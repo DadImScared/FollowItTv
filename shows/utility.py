@@ -1,8 +1,8 @@
 
 import math
 import re
-from pytv import Shows
-from pytv.tvmaze import ApiError
+from pytv import Shows, Show as TvShow
+from pytv.tvmaze import ApiError, get_updates
 
 from .models import Show
 
@@ -20,6 +20,16 @@ def dict_data(show):
     return {k: v for k, v in vars(show).items() if not re.search(pattern, k)}
 
 
+def save_show(show):
+    """Save show to db"""
+    return Show.objects.get_or_create(
+        show_id=show.show_id,
+        show_type=show.type,
+        links=show._links,
+        **dict_data(show)
+    )
+
+
 def save_shows(page=0):
     """Gets show data from api and stores it locally"""
     try:
@@ -28,12 +38,7 @@ def save_shows(page=0):
         raise e
     else:
         for show in shows.shows:
-            Show.objects.get_or_create(
-                show_id=show.show_id,
-                show_type=show.type,
-                links=show._links,
-                **dict_data(show)
-            )
+            save_show(show)
         else:
             save_shows(page + 1)
 
@@ -47,3 +52,26 @@ def resume_save_shows():
     else:
         # start at page 0
         save_shows()
+
+
+def sync_data():
+    """Syncs api show data to local show data"""
+    data = get_updates()
+    for show_id, update_time, in data.items():
+        try:
+            show = Show.objects.get(show_id=show_id)
+        except Show.DoesNotExist:
+            # index missing show
+            save_show(TvShow(show_id=show_id))
+        else:
+            if int(show.updated) != update_time:
+                # compare values and update needed
+                show_data = TvShow(show_id=show_id)
+                if show_data.type != show.show_type:
+                    show.show_type = show_data.type
+                if show_data._links != show.links:
+                    show.links = show_data._links
+                for key in dict_data(TvShow(show_id=1)).keys():
+                    if getattr(show_data, key) != getattr(show, key):
+                        setattr(show, key, getattr(show_data, key))
+                show.save()
