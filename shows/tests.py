@@ -1,7 +1,9 @@
 
+import inspect
 from django.test import TestCase
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
+from rest_framework import status
 import pytv
 import factory
 from pytv.tvmaze import ApiError
@@ -11,6 +13,13 @@ from .utility import dict_data, save_shows, resume_save_shows, sync_data, save_s
 from . import factories
 
 # Create your tests here.
+
+
+def clean_up_factories():
+    """Helper function to reset_sequence on object."""
+    for name, obj in inspect.getmembers(factories):
+        if inspect.isclass(obj) and "factory" in name.lower():
+            obj.reset_sequence(0)
 
 
 class TestUtility(TestCase):
@@ -137,10 +146,14 @@ class TestUtility(TestCase):
 
 
 class BaseTestCase(APITestCase):
+    """Base test case that all tests that use factories inherit from"""
 
     def setUp(self):
         self.users = factory.create_batch(factories.UserFactory, size=5)
         self.shows = factory.create_batch(factories.ShowFactory, size=25)
+
+    def tearDown(self):
+        clean_up_factories()
 
     def follow_shows(self, user, with_episodes=False):
         """Given a user object follow all shows in self.shows
@@ -170,3 +183,48 @@ class BaseTestCase(APITestCase):
             # after episodes are created for a show
             # reset episode sequence so future episodes start from 0
             factories.WatchedEpisodeFactory.reset_sequence()
+
+
+class BaseAuthenticatedTest(BaseTestCase):
+    """Base test where all authenticated tests inherit from"""
+
+    def setUp(self):
+        super().setUp()
+        self.user = self.users[0]
+        self.client.force_authenticate(user=self.user)
+
+    def change_user(self):
+        self.client.logout()
+        self.user = self.users[1]
+        self.client.force_authenticate(user=self.user)
+
+
+class TestFollowShowView(BaseAuthenticatedTest):
+
+    def test_user_follow_new_show(self):
+        response = self.client.post(reverse('follow_show', args=(2,)))
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, 'Following show')
+        self.assertTrue(FollowedShow.objects.count())
+
+    def test_user_un_follow_show(self):
+        self.follow_shows(self.user)
+        show = FollowedShow.objects.first()
+        response = self.client.post(reverse('follow_show', args=(show.show.show_id,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, 'un followed show')
+        show.refresh_from_db()
+        self.assertFalse(show.is_following)
+
+    def test_user_re_follows_show(self):
+        self.follow_shows(self.user)
+        show = FollowedShow.objects.first()
+        show.is_following = False
+        show.save()
+        self.assertFalse(show.is_following)
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(reverse('follow_show', args=(show.show.show_id,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, 'following show')
+        show.refresh_from_db()
+        self.assertTrue(show.is_following)
