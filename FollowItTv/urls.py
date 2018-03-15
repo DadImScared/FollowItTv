@@ -23,5 +23,6 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
     path('api/v1/', include('rest_auth.urls')),
     path('api/v1/register/account-confirm-email/', AccountConfirm.as_view(), name='account_confirm_email'),
-    path('api/v1/register/', include('rest_auth.registration.urls'))
+    path('api/v1/register/', include('rest_auth.registration.urls')),
+    path('api/v1/', include('shows.urls'))
 ]

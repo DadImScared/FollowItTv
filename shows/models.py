@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.conf import settings
 
 # Create your models here.
 
@@ -26,6 +27,32 @@ class Show(models.Model):
     summary = models.TextField(null=True)
     updated = models.TextField()
     links = JSONField(null=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, through='FollowedShow')
 
     class Meta:
         ordering = ['show_id']
+
+
+class FollowedShow(models.Model):
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    is_following = models.BooleanField(default=True)
+    followed_at = models.DateTimeField(auto_now_add=True)
+
+
+class WatchedEpisode(models.Model):
+    show = models.ForeignKey(FollowedShow, related_name='watched_episode', on_delete=models.CASCADE)
+    has_seen = models.BooleanField(default=False)
+    episode_id = models.IntegerField()
+    url = models.URLField(max_length=400)
+    name = models.TextField()
+    season = models.IntegerField()
+    number = models.IntegerField()
+    air_time = models.TimeField()
+    air_date = models.DateField()
+    air_stamp = models.DateTimeField()
+    summary = models.TextField()
+
+    class Meta:
+        ordering = ['season', 'number']
+        unique_together = (('show', 'season', 'episode_id'),)

@@ -1,10 +1,14 @@
 
 from django.test import TestCase
+from rest_framework.reverse import reverse
+from rest_framework.test import APITestCase
 import pytv
+import factory
 from pytv.tvmaze import ApiError
 
-from .models import Show
+from .models import Show, FollowedShow, WatchedEpisode
 from .utility import dict_data, save_shows, resume_save_shows, sync_data, save_show
+from . import factories
 
 # Create your tests here.
 
@@ -130,3 +134,39 @@ class TestUtility(TestCase):
         self.assertTrue(Show.objects.count())
         show_instance = Show.objects.get(show_id=show.show_id)
         self.assertEqual(show.name, show_instance.name)
+
+
+class BaseTestCase(APITestCase):
+
+    def setUp(self):
+        self.users = factory.create_batch(factories.UserFactory, size=5)
+        self.shows = factory.create_batch(factories.ShowFactory, size=25)
+
+    def follow_shows(self, user, with_episodes=False):
+        """Given a user object follow all shows in self.shows
+
+        :param user: User object
+        :param bool with_episodes: Should attach WatchedEpisode objects to each followed show
+        :return:
+        """
+        followed = []
+        for show in self.shows:
+            followed.append(
+                factories.FollowedShowFactory(
+                    user=user,
+                    show=show
+                )
+            )
+        if with_episodes:
+            self.add_episodes(followed)
+
+    def add_episodes(self, followed):
+        """Adds 10 episodes to each show in followed list"""
+        for show in followed:
+            for _ in range(10):
+                factories.WatchedEpisodeFactory(
+                    show=show
+                )
+            # after episodes are created for a show
+            # reset episode sequence so future episodes start from 0
+            factories.WatchedEpisodeFactory.reset_sequence()
