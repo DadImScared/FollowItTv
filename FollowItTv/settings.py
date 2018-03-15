@@ -25,11 +25,28 @@ SECRET_KEY = config.SECRET_KEY
 
 AUTH_USER_MODEL = 'users.User'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.DEBUG
 
 ALLOWED_HOSTS = []
 
+DEV_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+PROD_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = DEV_BACKEND if DEBUG else PROD_BACKEND
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config.EMAIL_USER
+EMAIL_HOST_PASSWORD = config.EMAIL_PASS
+EMAIL_USE_TLS = True
+EMAIL_SSL = False
 
+OLD_PASSWORD_FIELD_ENABLED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 20
+
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +57,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +111,14 @@ DATABASES = {
         'PORT': config.PSG_PORT
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 
 # Password validation
