@@ -1,5 +1,7 @@
 
 import inspect
+from allauth.account.models import EmailAddress
+from django.core import mail
 from django.test import TestCase
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
@@ -10,6 +12,7 @@ from pytv.tvmaze import ApiError
 
 from .models import Show, FollowedShow, WatchedEpisode
 from .utility import dict_data, save_shows, resume_save_shows, sync_data, save_show
+from .email_users import mail_users, make_time
 from . import factories
 
 # Create your tests here.
@@ -228,3 +231,40 @@ class TestFollowShowView(BaseAuthenticatedTest):
         self.assertEqual(response.data, 'following show')
         show.refresh_from_db()
         self.assertTrue(show.is_following)
+
+
+class TestMailUsers(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+        self.user = self.users[0]
+        self.schedule = pytv.Schedule()
+        self.shows = [episode.show for episode in self.schedule.episodes]
+        EmailAddress.objects.create(user=self.user, email=self.user.email, primary=True, verified=True)
+
+    def test_mail_users(self):
+        show, created = save_show(self.shows[0])
+        FollowedShow.objects.create(
+            show=show,
+            user=self.user
+        )
+        mail_users()
+        self.assertTrue(len(mail.outbox))
+        self.assertEqual(mail.outbox[0].body, '{} | {}'.format(show.name, make_time(show.schedule['time'])))
+
+    def test_multiple_shows_mail_users(self):
+        """a user following multiple shows should see results in reverse airtime"""
+        for show in self.shows[::2]:
+            show, created = save_show(show)
+            FollowedShow.objects.create(
+                show=show,
+                user=self.user
+            )
+
+        mail_users()
+        show_email = '{}'.format(
+            '\n'.join(['{} | {}'.format(
+                show.name,
+                make_time(show.schedule['time'])
+            ) for show in sorted(self.shows[::2], key=lambda item: item.schedule['time'], reverse=True)])
+        )
+        self.assertEqual(mail.outbox[0].body, show_email)
