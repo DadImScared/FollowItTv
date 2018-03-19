@@ -1,4 +1,5 @@
 
+import datetime
 import inspect
 from allauth.account.models import EmailAddress
 from django.core import mail
@@ -268,3 +269,18 @@ class TestMailUsers(BaseTestCase):
             ) for show in sorted(self.shows[::2], key=lambda item: item.schedule['time'], reverse=True)])
         )
         self.assertEqual(mail.outbox[0].body, show_email)
+
+
+class TestScheduleView(BaseAuthenticatedTest):
+
+    def setUp(self):
+        super().setUp()
+        self.date = datetime.datetime.now().strftime('%Y-%m-%d')
+        self.schedule = pytv.Schedule(date=self.date)
+        self.shows = [save_show(episodes.show)[0] for episodes in self.schedule.episodes]
+
+    def test_schedule_view(self):
+        response = self.client.get(reverse('schedule', args=('2018-03-18',)))
+        schedule = pytv.Schedule(date='2018-03-18')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(schedule.episodes[0].id, response.data[0]['id'])

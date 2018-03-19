@@ -1,8 +1,10 @@
 
 from django.shortcuts import get_object_or_404
+from pytv import Schedule
 from rest_framework import status, permissions
 from rest_framework.views import APIView, Response
 
+from .utility import dict_data
 from .models import Show, FollowedShow
 
 # Create your views here.
@@ -23,3 +25,18 @@ class FollowShow(APIView):
             followed_show.is_following = not followed_show.is_following
             followed_show.save()
             return Response(f"{'following' if followed_show.is_following else 'un followed'} show")
+
+
+class ScheduleView(APIView):
+
+    def get(self, request, date_str, *args, **kwargs):
+        schedule = Schedule(date=date_str)
+        return Response([{
+                # non matching pattern so all keys return
+                **dict_data(episode, 'rht'),
+                "show": {
+                    "id": episode.show.id,
+                    "type": episode.show.type,
+                    **dict_data(episode.show)
+                }
+            } for episode in schedule.episodes])

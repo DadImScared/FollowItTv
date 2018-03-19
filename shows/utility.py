@@ -8,12 +8,13 @@ from .models import Show
 
 # keys that match the pattern are added by the library pytv excluding them
 # allows **dict dump into Show model
-pattern = r"_url|_list|id|type|next|_links"
+default_pattern = r"_url|_list|id|type|next|_links"
 
 
-def dict_data(show):
+def dict_data(show, pattern=default_pattern):
     """Filters the keys in vars(show) so it matches the model
 
+    :param str pattern: regex pattern to filter un wanted keys
     :param show: pytv.tvmaze Show object
     :return: dict of class with un needed values filtered
     """
