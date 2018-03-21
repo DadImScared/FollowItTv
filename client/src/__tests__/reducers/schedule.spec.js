@@ -1,6 +1,6 @@
 
-import * as scheduleActionTypes from '../actiontypes/schedule';
-import reducer from './schedule';
+import * as scheduleActionTypes from '../../actiontypes/schedule';
+import reducer from '../../reducers/schedule';
 
 const initialState = {
   '2018-03-15': [{ name: 'episode0' }, { name: 'episode1' }]

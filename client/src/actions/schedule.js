@@ -1,4 +1,6 @@
 
+import axios from 'axios';
+
 import * as scheduleActionTypes from '../actiontypes/schedule';
 
 
@@ -9,3 +11,5 @@ export const addSchedule = (date, episodes) => {
     episodes
   };
 };
+
+export const getSchedule = async (date) => await axios.get(`/api/v1/schedule/${date}/`);

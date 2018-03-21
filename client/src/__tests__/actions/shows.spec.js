@@ -1,6 +1,6 @@
 
-import * as showActionTypes from '../actiontypes/shows';
-import * as actions from './shows';
+import * as showActionTypes from '../../actiontypes/shows';
+import * as actions from '../../actions/shows';
 
 describe('show actions', () => {
   it('should create add show action', () => {

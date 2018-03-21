@@ -12,13 +12,13 @@ import styles from '../styles/Base.css';
 
 const theme = createMuiTheme();
 
-const Base = ({ classes }) => (
+const Base = ({ classes, ...other }) => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline/>
     <div className={classes.appFrame}>
       <Navbar />
       <Navdrawer />
-      <Main />
+      <Main {...other} />
     </div>
   </MuiThemeProvider>
 );

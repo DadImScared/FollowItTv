@@ -1,6 +1,6 @@
 
-import * as showActionTypes from '../actiontypes/shows';
-import reducer from './shows';
+import * as showActionTypes from '../../actiontypes/shows';
+import reducer from '../../reducers/shows';
 
 describe('shows', () => {
   it('should add show', () => {

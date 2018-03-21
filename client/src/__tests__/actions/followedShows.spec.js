@@ -1,6 +1,6 @@
 
-import * as followedShowsTypes from '../actiontypes/followedShows';
-import * as actions from './followedShows';
+import * as followedShowsTypes from '../../actiontypes/followedShows';
+import * as actions from '../../actions/followedShows';
 
 
 describe('actions', () => {
