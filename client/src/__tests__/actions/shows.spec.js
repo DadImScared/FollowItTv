@@ -11,4 +11,12 @@ describe('show actions', () => {
     };
     expect(actions.addShow(2, {})).toEqual(expectedAction);
   });
+
+  it('should create add shows action', () => {
+    const expectedAction = {
+      type: showActionTypes.ADD_SHOWS,
+      shows: {}
+    };
+    expect(actions.addShows({})).toEqual(expectedAction);
+  });
 });

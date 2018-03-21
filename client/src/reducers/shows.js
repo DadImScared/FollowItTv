@@ -10,6 +10,11 @@ function shows(state={}, action) {
         ...action.payload
       }
     };
+  case showActionTypes.ADD_SHOWS:
+    return {
+      ...state,
+      ...action.shows
+    };
   default:
     return state;
   }

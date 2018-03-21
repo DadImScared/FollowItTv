@@ -2,6 +2,32 @@
 import * as showActionTypes from '../../actiontypes/shows';
 import reducer from '../../reducers/shows';
 
+const initialShows = {
+  5: {
+    name: 'x files',
+    id: 5
+  },
+  10: {
+    name: 'tom and jerry',
+    id: 10
+  },
+  1: {
+    name: 'breaking bad',
+    id: 1
+  }
+};
+
+const shows = {
+  1: {
+    name: 'breaking bad',
+    id: 1
+  },
+  2: {
+    name: 'under the dome',
+    id: 2
+  }
+};
+
 describe('shows', () => {
   it('should add show', () => {
     const payload = { name: 'show1' };
@@ -16,5 +42,23 @@ describe('shows', () => {
         ...payload
       }
     });
+  });
+
+  it('should add shows', () => {
+    expect(
+      reducer({}, {
+        type: showActionTypes.ADD_SHOWS,
+        shows
+      })
+    ).toEqual(shows);
+  });
+
+  it('should add shows to existing shows', () => {
+    expect(
+      reducer(initialShows, {
+        type: showActionTypes.ADD_SHOWS,
+        shows
+      })
+    ).toEqual({ ...initialShows, ...shows });
   });
 });
