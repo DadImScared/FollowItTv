@@ -1,6 +1,13 @@
 
 import * as followedActionTypes from '../actiontypes/followedShows';
 
+export const addDay = (day, shows) => {
+  return {
+    type: followedActionTypes.ADD_DAY,
+    day,
+    shows
+  };
+};
 
 export const followShow = (days, id) => {
   return {
