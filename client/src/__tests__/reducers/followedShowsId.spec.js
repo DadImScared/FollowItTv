@@ -1,7 +1,7 @@
 
-import * as followedShowsTypes from '../actiontypes/followedShows';
+import * as followedShowsTypes from '../../actiontypes/followedShows';
 
-import reducer from './followedShowsId';
+import reducer from '../../reducers/followedShowsId';
 
 
 describe('followedShowsId', () => {

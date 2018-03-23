@@ -1,7 +1,7 @@
 
-import * as followedShowsTypes from '../actiontypes/followedShows';
+import * as followedShowsTypes from '../../actiontypes/followedShows';
 
-import reducer from './followedShows';
+import reducer from '../../reducers/followedShows';
 
 
 const initialState = {

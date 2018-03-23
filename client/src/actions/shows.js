@@ -8,3 +8,10 @@ export const addShow = (id, payload) => {
     payload
   };
 };
+
+export const addShows = (shows) => {
+  return {
+    type: showActionTypes.ADD_SHOWS,
+    shows
+  };
+};

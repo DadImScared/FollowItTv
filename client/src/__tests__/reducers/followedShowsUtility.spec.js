@@ -1,5 +1,5 @@
 
-import { followShow, unfollowShow } from './followedShowsUtility';
+import { followShow, unfollowShow } from '../../reducers/followedShowsUtility';
 
 
 describe('followShow', () => {
