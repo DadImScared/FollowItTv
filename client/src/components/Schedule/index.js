@@ -46,8 +46,8 @@ export class Schedule extends Component {
     try {
       const { data } = await getSchedule(date);
       const { episodes, shows } = getEpisodesAndShows(data);
-      addSchedule(date, episodes);
       addShows(shows);
+      addSchedule(date, episodes);
     }
     catch ({ response: { data } }) {
       console.log(data);
@@ -57,13 +57,14 @@ export class Schedule extends Component {
   render() {
     const { schedule } = this.props;
     return (
-      <View episodes={schedule[this.getDate(this.props)] || []} />
+      <View episodes={schedule[this.getDate(this.props)] || []} {...this.props} />
     );
   }
 }
 
-const mapStateToProps = ({ schedule }) => ({
-  schedule
+const mapStateToProps = ({ schedule, shows }) => ({
+  schedule,
+  shows
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -13,6 +13,7 @@ describe('View', () => {
 
   it('should render', () => {
     const wrapper = shallow(<View classes={{ content: '' }} episodes={episodes} />);
-    expect(wrapper.find('div')).toHaveLength(4);
+
+    expect(wrapper.find('WithStyles(GridWrapper)')).toHaveLength(4);
   });
 });
