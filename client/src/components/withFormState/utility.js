@@ -13,5 +13,5 @@ export const applyValidation = async (props, state, id, validators) => {
       }
     }
   }
-  return await initialValue;
+  return initialValue;
 };
