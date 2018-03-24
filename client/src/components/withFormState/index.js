@@ -19,9 +19,9 @@ export default function(WrapperComponent) {
       };
     }
 
-    validateDebounce = _.debounce((props, { formErrors, form }, id, updateFormErrors, validators) => {
+    validateDebounce = _.debounce(async (props, { formErrors, form }, id, updateFormErrors, validators) => {
       const errors = { ...formErrors };
-      errors[id] = applyValidation(props, { formErrors, form }, id, validators);
+      errors[id] = await applyValidation(props, { formErrors, form }, id, validators);
       updateFormErrors(errors);
     }, 200);
 
@@ -77,6 +77,6 @@ export default function(WrapperComponent) {
       );
     }
   }
-  WithFormState.displayName = `WithFormState(${getDisplayName(WrapperComponent)}`;
+  WithFormState.displayName = `WithFormState(${getDisplayName(WrapperComponent)})`;
   return WithFormState;
 }

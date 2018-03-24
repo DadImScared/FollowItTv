@@ -1,15 +1,17 @@
 
-export const applyValidation = (props, state, id, validators) => {
-  return validators.reduce((accum, validator) => {
-    const result = validator(props, state, id);
+export const applyValidation = async (props, state, id, validators) => {
+  let initialValue = '';
+  for (const validator of validators) {
+    const result = await validator(props, state, id);
+
     if (result !== undefined) {
-      if (accum.length) {
-        accum += `, ${result}`;
+      if (initialValue.length) {
+        initialValue += `, ${result}`;
       }
       else {
-        accum += `${result}`;
+        initialValue += `${result}`;
       }
     }
-    return accum;
-  }, '');
+  }
+  return await initialValue;
 };

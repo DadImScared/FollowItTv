@@ -16,21 +16,16 @@ const baseData = {
   }
 };
 
+
 describe('withFormState HOC', () => {
   let MockComponent;
   let WrapperComponent;
   let wrapper;
-  let clock;
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers();
     MockComponent = () => (<div>thing here</div>);
     WrapperComponent = withFormState(MockComponent);
     wrapper = shallow(<WrapperComponent />);
-  });
-
-  afterEach(() => {
-    clock.restore();
   });
 
   it('should update form state on updateForm', () => {
@@ -40,22 +35,18 @@ describe('withFormState HOC', () => {
     expect(instance.state.form.username).toEqual('tom');
   });
 
-  it('should apply validation if validators are passed in', () => {
+  it('should call validateDebounce on updateForm if validators exist', async () => {
     const instance = wrapper.instance();
-
-    const nothing = sinon.spy(() => {});
-    const badInput = sinon.spy(() => ('bad input'));
-    const tooShort = sinon.spy(() => ('too short'));
+    const spy = sinon.spy(instance, 'validateDebounce');
+    const nothing = () => {};
+    const badInput = () => ('bad input');
+    const tooShort = () => ('too short');
 
     const validators = [nothing, badInput, tooShort];
 
     instance.updateForm(baseData.event, baseData.id, validators);
-    clock.tick(1000);
-    expect(instance.state.form.username).toEqual('tom');
-    expect(instance.state.formErrors.username).toEqual('bad input, too short');
-    validators.forEach((validator) => {
-      expect(validator.calledOnce).toEqual(true);
-    });
+
+    expect(spy.calledOnce).toEqual(true);
   });
 
   it('should pass down necessary props', () => {
