@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 
 import Schedule from './Schedule';
+import Register from './Register';
 // import Schedule from './oldSchedule';
 import styles from '../styles/Main.css';
 
@@ -15,6 +16,10 @@ export const Main = ({ classes }) => (
       <Route
         path={'/schedule/:date?'}
         render={(props) => <Schedule {...props} />}
+      />
+      <Route
+        path={'/register/'}
+        render={(props) => <Register {...props} />}
       />
     </Switch>
   </div>

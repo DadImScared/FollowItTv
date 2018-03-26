@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { RegisterForm } from '../../../components/Register/RegisterForm';
+import RegisterForm from '../../../components/Register/RegisterForm';
 
 
 describe('RegisterForm', () => {
@@ -24,7 +24,7 @@ describe('RegisterForm', () => {
   it('should render', () => {
     expect(wrapper.find('form')).toHaveLength(1);
     expect(wrapper.find('TextField')).toHaveLength(3);
-    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('WithStyles(Button)')).toHaveLength(1);
   });
 
   it('should submit', () => {

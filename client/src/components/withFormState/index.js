@@ -63,6 +63,10 @@ export default function(WrapperComponent) {
       this.setState({ formErrors: {} });
     };
 
+    clear = () => {
+      this.setState({ form: {}, formErrors: {} });
+    };
+
     render() {
       return (
         <WrapperComponent
@@ -71,6 +75,7 @@ export default function(WrapperComponent) {
           handleErrorResponse={this.handleErrorResponse}
           clearErrors={this.clearErrors}
           clearFields={this.clearFields}
+          clear={this.clear}
           {...this.state}
           {...this.props}
         />

@@ -54,6 +54,7 @@ describe('withFormState HOC', () => {
     const keys = [
       'clearErrors',
       'clearFields',
+      'clear',
       'form',
       'formErrors',
       'handleErrorResponse',

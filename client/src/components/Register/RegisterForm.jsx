@@ -21,7 +21,7 @@ const formFields = [
   }
 ];
 
-export const RegisterForm = ({ updateForm, submit, form, formErrors }) => (
+const RegisterForm = ({ classes, updateForm, submit, form, formErrors }) => (
   <div>
     <form onSubmit={submit}>
       {
