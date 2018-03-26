@@ -16,7 +16,11 @@ describe('RegisterForm', () => {
       updateForm: sinon.spy(() => {}),
       submit: sinon.spy(() => {}),
       form: {},
-      formErrors: {}
+      formErrors: {},
+      classes: {
+        form: 'form',
+        fieldStyle: 'fieldStyle'
+      }
     };
     wrapper = shallow(<RegisterForm {...props} />);
   });

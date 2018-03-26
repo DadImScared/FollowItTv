@@ -23,11 +23,12 @@ const formFields = [
 
 const RegisterForm = ({ classes, updateForm, submit, form, formErrors }) => (
   <div>
-    <form onSubmit={submit}>
+    <form className={classes.form} onSubmit={submit}>
       {
         formFields.map(({ id, labelText, fieldType='text', validators }, index) => {
           return (
             <TextField
+              className={classes.fieldStyle}
               key={`${id}-${index}`}
               label={labelText}
               type={fieldType}
@@ -39,7 +40,7 @@ const RegisterForm = ({ classes, updateForm, submit, form, formErrors }) => (
           );
         })
       }
-      <Button type={'submit'}>submit</Button>
+      <Button variant={'raised'} color={'primary'} style={{ alignSelf: 'flex-start' }} type={'submit'}>submit</Button>
     </form>
   </div>
 );

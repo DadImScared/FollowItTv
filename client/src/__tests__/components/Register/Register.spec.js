@@ -16,7 +16,7 @@ describe('Register', () => {
     const wrapper = shallow(<Register />);
     const inner = wrapper.dive();
 
-    expect(inner.find('View')).toHaveLength(1);
+    expect(inner.find('WithStyles(View)')).toHaveLength(1);
   });
 
   it('should register user on submit', async () => {
