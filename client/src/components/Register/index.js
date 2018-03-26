@@ -18,7 +18,7 @@ export class Register extends Component {
 
   submit = async (e) => {
     e.preventDefault();
-
+    this.props.submit();
     const { form: { email, ...other }, handleErrorResponse, clear } = this.props;
     try {
       await registerUser({ email, ...other });

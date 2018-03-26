@@ -19,28 +19,36 @@ describe('validators', () => {
   describe('passwordValidator', () => {
     it('should return an error message if password1 and password2 exist and are not the same', () => {
       const message = passwordValidator(data.props, data.state, data.id);
-      expect(message).toEqual('Passwords must match');
+      expect(message).toEqual({ password1: 'Passwords must match' });
     });
 
-    it('should not return if passwords match', () => {
+    it('should return validation message/s with remove true if valid', () => {
       const state = {
         form: {
           password1: 'asw',
           password2: 'asw'
         }
       };
-      const message = passwordValidator(data.props, state, data.id);
-      expect(message).toEqual(undefined);
+      const message = passwordValidator(data.props, state);
+      expect(message).toEqual({
+        password1: 'Passwords must match',
+        password2: 'Passwords must match',
+        remove: true
+      });
     });
 
-    it('should not return if one password field is empty', () => {
+    it('should return validation messages with remove true if not all fields in validator exist', () => {
       let state = {
         form: {
           password1: 'awd'
         }
       };
       let message = passwordValidator(data.props, state, data.id);
-      expect(message).toEqual(undefined);
+      expect(message).toEqual({
+        password1: 'Passwords must match',
+        password2: 'Passwords must match',
+        remove: true
+      });
 
       state = {
         form: {
@@ -48,24 +56,33 @@ describe('validators', () => {
         }
       };
       message = passwordValidator(data.props, state, data.id);
-      expect(message).toEqual(undefined);
+      expect(message).toEqual({
+        password1: 'Passwords must match',
+        password2: 'Passwords must match',
+        remove: true
+      });
     });
   });
 
   describe('lengthValidator', () => {
     it('should return message if invalid length', () => {
       const message = lengthValidator(data.props, data.state, data.id);
-      expect(message).toEqual('Password length must be 8 characters or more');
+      expect(message).toEqual({
+        password1: 'Password length must be 8 characters or more'
+      });
     });
 
-    it('should not return message if valid length', () => {
+    it('should return validation message with remove true if valid length', () => {
       const state = {
         form: {
           password1: 'awdawdawdfawdawf'
         }
       };
       const message = lengthValidator(data.props, state, data.id);
-      expect(message).toEqual(undefined);
+      expect(message).toEqual({
+        password1: 'Password length must be 8 characters or more',
+        remove: true
+      });
     });
   });
 });

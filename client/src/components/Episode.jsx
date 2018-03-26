@@ -33,7 +33,6 @@ export class Episode extends Component {
   componentDidMount() {
     if (this.el) {
       this.setState({ height: this.el.clientHeight });
-      console.log('here');
     }
   }
 

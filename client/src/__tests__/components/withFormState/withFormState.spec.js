@@ -35,6 +35,12 @@ describe('withFormState HOC', () => {
     expect(instance.state.form.username).toEqual('tom');
   });
 
+  it('should flag field id false in afterSend on clearById', () => {
+    const instance = wrapper.instance();
+    instance.clearById('username');
+    expect(instance.state.afterSend.username).toEqual(false);
+  });
+
   it('should call validateDebounce on updateForm if validators exist', async () => {
     const instance = wrapper.instance();
     const spy = sinon.spy(instance, 'validateDebounce');
@@ -59,7 +65,8 @@ describe('withFormState HOC', () => {
       'formErrors',
       'handleErrorResponse',
       'updateForm',
-      'updateFormErrors'
+      'updateFormErrors',
+      'submit'
     ];
     propKeys.forEach((key) => {
       expect(keys.includes(key)).toEqual(true);
