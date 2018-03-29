@@ -1,7 +1,8 @@
 
 import axios from 'axios';
 
-import { registerUser, reSendEmailConfirm } from '../../actions/users';
+import { LOG_OUT, LOG_IN } from '../../actiontypes/users';
+import { registerUser, reSendEmailConfirm, logIn, logOut } from '../../actions/users';
 
 jest.mock('axios');
 
@@ -39,6 +40,25 @@ describe('user actions', () => {
       catch ({ response: { data } }) {
         expect(data).toEqual('error');
       }
+    });
+  });
+
+  describe('logIn', () => {
+    it('should create logIn action', () => {
+      const expectedAction = {
+        type: LOG_IN,
+        token: 'token'
+      };
+      expect(logIn('token')).toEqual(expectedAction);
+    });
+  });
+
+  describe('logOut', () => {
+    it('should create logOut action', () => {
+      const expectedAction = {
+        type: LOG_OUT
+      };
+      expect(logOut()).toEqual(expectedAction);
     });
   });
 });

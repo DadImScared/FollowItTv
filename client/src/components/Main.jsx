@@ -7,7 +7,7 @@ import { withStyles } from 'material-ui/styles';
 
 import Schedule from './Schedule';
 import Register from './Register';
-// import Schedule from './oldSchedule';
+import Login from './Login';
 import styles from '../styles/Main.css';
 
 export const Main = ({ classes }) => (
@@ -20,6 +20,10 @@ export const Main = ({ classes }) => (
       <Route
         path={'/register/'}
         render={(props) => <Register {...props} />}
+      />
+      <Route
+        path={'/login/'}
+        render={(props) => <Login {...props} />}
       />
     </Switch>
   </div>
