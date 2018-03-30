@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 
 import Heart from 'mdi-material-ui/Heart';
@@ -11,6 +12,7 @@ import HeartBroken from 'mdi-material-ui/HeartBroken';
 
 import * as followShowActions from '../actions/followedShows';
 import { addShow, getShow } from '../actions/shows';
+import styles from '../styles/FollowShowButton.css';
 
 
 export class FollowShowButton extends Component {
@@ -60,10 +62,12 @@ export class FollowShowButton extends Component {
   };
 
   render() {
-    const { followedShows, showId } = this.props;
+    const { followedShows, showId, classes } = this.props;
     return (
       <Button onClick={this.handleClick}>
-        { followedShows.includes(showId) ? <HeartBroken />:<Heart /> }
+        <span className={classes.heartIcon}>
+          { followedShows.includes(showId) ? <HeartBroken />:<Heart /> }
+        </span>
         { followedShows.includes(showId) ? 'Un follow':'Follow'}
       </Button>
     );
@@ -83,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FollowShowButton);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(FollowShowButton));

@@ -29,5 +29,5 @@ export const unfollowShow = (days, id) => {
 };
 
 export const postFollow = async (showId) => {
-  return await axios.post(`/api/v1/followshow/${showId}/`, axiosOptions());
+  return await axios.post(`/api/v1/followshow/${showId}/`, {}, axiosOptions());
 };

@@ -40,6 +40,9 @@ describe('FollowShowButton', () => {
       unfollowShow: sinon.spy(() => {}),
       addShow: sinon.spy(() => {}),
       showId: 1,
+      classes: {
+        heartIcon: 'heartIcon'
+      },
       shows,
       followedShows
     };

@@ -10,6 +10,7 @@ import IconButton from 'material-ui/IconButton';
 
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
+import FollowShowButton from './FollowShowButton';
 import styles from '../styles/Episode.css';
 
 
@@ -92,7 +93,9 @@ export class Episode extends Component {
             </div>
           </CardContent>
           <CardActions>
-            <div>action area</div>
+            <div>
+              <FollowShowButton showId={show} />
+            </div>
           </CardActions>
         </Card>
       </div>
