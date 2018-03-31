@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import Schedule from './Schedule';
 import Register from './Register';
 import Login from './Login';
+import Show from './Show';
 import styles from '../styles/Main.css';
 
 export const Main = ({ classes }) => (
@@ -24,6 +25,10 @@ export const Main = ({ classes }) => (
       <Route
         path={'/login/'}
         render={(props) => <Login {...props} />}
+      />
+      <Route
+        path={'/show/:showId'}
+        component={Show}
       />
     </Switch>
   </div>

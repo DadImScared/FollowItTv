@@ -43,7 +43,8 @@ export class Episode extends Component {
         name,
         show,
         airtime,
-        summary
+        summary,
+        image
       },
       shows,
       classes
@@ -58,7 +59,8 @@ export class Episode extends Component {
           <CardMedia
             component={'img'}
             className={classes.media}
-            image={shows[show] && shows[show].image && shows[show].image.medium}
+            // image={shows[show] && shows[show].image && shows[show].image.medium}
+            image={(image && image.medium) || (shows[show] && shows[show].image && shows[show].image.medium)}
             title={`episode ${name}. show ${shows[show] || 'no name'}`}
           />
           <CardContent>

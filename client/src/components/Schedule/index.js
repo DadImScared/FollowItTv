@@ -59,7 +59,6 @@ export class Schedule extends Component {
 
   render() {
     const { schedule } = this.props;
-    console.log(schedule[this.getDate(this.props)] || [] );
     return (
       <View episodeIds={schedule[this.getDate(this.props)] || []} {...this.props} />
     );
