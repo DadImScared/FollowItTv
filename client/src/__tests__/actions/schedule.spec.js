@@ -22,10 +22,12 @@ const shows = [
 const detailedResponse = {
   data: [
     {
+      id: 1,
       name: 'episode0',
       show: shows[0]
     },
     {
+      id: 2,
       name: 'episode2',
       show: shows[1]
     }
@@ -56,17 +58,20 @@ describe('schedule actions', () => {
   it('should get episodes and shows from initial episodes', async () => {
     axios.get.mockImplementation(() => detailedResponse);
     const { data } = await actions.getSchedule('2018-03-17');
-    const { episodes, shows: newShows } = actions.getEpisodesAndShows(data);
-    expect(episodes).toEqual([
-      {
+    const { episodes, shows: newShows, episodeIds } = actions.getEpisodesAndShows(data);
+    expect(episodeIds).toEqual([1, 2]);
+    expect(episodes).toEqual({
+      1: {
+        id: 1,
         name: 'episode0',
         show: 1
       },
-      {
+      2: {
+        id: 2,
         name: 'episode2',
         show: 3
       }
-    ]);
+    });
     expect(newShows).toEqual({
       [shows[0].id]: shows[0],
       [shows[1].id]: shows[1]

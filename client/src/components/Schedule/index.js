@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import { getSchedule, getEpisodesAndShows, addSchedule } from '../../actions/schedule';
 import { addShows } from '../../actions/shows';
+import { addEpisodes } from '../../actions/episodes';
 
 import View from './View';
 
@@ -41,13 +42,15 @@ export class Schedule extends Component {
   fetchSchedule = async (date) => {
     const {
       addSchedule,
-      addShows
+      addShows,
+      addEpisodes
     } = this.props;
     try {
       const { data } = await getSchedule(date);
-      const { episodes, shows } = getEpisodesAndShows(data);
+      const { episodes, shows, episodeIds } = getEpisodesAndShows(data);
       addShows(shows);
-      addSchedule(date, episodes);
+      addEpisodes(episodes);
+      addSchedule(date, episodeIds);
     }
     catch ({ response: { data } }) {
       console.log(data);
@@ -56,21 +59,24 @@ export class Schedule extends Component {
 
   render() {
     const { schedule } = this.props;
+    console.log(schedule[this.getDate(this.props)] || [] );
     return (
-      <View episodes={schedule[this.getDate(this.props)] || []} {...this.props} />
+      <View episodeIds={schedule[this.getDate(this.props)] || []} {...this.props} />
     );
   }
 }
 
-const mapStateToProps = ({ schedule, shows }) => ({
+const mapStateToProps = ({ schedule, shows, episodes }) => ({
   schedule,
-  shows
+  shows,
+  episodes
 });
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addShows,
-    addSchedule
+    addSchedule,
+    addEpisodes
   }, dispatch);
 };
 

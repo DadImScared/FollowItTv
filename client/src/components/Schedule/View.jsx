@@ -5,16 +5,16 @@ import Grid from 'material-ui/Grid';
 
 import Episode from '../Episode';
 
-const View = ({ episodes, shows }) => (
+const View = ({ episodeIds, shows, episodes }) => (
   <Grid container>
     {
-      episodes.length ?
-        episodes.map((item, index) => {
+      episodeIds.length ?
+        episodeIds.map((item, index) => {
           return (
-            <Grid item xs={12} sm={6} lg={4} xl={3} key={`${item.id}-${index}`}>
+            <Grid item xs={12} sm={6} lg={4} xl={3} key={`${episodes[item].id}-${index}`}>
               <Episode
                 shows={shows}
-                item={item}
+                item={episodes[item]}
               />
             </Grid>
           );

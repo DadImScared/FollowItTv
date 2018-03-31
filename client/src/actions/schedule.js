@@ -16,15 +16,21 @@ export const getSchedule = async (date) => await axios.get(`/api/v1/schedule/${d
 
 export const getEpisodesAndShows = (initialEpisodes) => {
   // we want to remove show info from episodes and replace with show id while also extracting show info
-  const episodes = [];
+  const episodeIds = [];
+  const episodes = {};
   const shows = {};
   initialEpisodes.forEach((obj) => {
-    episodes.push({ ...obj, show: obj.show.id });
+    episodeIds.push(obj.id);
+    episodes[obj.id] = {
+      ...obj,
+      show: obj.show.id
+    };
     shows[obj.show.id] = {
       ...obj.show
     };
   });
   return {
+    episodeIds,
     episodes,
     shows
   };
