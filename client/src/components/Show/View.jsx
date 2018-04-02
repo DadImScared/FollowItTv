@@ -31,6 +31,7 @@ export const View = ({ handleChange, handleChangeIndex, currentTab, show, match,
         iconProps={{ style: { display: 'flex' } }}
       />
       <Tabs
+        classes={{ flexContainer: classes.flexContainer }}
         value={currentTab}
         onChange={handleChange}
         indicatorColor={'primary'}
