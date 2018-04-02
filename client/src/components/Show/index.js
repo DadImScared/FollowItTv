@@ -8,6 +8,14 @@ import { addShow, getShow } from '../../actions/shows';
 import View from './View';
 
 
+const routes = {
+  0: 'general',
+  1: 'seasons',
+  2: 'cast',
+  3: 'crew'
+};
+
+
 export class Show extends Component {
   constructor(...args) {
     super(...args);
@@ -18,6 +26,7 @@ export class Show extends Component {
 
   async componentDidMount() {
     const { shows, addShow } = this.props;
+    this.setInitialTab();
     const showId = this.getShowId(this.props);
     if (shows[showId]) {
       return;
@@ -31,16 +40,32 @@ export class Show extends Component {
     }
   }
 
+  setInitialTab = () => {
+    const { location } = this.props;
+    Object.keys(routes).forEach((route) => {
+      if (location.pathname.includes(routes[route])) {
+        this.setState({ currentTab: parseInt(route) });
+      }
+    });
+  };
+
   getShowId = (props) => {
     return props.match.params.showId;
   };
 
   handleChange = (event, value) => {
     this.setState({ currentTab: value });
+    this.pushRoute(value);
   };
 
   handleChangeIndex = (value) => {
     this.setState({ currentTab: value });
+    this.pushRoute(value);
+  };
+
+  pushRoute = (value) => {
+    const { match, history } = this.props;
+    history.push(`${match.url}/${routes[value]}`);
   };
 
   render() {

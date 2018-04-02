@@ -23,4 +23,20 @@ describe('actions', () => {
     };
     expect(actions.addSeasonEpisodes(1, episodes)).toEqual(expectedAction);
   });
+
+  test('normalizeSeasonEpisodes', () => {
+    const episodes = [
+      { id: 1 },
+      { id: 2 }
+    ];
+    const expectedResults = {
+      episodeList: [1, 2],
+      newEpisodes: {
+        1: { id: 1, show: 1 },
+        2: { id: 2, show: 1 }
+      }
+    };
+    const results = actions.normalizeSeasonEpisodes(1, episodes);
+    expect(results).toEqual(expectedResults);
+  });
 });
