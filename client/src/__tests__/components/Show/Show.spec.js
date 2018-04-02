@@ -45,19 +45,10 @@ describe('Show', () => {
   });
 
   it('should render', () => {
-    const expectedProps = [
-      'addShow', 'currentTab', 'handleChange',
-      'handleChangeIndex', 'history', 'location',
-      'show', 'match'
-    ];
     const spied = sinon.spy(instance, 'setInitialTab');
     instance.componentDidMount();
     expect(spied.calledOnce).toEqual(true);
     expect(props.addShow.calledOnce).toEqual(true);
-    expect(wrapper.find('View')).toHaveLength(1);
-    Object.keys(wrapper.find('View').props()).forEach((prop) => {
-      expect(expectedProps.includes(prop)).toEqual(true);
-    });
   });
 
   it('should change tabs on mount if pathname includes one of ["seasons", "cast", "crew"]', () => {

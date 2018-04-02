@@ -62,13 +62,18 @@ export class FollowShowButton extends Component {
   };
 
   render() {
-    const { followedShows, showId, classes } = this.props;
+    const { followedShows, showId, classes, fab = false, buttonProps = {}, iconProps = {} } = this.props;
     return (
-      <Button onClick={this.handleClick}>
-        <span className={classes.heartIcon}>
+      <Button {...buttonProps} onClick={this.handleClick}>
+        <span className={fab ? '':classes.heartIcon} {...iconProps}>
           { followedShows.includes(showId) ? <HeartBroken />:<Heart /> }
         </span>
-        { followedShows.includes(showId) ? 'Un follow':'Follow'}
+        {
+          fab ?
+            ''
+            :
+            followedShows.includes(showId) ? 'Un follow':'Follow'
+        }
       </Button>
     );
   }
