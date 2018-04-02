@@ -26,7 +26,7 @@ export class Show extends Component {
 
   async componentDidMount() {
     const { shows, addShow } = this.props;
-    this.setInitialTab();
+    this.setInitialTab(this.props);
     const showId = this.getShowId(this.props);
     if (shows[showId]) {
       return;
@@ -40,8 +40,16 @@ export class Show extends Component {
     }
   }
 
-  setInitialTab = () => {
-    const { location } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { location: { pathname: oldPath } } = this.props;
+    const { location: { pathname } } = nextProps;
+    if (pathname !== oldPath) {
+      this.setInitialTab(nextProps);
+    }
+  }
+
+  setInitialTab = (props) => {
+    const { location } = props;
     Object.keys(routes).forEach((route) => {
       if (location.pathname.includes(routes[route])) {
         this.setState({ currentTab: parseInt(route) });
@@ -54,17 +62,19 @@ export class Show extends Component {
   };
 
   handleChange = (event, value) => {
-    this.setState({ currentTab: value });
     this.pushRoute(value);
   };
 
   handleChangeIndex = (value) => {
-    this.setState({ currentTab: value });
     this.pushRoute(value);
   };
 
   pushRoute = (value) => {
+    if (value === this.state.currentTab) {
+      return;
+    }
     const { match, history } = this.props;
+    this.setState({ currentTab : value });
     history.push(`${match.url}/${routes[value]}`);
   };
 
