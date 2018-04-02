@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
+import Divider from 'material-ui/Divider';
 
 import { getSeasonEpisodes, normalizeSeasonEpisodes } from '../../../actions/seasons';
 import Episode from '../../Episode';
@@ -31,16 +32,29 @@ export class Season extends Component {
     const fullEpisodes = seasonEpisodes[season.id] || [];
     return (
       <div>
-        <Typography>
-          { season.summary }
-        </Typography>
+        <div style={{ marginBottom: '8px' }}>
+          <div>
+            <Typography gutterBottom>
+              episodes: {season.episodeOrder}
+            </Typography>
+          </div>
+          <Typography gutterBottom>
+            {
+              season.summary ?
+                <span>summary: {season.summary}</span>
+                :
+                'No summary'
+            }
+          </Typography>
+          <Divider/>
+        </div>
         <Grid container>
           {
             fullEpisodes.map((episodeId, index) => {
               const episode = episodes[episodeId] || {};
               return (
                 <Grid item xs={12} lg={6} xl={4} style={{ marginBottom: '5px' }} key={`${episodeId}-${index}`}>
-                  <Episode item={episode} show={show} />
+                  <Episode showActions={false} item={episode} show={show} />
                 </Grid>
               );
             })

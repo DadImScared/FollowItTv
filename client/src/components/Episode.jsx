@@ -48,6 +48,7 @@ export class Episode extends Component {
         image
       } = {},
       shows = {},
+      showActions = true,
       classes
     } = this.props;
     const currentShow = this.props.show || shows[show];
@@ -97,11 +98,16 @@ export class Episode extends Component {
               </IconButton>
             </div>
           </CardContent>
-          <CardActions>
-            <div>
-              <FollowShowButton showId={currentId} />
-            </div>
-          </CardActions>
+          {
+            showActions ?
+              <CardActions>
+                <div>
+                  <FollowShowButton showId={currentId} />
+                </div>
+              </CardActions>
+              :
+              null
+          }
         </Card>
       </div>
     );
