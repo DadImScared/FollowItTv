@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 import { addEpisodes, getEpisode } from '../../../actions/episodes';
+import Countdown from '../../Countdown';
 
 
 export class LatestEpisode extends Component {
@@ -45,19 +47,32 @@ export class LatestEpisode extends Component {
     const { name, airtime, airdate, summary }  = episodes[episodeId] || {};
     return (
       <Paper style={{ height: '150px', marginTop: '16px', padding: '8px' }}>
-        <Typography align={'center'}>
+        <Typography component={'div'} align={'center'}>
           {
             nextEpisode ?
-              'Next episode':'Previous episode'
+              <span style={{ display: 'flex', justifyContent: 'center' }}>
+                <span style={{ marginRight: '5px' }}>Next episode</span>
+                {
+                  airtime ?
+                    <Countdown eventTime={moment(`${airdate} ${airtime}`, 'YYYY-MM-DD HH:mm')} />
+                    :
+                    null
+                }
+              </span>:'Previous episode'
           }
         </Typography>
         <div>
           <Typography>
             {`name ${name}`}
           </Typography>
-          <Typography>
-            {`date ${airdate} ${airtime}`}
-          </Typography>
+          {
+            !nextEpisode ?
+              <Typography>
+                <span>{`date ${airdate} ${airtime}`}</span>
+              </Typography>
+              :
+              null
+          }
         </div>
         <Typography>
           {summary}
