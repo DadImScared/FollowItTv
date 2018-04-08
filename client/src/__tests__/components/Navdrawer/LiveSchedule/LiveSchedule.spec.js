@@ -111,4 +111,77 @@ describe('LiveSchedule', () => {
     expect(state.willAir.includes(1)).toEqual(true);
     expect(state.hasAired.includes(3)).toEqual(true);
   });
+
+  test('moveShows', () => {
+    const shows = {
+      1: {
+        id: 1,
+        name: 'breaking bad',
+        schedule: {
+          time: moment().add(1, 'minutes').format('HH:mm')
+        },
+        runtime: 30
+      },
+      2: {
+        id: 2,
+        name: 'under the dome',
+        schedule: {
+          time: moment().subtract(20, 'minutes').format('HH:mm')
+        },
+        runtime: 60
+      },
+      3: {
+        id: 3,
+        name: 'show3',
+        schedule: {
+          time: moment().subtract(15, 'minutes').format('HH:mm')
+        },
+        runtime: 10
+      }
+    };
+    wrapper = shallow(<LiveSchedule {...props} shows={shows} />);
+    instance = wrapper.instance();
+    instance.setState({ currentlyAiring: [1], hasAired: [2] });
+    instance.moveShow('currentlyAiring', 1);
+    expect(instance.state.currentlyAiring).toEqual([]);
+    expect(instance.state.hasAired).toEqual([1, 2]);
+  });
+
+  test('multiple moveShow calls at same time', () => {
+    const clock = sinon.useFakeTimers();
+    const shows = {
+      1: {
+        id: 1,
+        name: 'breaking bad',
+        schedule: {
+          time: moment().add(1, 'minutes').format('HH:mm')
+        },
+        runtime: 30
+      },
+      2: {
+        id: 2,
+        name: 'under the dome',
+        schedule: {
+          time: moment().subtract(20, 'minutes').format('HH:mm')
+        },
+        runtime: 60
+      },
+      3: {
+        id: 3,
+        name: 'show3',
+        schedule: {
+          time: moment().subtract(15, 'minutes').format('HH:mm')
+        },
+        runtime: 10
+      }
+    };
+    wrapper = shallow(<LiveSchedule {...props} shows={shows} />);
+    instance = wrapper.instance();
+    instance.setState({ currentlyAiring: [1, 3], hasAired: [2] });
+    setTimeout(() => instance.moveShow('currentlyAiring', 1), 1000);
+    setTimeout(() => instance.moveShow('currentlyAiring', 3), 1000);
+    clock.tick(1000);
+    expect(instance.state.hasAired).toEqual([1, 3, 2]);
+    expect(instance.state.currentlyAiring).toEqual([]);
+  });
 });

@@ -2,13 +2,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary
 } from 'material-ui/ExpansionPanel';
 import Typography from 'material-ui/Typography';
+
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
+import Countdown from '../../Countdown';
 
 
 export class ExpandedShows extends Component {
@@ -31,7 +34,7 @@ export class ExpandedShows extends Component {
   };
 
   render() {
-    const { panels, shows } = this.props;
+    const { panels, shows, moveShow } = this.props;
     const { expanded } = this.state;
     return (
       <div>
@@ -50,11 +53,23 @@ export class ExpandedShows extends Component {
                 <ExpansionPanelDetails>
                   <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                     {
-                      panel.map((item, index) => (
-                        <div key={`${item}-${index}`}>
-                          {shows[item] && shows[item].name}
-                        </div>
-                      ))
+                      panel.map((item, index) => {
+                        const show = shows[item] || {};
+                        return (
+                          <div key={`${item}-${index}`}>
+                            {show.name}
+                            {
+                              show.schedule && description === 'Airing soon' ?
+                                <Countdown
+                                  callBack={() => moveShow('willAir', item)}
+                                  eventTime={moment(shows[item].schedule.time, 'HH:mm')}
+                                />
+                                :
+                                null
+                            }
+                          </div>
+                        );
+                      })
                     }
                   </div>
                 </ExpansionPanelDetails>
@@ -69,7 +84,8 @@ export class ExpandedShows extends Component {
 
 ExpandedShows.propTypes = {
   panels: PropTypes.array.isRequired,
-  shows: PropTypes.object.isRequired
+  shows: PropTypes.object.isRequired,
+  moveShow: PropTypes.func.isRequired
 };
 
 export default ExpandedShows;

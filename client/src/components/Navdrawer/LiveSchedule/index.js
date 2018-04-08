@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 
+import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -11,6 +12,12 @@ import { getSchedule, getEpisodesAndShows, addSchedule } from '../../../actions/
 import { addEpisodes } from '../../../actions/episodes';
 
 import View from './View';
+
+
+const nextStep = {
+  'willAir': 'currentlyAiring',
+  'currentlyAiring': 'hasAired'
+};
 
 
 export class LiveSchedule extends Component {
@@ -75,6 +82,18 @@ export class LiveSchedule extends Component {
     }
   };
 
+  moveShow = (currentStep, id) => {
+    this.setState((prevState, { shows }) => {
+      const currentStepList = prevState[currentStep].filter((item) => item !== id);
+      const nextStepList = [...prevState[nextStep[currentStep]], id];
+      const sortedList = _.orderBy(nextStepList, [(o) => moment(shows[o].schedule.time, 'HH:mm')], ['desc']);
+      return {
+        [currentStep]: currentStepList,
+        [nextStep[currentStep]]: sortedList
+      };
+    });
+  };
+
   fetchSchedule = async () => {
     const { addShows, addEpisodes, addSchedule } = this.props;
     const { today } = this.state;
@@ -96,7 +115,7 @@ export class LiveSchedule extends Component {
 
   render() {
     return (
-      <View {...this.state} shows={this.props.shows} />
+      <View {...this.state} shows={this.props.shows} moveShow={this.moveShow} />
     );
   }
 }

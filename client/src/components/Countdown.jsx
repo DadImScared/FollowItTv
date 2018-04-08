@@ -13,9 +13,13 @@ export class Countdown extends Component {
   }
 
   componentDidMount() {
-    const { eventTime, startTime = moment() } = this.props;
+    const { eventTime, startTime = moment(), callBack } = this.props;
     const diff = eventTime.diff(startTime);
     const duration = moment.duration(diff);
+    if (duration.asMilliseconds() <= 0) {
+      callBack && callBack();
+      return;
+    }
     this.setState({ duration });
     this.interval = setInterval(() => {
       this.updateTimer();
