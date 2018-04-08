@@ -1,35 +1,54 @@
 
 import React from 'react';
 
-import moment from 'moment';
+import { withStyles } from 'material-ui/styles';
+import List from 'material-ui/List';
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary
+} from 'material-ui/ExpansionPanel';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
-import Countdown from '../../Countdown';
 import ExpandedShows from './ExpandedShows';
+import Show from './Show';
+import { LiveSchedule } from '../../../styles/Navdrawer';
 
 
-export const View = ({ today, currentlyAiring, willAir, hasAired, shows, moveShow }) => (
-  <div>
-    <div>
-      currently airing
-      {
-        currentlyAiring.map((item, index) => (
-          <div key={`${item}-${index}`}>
-            {
-              shows[item] ?
-                <div>
-                  {shows[item].name}
-                  <Countdown
-                    callBack={() => moveShow('currentlyAiring', item)}
-                    eventTime={moment(shows[item].schedule.time, 'HH:mm').add(shows[item].runtime, 'minutes')}
-                  />
-                </div>
-                :
-                null
-            }
-          </div>
-        ))
-      }
-    </div>
+const { currentlyAiring: styles } = LiveSchedule;
+
+export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows, moveShow }) => (
+  <div style={{ padding: '8px' }} className={classes.background}>
+    <Typography align={'center'}>
+      Todays Schedule
+    </Typography>
+    <ExpansionPanel expanded={true}>
+      <ExpansionPanelSummary className={classes.panelSummary}>
+        <Typography>Currently airing</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails classes={{ root: classes.panelDetail }}>
+        <Paper className={classes.listBackground} style={{ width: '100%' }}>
+          {
+            currentlyAiring.length ?
+              <List>
+                {
+                  currentlyAiring.map((item, index) => (
+                    <Show
+                      currentStep={'currentlyAiring'}
+                      key={`${item}-${index}`}
+                      show={shows[item] || {}}
+                      moveShow={moveShow}
+                      showId={item}
+                    />
+                  ))
+                }
+              </List>
+              :
+              <div>no shows!</div>
+          }
+        </Paper>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
     {
       willAir.length || hasAired.length ?
         <ExpandedShows
@@ -46,4 +65,4 @@ export const View = ({ today, currentlyAiring, willAir, hasAired, shows, moveSho
   </div>
 );
 
-export default View;
+export default withStyles(styles)(View);

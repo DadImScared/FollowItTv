@@ -3,11 +3,18 @@ const drawerWidth = 260;
 
 
 export default (theme) => ({
+  divider: {
+    backgroundColor: theme.palette.secondary.light
+  },
+  drawerHeaderTitle: {
+    color: theme.palette.secondary.contrastText
+  },
   drawerHeader: {
     ...theme.mixins.toolbar,
     display: 'flex',
     paddingLeft: theme.spacing.unit * 2,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: theme.palette.primary.dark
   },
   drawerPaper: {
     width: 250,

@@ -63,7 +63,7 @@ export class Countdown extends Component {
 
   render() {
     return (
-      <Typography>
+      <Typography component={'span'}>
         {
           this.state.duration ?
             this.getCountdown()

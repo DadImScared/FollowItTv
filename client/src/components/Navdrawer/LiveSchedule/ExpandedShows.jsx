@@ -2,16 +2,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import moment from 'moment';
+import { withStyles } from 'material-ui/styles';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary
 } from 'material-ui/ExpansionPanel';
+import List from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
-import Countdown from '../../Countdown';
+import Show from './Show';
+import { LiveSchedule } from '../../../styles/Navdrawer';
+
+const { expandedShows: styles } = LiveSchedule;
 
 
 export class ExpandedShows extends Component {
@@ -34,44 +39,42 @@ export class ExpandedShows extends Component {
   };
 
   render() {
-    const { panels, shows, moveShow } = this.props;
+    const { panels, shows, moveShow, classes } = this.props;
     const { expanded } = this.state;
     return (
       <div>
         {
           panels.map(([panel, description], index) => {
+            const panelName = description === 'Airing soon' ? 'willAir':'hasAired';
             return (
               <ExpansionPanel
                 expanded={expanded === index}
                 onChange={(event, expanded) => this.changePanel(expanded, index)}
                 key={`${description}-${index}`}>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanelSummary className={classes[`${panelName}Summary`]} expandIcon={<ExpandMoreIcon />}>
                   <Typography>
                     {description}
                   </Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                    {
-                      panel.map((item, index) => {
-                        const show = shows[item] || {};
-                        return (
-                          <div key={`${item}-${index}`}>
-                            {show.name}
-                            {
-                              show.schedule && description === 'Airing soon' ?
-                                <Countdown
-                                  callBack={() => moveShow('willAir', item)}
-                                  eventTime={moment(shows[item].schedule.time, 'HH:mm')}
-                                />
-                                :
-                                null
-                            }
-                          </div>
-                        );
-                      })
-                    }
-                  </div>
+                <ExpansionPanelDetails classes={{ root: classes[`${panelName}Detail`] }}>
+                  <Paper className={classes[`${panelName}List`]}>
+                    <List style={{ maxHeight: '250px', overflowY: 'scroll' }}>
+                      {
+                        panel.map((item, index) => {
+                          const show = shows[item] || {};
+                          return (
+                            <Show
+                              key={`${item}-${index}`}
+                              showTimer={show.schedule && description === 'Airing soon'}
+                              show={show}
+                              moveShow={moveShow}
+                              showId={item}
+                            />
+                          );
+                        })
+                      }
+                    </List>
+                  </Paper>
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             );
@@ -88,5 +91,5 @@ ExpandedShows.propTypes = {
   moveShow: PropTypes.func.isRequired
 };
 
-export default ExpandedShows;
+export default withStyles(styles)(ExpandedShows);
 

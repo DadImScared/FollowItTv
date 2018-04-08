@@ -8,7 +8,7 @@ import Toolbar from 'material-ui/Toolbar';
 import styles from '../styles/Navbar.css';
 
 const Navbar = ({ classes }) => (
-  <AppBar className={classes.appBar}>
+  <AppBar color={'secondary'} className={classes.appBar}>
     <Toolbar>
       toolbar stuff here
     </Toolbar>
