@@ -37,6 +37,7 @@ export class Countdown extends Component {
       const { callBack } = this.props;
       clearInterval(this.interval);
       callBack && callBack();
+      return;
     }
     this.setState({ duration: newDuration });
   };
