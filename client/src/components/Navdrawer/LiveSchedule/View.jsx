@@ -30,7 +30,7 @@ export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows
         <Paper className={classes.listBackground} style={{ width: '100%' }}>
           {
             currentlyAiring.length ?
-              <List>
+              <List style={{ maxHeight: '300px', overflow: 'auto' }}>
                 {
                   currentlyAiring.map((item, index) => (
                     <Show
