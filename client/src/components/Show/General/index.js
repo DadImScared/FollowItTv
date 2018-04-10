@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography';
 import { General as styles } from '../../../styles/Show';
 import showInfo from './showInfo';
 import LatestEpisode from './LatestEpisode';
+import Summary from '../../Summary';
 
 
 const General = ({ show, classes }) => (
@@ -15,7 +16,12 @@ const General = ({ show, classes }) => (
     <div>
       <img className={classes.img} src={show.image && show.image.medium || ''} />
       <Typography className={classes.summary}>
-        {show.summary || 'no summary'}
+        {
+          show.summary ?
+            <Summary summary={show.summary} />
+            :
+            'no summary'
+        }
       </Typography>
     </div>
     <Paper className={classes.showInfo}>

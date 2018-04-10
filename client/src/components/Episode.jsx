@@ -1,8 +1,11 @@
 
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import classnames from 'classnames';
 import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Collapse from 'material-ui/transitions/Collapse';
@@ -12,6 +15,7 @@ import SvgIcon from 'material-ui/SvgIcon';
 import Television from 'mdi-material-ui/Television';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
+import Summary from './Summary';
 import FollowShowButton from './FollowShowButton';
 import styles from '../styles/Episode.css';
 
@@ -92,7 +96,7 @@ export class Episode extends Component {
                 <Typography component={'div'}>
                   {
                     summary ?
-                      <div ref={this.setRef}>{summary}</div>
+                      <Summary summary={summary} setRef={this.setRef} />
                       :
                       'No summary entered.'
                   }
@@ -121,8 +125,11 @@ export class Episode extends Component {
           {
             showActions ?
               <CardActions>
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                   <FollowShowButton {...followProps} showId={currentId} />
+                  <Button component={Link} to={`/show/${currentId}/general`} color={'secondary'}>
+                    View show
+                  </Button>
                 </div>
               </CardActions>
               :
