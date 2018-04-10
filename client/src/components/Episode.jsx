@@ -7,7 +7,9 @@ import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-
 import Typography from 'material-ui/Typography';
 import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
+import SvgIcon from 'material-ui/SvgIcon';
 
+import Television from 'mdi-material-ui/Television';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
 import FollowShowButton from './FollowShowButton';
@@ -49,7 +51,8 @@ export class Episode extends Component {
       } = {},
       shows = {},
       showActions = true,
-      classes
+      classes,
+      followProps = {}
     } = this.props;
     const currentShow = this.props.show || shows[show];
     const currentId = (this.props.show && this.props.show.id) || show;
@@ -57,8 +60,24 @@ export class Episode extends Component {
       <div>
         <Card>
           <CardHeader
-            title={(this.props.show ? name:currentShow.name || 'no name')}
-            subheader={`${this.props.show ? `${airdate} | `:''}${airtime}`}
+            title={
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', alignItems: 'center' }}>
+                <Typography variant={'subheading'}>
+                  {this.props.show ? name:currentShow.name || 'no name'}
+                </Typography>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography style={{ marginRight: '4px' }}>
+                    {currentShow.network.name}
+                  </Typography>
+                  <a href={`${currentShow.officialSite}`} style={{ display: 'flex' }}>
+                    <SvgIcon color={'primary'}>
+                      <Television />
+                    </SvgIcon>
+                  </a>
+                </div>
+              </div>
+            }
+            subheader={`${this.props.show ? `${airdate} | `:''}${airtime}${!this.props.show ? ` | ${name}`:''}`}
           />
           <CardMedia
             component={'img'}
@@ -87,8 +106,9 @@ export class Episode extends Component {
                 justifyContent: 'space-between',
                 visibility: this.state.height >= 40 ? 'visible':'hidden'
               }}>
-              <span style={{ alignSelf: 'center' }}>read more</span>
+              <Typography style={{ alignSelf: 'center' }}>read more</Typography>
               <IconButton
+                color={'secondary'}
                 className={classnames(classes.expand, {
                   [classes.expandOpen]: this.state.isOpen
                 })}
@@ -102,7 +122,7 @@ export class Episode extends Component {
             showActions ?
               <CardActions>
                 <div>
-                  <FollowShowButton showId={currentId} />
+                  <FollowShowButton {...followProps} showId={currentId} />
                 </div>
               </CardActions>
               :

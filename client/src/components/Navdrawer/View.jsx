@@ -10,8 +10,8 @@ import LiveSchedule from './LiveSchedule';
 import { Navdrawer as styles } from '../../styles/Navdrawer';
 
 
-const View = ({ classes }) => (
-  <ResponsiveDrawer drawerClasses={{ paper: classes.drawerPaper }}>
+const View = ({ classes, isOpen, toggleNav }) => (
+  <ResponsiveDrawer handleClose={toggleNav} isOpen={isOpen} drawerClasses={{ paper: classes.drawerPaper }}>
     <div style={{ position: 'fixed' }} className={classes.drawerPaper}>
       <div className={classes.drawerHeader}>
         <Typography className={classes.drawerHeaderTitle}>

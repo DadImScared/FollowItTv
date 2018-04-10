@@ -141,10 +141,12 @@ describe('LiveSchedule', () => {
     };
     wrapper = shallow(<LiveSchedule {...props} shows={shows} />);
     instance = wrapper.instance();
-    instance.setState({ currentlyAiring: [1], hasAired: [2] });
+    instance.setState({ currentlyAiring: [1], hasAired: [2], willAir: [3] });
     instance.moveShow('currentlyAiring', 1);
     expect(instance.state.currentlyAiring).toEqual([]);
     expect(instance.state.hasAired).toEqual([1, 2]);
+    instance.moveShow('willAir', 3);
+    expect(instance.state.currentlyAiring).toEqual([3]);
   });
 
   test('multiple moveShow calls at same time', () => {

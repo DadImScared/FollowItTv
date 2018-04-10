@@ -64,7 +64,7 @@ export class FollowShowButton extends Component {
   render() {
     const { followedShows, showId, classes, fab = false, buttonProps = {}, iconProps = {} } = this.props;
     return (
-      <Button {...buttonProps} onClick={this.handleClick}>
+      <Button color={'primary'} {...buttonProps} onClick={this.handleClick}>
         <span className={fab ? '':classes.heartIcon} {...iconProps}>
           { followedShows.includes(showId) ? <HeartBroken />:<Heart /> }
         </span>

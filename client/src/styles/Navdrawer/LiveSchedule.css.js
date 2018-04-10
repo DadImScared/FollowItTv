@@ -3,10 +3,14 @@ import green from 'material-ui/colors/green';
 import orange from 'material-ui/colors/orange';
 import red from 'material-ui/colors/red';
 
+
 const currentlyAiring = (theme) => ({
   background: {
     backgroundColor: theme.palette.primary.main,
-    height: 'calc(100% - 65px)'
+    minHeight: 'calc(100% - 57px)',
+    [theme.breakpoints.up('md')]: {
+      minHeight: 'calc(100% - 65px)'
+    }
   },
   panelSummary: {
     border: `solid 1px ${green[700]}`
@@ -21,7 +25,14 @@ const currentlyAiring = (theme) => ({
   }
 });
 
-const expandedShows = () => ({
+const expandedShows = (theme) => ({
+  innerList: {
+    maxHeight: '200px',
+    overflow: 'auto',
+    [theme.breakpoints.up('md')]: {
+      maxHeight: '250px'
+    }
+  },
   willAirSummary: {
     border: `solid 1px ${orange[700]}`
   },

@@ -51,14 +51,14 @@ export class ExpandedShows extends Component {
                 expanded={expanded === index}
                 onChange={(event, expanded) => this.changePanel(expanded, index)}
                 key={`${description}-${index}`}>
-                <ExpansionPanelSummary className={classes[`${panelName}Summary`]} expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanelSummary classes={{ root: classes[`${panelName}Summary`] }} expandIcon={<ExpandMoreIcon />}>
                   <Typography>
                     {description}
                   </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails classes={{ root: classes[`${panelName}Detail`] }}>
                   <Paper className={classes[`${panelName}List`]}>
-                    <List style={{ maxHeight: '250px', overflowY: 'scroll' }}>
+                    <List className={classes.innerList}>
                       {
                         panel.map((item, index) => {
                           const show = shows[item] || {};
@@ -68,7 +68,6 @@ export class ExpandedShows extends Component {
                               showTimer={show.schedule && description === 'Airing soon'}
                               show={show}
                               moveShow={moveShow}
-                              showId={item}
                             />
                           );
                         })
