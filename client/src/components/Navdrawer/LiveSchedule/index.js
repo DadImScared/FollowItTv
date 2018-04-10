@@ -40,7 +40,7 @@ export class LiveSchedule extends Component {
         await this.fetchSchedule();
       }
       try {
-        this.organizeShows();
+        this.organizeEpisodes();
       }
       catch (e) {
         console.log(e);
@@ -51,7 +51,7 @@ export class LiveSchedule extends Component {
     });
   }
 
-  organizeShows = () => {
+  organizeEpisodes = () => {
     // organize shows into one of category
     // "willAir" "currentlyAiring" "hasAired"
     const willAir = [];
@@ -61,16 +61,16 @@ export class LiveSchedule extends Component {
     const { today } = this.state;
     const now = moment();
     schedule[today].forEach((episodeId) => {
-      const { airtime: time, airdate: date, runtime, show: id } = episodes[episodeId];
+      const { airtime: time, airdate: date, runtime } = episodes[episodeId];
       const showDate = moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm');
       if (now.diff(showDate) < 0) {
-        this.pushArray(willAir, id);
+        this.pushArray(willAir, episodeId);
       }
       else if (now.diff(showDate.clone().add(runtime, 'minutes')) > 0 ) {
-        this.pushArray(hasAired, id);
+        this.pushArray(hasAired, episodeId);
       }
       else {
-        this.pushArray(currentlyAiring, id);
+        this.pushArray(currentlyAiring, episodeId);
       }
     });
     this.setState({ willAir, currentlyAiring, hasAired });
@@ -83,10 +83,10 @@ export class LiveSchedule extends Component {
   };
 
   moveShow = (currentStep, id) => {
-    this.setState((prevState, { shows }) => {
+    this.setState((prevState, { episodes }) => {
       const currentStepList = prevState[currentStep].filter((item) => item !== id);
       const nextStepList = [...prevState[nextStep[currentStep]], id];
-      const sortedList = _.orderBy(nextStepList, [(o) => moment(shows[o].schedule.time, 'HH:mm')], ['desc']);
+      const sortedList = _.orderBy(nextStepList, [(o) => moment(episodes[o].airtime, 'HH:mm')], ['desc']);
       return {
         [currentStep]: currentStepList,
         [nextStep[currentStep]]: sortedList
@@ -114,8 +114,9 @@ export class LiveSchedule extends Component {
   };
 
   render() {
+    const { episodes, shows } = this.props;
     return (
-      <View {...this.state} shows={this.props.shows} moveShow={this.moveShow} />
+      <View {...this.state} episodes={episodes} shows={shows} moveShow={this.moveShow} />
     );
   }
 }

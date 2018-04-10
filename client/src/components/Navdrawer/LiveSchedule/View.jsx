@@ -17,7 +17,7 @@ import { LiveSchedule } from '../../../styles/Navdrawer';
 
 const { currentlyAiring: styles } = LiveSchedule;
 
-export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows, moveShow }) => (
+export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows, moveShow, episodes }) => (
   <div style={{ padding: '8px' }} className={classes.background}>
     <Typography align={'center'}>
       Todays Schedule
@@ -36,8 +36,10 @@ export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows
                     <Show
                       currentStep={'currentlyAiring'}
                       key={`${item}-${index}`}
-                      show={shows[item] || {}}
+                      show={shows[episodes[item].show] || {}}
                       moveShow={moveShow}
+                      eventTime={episodes[item].airtime}
+                      episodeId={item}
                     />
                   ))
                 }
@@ -53,6 +55,7 @@ export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows
         <ExpandedShows
           moveShow={moveShow}
           shows={shows}
+          episodes={episodes}
           panels={[
             [(willAir.length && willAir) || [], 'Airing soon'],
             [(hasAired.length && hasAired) || [], 'Already aired']

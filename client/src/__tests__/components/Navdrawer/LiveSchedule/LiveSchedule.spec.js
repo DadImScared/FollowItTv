@@ -44,7 +44,7 @@ describe('LiveSchedule', () => {
     expect(spiedMethod.calledOnce).toEqual(true);
   });
 
-  test('organizeShows method', () => {
+  test('organizeEpisodes method', () => {
     // this test might fail if ran at 12:00am to 12:10am will have to find solution in future
     // a normal schedule will not fail regardless of time
     const today = moment().format('YYYY-MM-DD');
@@ -113,33 +113,24 @@ describe('LiveSchedule', () => {
   });
 
   test('moveShows', () => {
-    const shows = {
+    const episodes = {
       1: {
         id: 1,
         name: 'breaking bad',
-        schedule: {
-          time: moment().add(1, 'minutes').format('HH:mm')
-        },
-        runtime: 30
+        airtime: moment().add(1, 'minutes').format('HH:mm')
       },
       2: {
         id: 2,
         name: 'under the dome',
-        schedule: {
-          time: moment().subtract(20, 'minutes').format('HH:mm')
-        },
-        runtime: 60
+        airtime: moment().subtract(20, 'minutes').format('HH:mm')
       },
       3: {
         id: 3,
         name: 'show3',
-        schedule: {
-          time: moment().subtract(15, 'minutes').format('HH:mm')
-        },
-        runtime: 10
+        airtime: moment().subtract(15, 'minutes').format('HH:mm')
       }
     };
-    wrapper = shallow(<LiveSchedule {...props} shows={shows} />);
+    wrapper = shallow(<LiveSchedule {...props} episodes={episodes} />);
     instance = wrapper.instance();
     instance.setState({ currentlyAiring: [1], hasAired: [2], willAir: [3] });
     instance.moveShow('currentlyAiring', 1);
@@ -151,33 +142,24 @@ describe('LiveSchedule', () => {
 
   test('multiple moveShow calls at same time', () => {
     const clock = sinon.useFakeTimers();
-    const shows = {
+    const episodes = {
       1: {
         id: 1,
         name: 'breaking bad',
-        schedule: {
-          time: moment().add(1, 'minutes').format('HH:mm')
-        },
-        runtime: 30
+        airtime: moment().add(1, 'minutes').format('HH:mm')
       },
       2: {
         id: 2,
         name: 'under the dome',
-        schedule: {
-          time: moment().subtract(20, 'minutes').format('HH:mm')
-        },
-        runtime: 60
+        airtime: moment().subtract(20, 'minutes').format('HH:mm')
       },
       3: {
         id: 3,
         name: 'show3',
-        schedule: {
-          time: moment().subtract(15, 'minutes').format('HH:mm')
-        },
-        runtime: 10
+        airtime: moment().subtract(15, 'minutes').format('HH:mm')
       }
     };
-    wrapper = shallow(<LiveSchedule {...props} shows={shows} />);
+    wrapper = shallow(<LiveSchedule {...props} episodes={episodes} />);
     instance = wrapper.instance();
     instance.setState({ currentlyAiring: [1, 3], hasAired: [2] });
     setTimeout(() => instance.moveShow('currentlyAiring', 1), 1000);

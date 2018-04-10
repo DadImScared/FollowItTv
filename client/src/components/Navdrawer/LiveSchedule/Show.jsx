@@ -9,23 +9,23 @@ import { ListItem, ListItemText } from 'material-ui/List';
 import Countdown from '../../Countdown';
 
 
-const Show = ({ show, showTimer, moveShow, currentStep, ...other }) => (
+const Show = ({ show, showTimer, moveShow, currentStep, eventTime, episodeId, ...other }) => (
   <ListItem {...other}>
     <ListItemText
       primary={show.name}
       secondary={
         showTimer ?
           <Countdown
-            callBack={() => moveShow(currentStep, show.id)}
+            callBack={() => moveShow(currentStep, episodeId)}
             eventTime={
               currentStep === 'currentlyAiring' ?
-                moment(show.schedule.time, 'HH:mm').add(show.runtime, 'minutes')
+                moment(eventTime, 'HH:mm').add(show.runtime, 'minutes')
                 :
-                moment(show.schedule.time, 'HH:mm')
+                moment(eventTime, 'HH:mm')
             }
           />
           :
-          show.schedule.time
+          eventTime
       }
     />
   </ListItem>
@@ -34,6 +34,8 @@ const Show = ({ show, showTimer, moveShow, currentStep, ...other }) => (
 Show.propTypes = {
   show: PropTypes.object.isRequired,
   moveShow: PropTypes.func.isRequired,
+  eventTime: PropTypes.string.isRequired,
+  episodeId: PropTypes.number.isRequired,
   showTimer: PropTypes.bool,
   currentStep: PropTypes.string
 };

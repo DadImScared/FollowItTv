@@ -39,7 +39,7 @@ export class ExpandedShows extends Component {
   };
 
   render() {
-    const { panels, shows, moveShow, classes } = this.props;
+    const { panels, shows, episodes, moveShow, classes } = this.props;
     const { expanded } = this.state;
     return (
       <div>
@@ -60,17 +60,22 @@ export class ExpandedShows extends Component {
                   <Paper className={classes[`${panelName}List`]}>
                     <List className={classes.innerList}>
                       {
-                        panel.map((item, index) => {
-                          const show = shows[item] || {};
-                          return (
-                            <Show
-                              key={`${item}-${index}`}
-                              showTimer={show.schedule && description === 'Airing soon'}
-                              show={show}
-                              moveShow={moveShow}
-                            />
-                          );
-                        })
+                        episodes ?
+                          panel.map((item, index) => {
+                            const show = shows[episodes[item].show] || {};
+                            return (
+                              <Show
+                                episodeId={item}
+                                key={`${item}-${index}`}
+                                showTimer={show.schedule && description === 'Airing soon'}
+                                show={show}
+                                moveShow={moveShow}
+                                eventTime={episodes[item].airtime}
+                              />
+                            );
+                          })
+                          :
+                          <div>loading</div>
                       }
                     </List>
                   </Paper>

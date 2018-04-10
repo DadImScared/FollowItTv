@@ -3,7 +3,7 @@ import React from 'react';
 
 import { shallow } from 'enzyme';
 
-import { ExpandedShows } from '../../../../components/Navdrawer/LiveSchedule/ExpandedShows';
+import ExpandedShows from '../../../../components/Navdrawer/LiveSchedule/ExpandedShows';
 
 
 describe('ExpandedShows', () => {
@@ -20,18 +20,29 @@ describe('ExpandedShows', () => {
           name: 'show2'
         }
       },
+      episodes: {
+        1: {
+          show: 1,
+          airtime: '11:00'
+        },
+        2: {
+          show: 2,
+          airtime: '12:00'
+        }
+      },
+      moveShow: () => {},
       panels
     };
 
   });
   it('should mount with correct panel open', () => {
     wrapper = shallow(<ExpandedShows {...props} />);
-    expect(wrapper.state().expanded).toEqual(0);
+    expect(wrapper.dive().state().expanded).toEqual(0);
   });
 
   it('should default second panel if first has no items', () => {
     props.panels = [[[], 'Airing soon'], panels[1]];
     wrapper = shallow(<ExpandedShows {...props} /> );
-    expect(wrapper.state().expanded).toEqual(1);
+    expect(wrapper.dive().state().expanded).toEqual(1);
   });
 });
