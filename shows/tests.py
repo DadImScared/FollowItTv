@@ -234,6 +234,26 @@ class TestFollowShowView(BaseAuthenticatedTest):
         self.assertTrue(show.is_following)
 
 
+class TestFollowedShowsView(BaseAuthenticatedTest):
+
+    def setUp(self):
+        super().setUp()
+
+    def test_all_shows_view(self):
+        self.follow_shows(self.user)
+        response = self.client.get(reverse('followed_shows'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 25)
+
+    def test_followed_shows_by_day(self):
+        self.follow_shows(self.user)
+        response = self.client.get(reverse('followed_shows', args=('Tuesday',)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.data)
+        for show in response.data:
+            self.assertTrue('Tuesday' in show['schedule']['days'])
+
+
 class TestMailUsers(BaseTestCase):
     def setUp(self):
         super().setUp()

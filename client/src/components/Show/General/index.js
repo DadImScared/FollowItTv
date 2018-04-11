@@ -15,7 +15,7 @@ const General = ({ show, classes }) => (
   <div className={classes.container}>
     <div>
       <img className={classes.img} src={show.image && show.image.medium || ''} />
-      <Typography className={classes.summary}>
+      <Typography component={'div'} className={classes.summary}>
         {
           show.summary ?
             <Summary summary={show.summary} />
