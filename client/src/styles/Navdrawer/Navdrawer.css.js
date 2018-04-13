@@ -7,7 +7,8 @@ export default (theme) => ({
     backgroundColor: theme.palette.secondary.light
   },
   drawerHeaderTitle: {
-    color: theme.palette.secondary.contrastText
+    color: theme.palette.secondary.contrastText,
+    marginRight: theme.spacing.unit
   },
   drawerHeader: {
     ...theme.mixins.toolbar,
