@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import cyan from 'material-ui/colors/cyan';
 import deepPurple from 'material-ui/colors/deepPurple';
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
@@ -10,6 +13,7 @@ import Navbar from './Navbar';
 import Navdrawer from './Navdrawer';
 import Main from './Main';
 
+import { getFollowedShows } from '../actions/followedShows';
 import styles from '../styles/Base.css';
 
 const theme = createMuiTheme({
@@ -26,6 +30,20 @@ export class  Base extends Component {
     this.state = {
       isOpen: false
     };
+  }
+
+  async componentDidMount() {
+    try {
+      await getFollowedShows(this.props.dispatch);
+    }
+    catch ({ response: { data, status } }) {
+      if (status === 401) {
+        // do nothing if users token expired or is wrong
+        return;
+      }
+      console.log(data);
+      console.log(status);
+    }
   }
 
   toggleNavdrawer = () => {
@@ -47,4 +65,4 @@ export class  Base extends Component {
   }
 }
 
-export default withStyles(styles)(Base);
+export default withStyles(styles)(withRouter(connect()(Base)));

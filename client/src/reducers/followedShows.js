@@ -25,7 +25,6 @@ function followedShows(state={}, action) {
   case followedShowsTypes.UNFOLLOW_SHOW:
     return updateShowInDay(state, action, unfollowShow);
   case followedShowsTypes.FOLLOW_SHOW:
-    console.log('here');
     return updateShowInDay(state, action, followShow);
   default:
     return state;
