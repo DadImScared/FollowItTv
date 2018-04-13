@@ -15,16 +15,16 @@ export const Main = ({ classes }) => (
   <div className={classes.content}>
     <Switch>
       <Route
-        path={'/schedule/:date?'}
-        render={(props) => <Schedule {...props} />}
-      />
-      <Route
         path={'/register/'}
         render={(props) => <Register {...props} />}
       />
       <Route
         path={'/login/'}
         render={(props) => <Login {...props} />}
+      />
+      <Route
+        path={'/schedule/:date?'}
+        render={(props) => <Schedule {...props} />}
       />
       <Route
         path={'/show/:showId'}
