@@ -66,6 +66,7 @@ export const getFollowedShows = async (dispatch, day = '') => {
     const { showData, showIds } = extractShowData(data);
     if (day) {
       dispatch(addShows(showData));
+      dispatch(addDay(day, showIds));
     }
     dispatch(addShowIds(showIds));
   }
