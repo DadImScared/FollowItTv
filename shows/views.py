@@ -34,10 +34,9 @@ class FollowedShows(APIView):
     def get(self, request, day=None):
         if day:
             queryset = FollowedShow.objects.filter(show__schedule__days__contains=[day], is_following=True)
-            results = [ShowSerializer(instance=followed.show).data for followed in queryset]
         else:
             queryset = FollowedShow.objects.filter(is_following=True)
-            results = [followed.show.show_id for followed in queryset]
+        results = [ShowSerializer(instance=followed.show).data for followed in queryset]
         return Response(results)
 
 
