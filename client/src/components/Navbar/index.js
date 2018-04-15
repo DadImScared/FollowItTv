@@ -17,9 +17,10 @@ import MenuIcon from 'material-ui-icons/Menu';
 import { logOut } from '../../actions/users';
 import LoggedInButtons from './LoggedInButtons';
 import LoggedOutButtons from './LoggedOutButtons';
+import Searchbar from './Searchbar';
 import styles from '../../styles/Navbar.css';
 
-const Navbar = ({ classes, toggleNav, loggedIn, logOut }) => {
+const Navbar = ({ classes, toggleNav, loggedIn, logOut, ...other }) => {
   const logOutUser = () => {
     Cookies.remove('token');
     logOut();
@@ -34,6 +35,9 @@ const Navbar = ({ classes, toggleNav, loggedIn, logOut }) => {
               <MenuIcon />
             </IconButton>
           </Hidden>
+        </div>
+        <div>
+          <Searchbar {...other} />
         </div>
         <div style={{ display: 'flex' }}>
           <Button component={Link} to={'/schedule'}>
