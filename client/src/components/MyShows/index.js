@@ -55,8 +55,11 @@ export class MyShows extends Component {
   }
 
   scheduleExists = () => {
-    const { followedShows } = this.props;
+    const { followedShows, followedShowsById } = this.props;
     const { day } = this.state;
+    if (day === 0) {
+      return followedShowsById.length;
+    }
     const dayValue = routes[day];
     return !!followedShows[dayValue];
   };
@@ -89,11 +92,13 @@ export class MyShows extends Component {
 
   setInitialTab = (props, cb) => {
     const { location } = props;
-    Object.keys(routes).forEach((route) => {
+    for(const route of Object.keys(routes)) {
       if (location.pathname.includes(routes[route])) {
         this.setState({ day: parseInt(route) }, cb);
+        return;
       }
-    });
+    }
+    cb();
   };
 
   unFollow = async (days, id) => {
@@ -167,8 +172,9 @@ export class MyShows extends Component {
   }
 }
 
-const mapStateToProps = ({ followedShows, shows }) => ({
+const mapStateToProps = ({ followedShows, shows, followedShowsById }) => ({
   followedShows,
+  followedShowsById,
   shows
 });
 

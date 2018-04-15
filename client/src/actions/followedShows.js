@@ -60,15 +60,19 @@ export const extractShowData = (data) => {
   };
 };
 
+const isDay = (day) => {
+  return day && day !== 'All';
+};
+
 export const getFollowedShows = async (dispatch, day = '') => {
   try {
-    const { data } = await axios.get(`/api/v1/followshows/${day ? `${_.capitalize(day)}/`:''}`, axiosOptions());
+    const { data } = await axios.get(`/api/v1/followedshows/${isDay(day) ? `${_.capitalize(day)}/`:''}`, axiosOptions());
     const { showData, showIds } = extractShowData(data);
-    if (day) {
-      dispatch(addShows(showData));
+    dispatch(addShows(showData));
+    dispatch(addShowIds(showIds));
+    if (isDay(day)) {
       dispatch(addDay(day, showIds));
     }
-    dispatch(addShowIds(showIds));
   }
   catch (e) {
     throw e;

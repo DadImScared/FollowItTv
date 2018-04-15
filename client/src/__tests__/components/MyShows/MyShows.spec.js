@@ -12,6 +12,7 @@ jest.mock('axios');
 
 const baseProps = () => ({
   followedShows: {},
+  followedShowsById: [],
   shows: {},
   location: {
     pathname: '/my_shows/All'
@@ -75,5 +76,34 @@ describe('MyShows', () => {
     expect(instance.state.undoData).toEqual({
       showId: null, showDays: []
     });
+  });
+
+  test('setInitialTab', () => {
+    const props = {
+      ...baseProps(),
+      location: {
+        pathname: '/my_shows'
+      }
+    };
+    const wrapper = shallow(<MyShows {...props} />);
+    const instance = wrapper.instance();
+    const spy = sinon.spy();
+    instance.setInitialTab(props, spy);
+    expect(spy.calledOnce).toEqual(true);
+  });
+
+  test('setInitialTab with day', () => {
+    const props = {
+      ...baseProps(),
+      location: {
+        pathname: '/my_shows/Monday'
+      }
+    };
+    const wrapper = shallow(<MyShows {...props} />);
+    const instance = wrapper.instance();
+    const spy = sinon.spy();
+    instance.setInitialTab(props, spy);
+    expect(spy.calledOnce).toEqual(true);
+    expect(instance.state.day).toEqual(1);
   });
 });
