@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
 
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getFollowedShows } from '../../actions/followedShows';
+import { getFollowedShows, unfollowShow, followShow, postFollow } from '../../actions/followedShows';
 import View from './View';
 
 
@@ -22,7 +23,12 @@ export class MyShows extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      day: 0
+      day: 0,
+      undoData: {
+        showId: null,
+        showDays: []
+      },
+      isOpen: false
     };
   }
 
@@ -90,6 +96,59 @@ export class MyShows extends Component {
     });
   };
 
+  unFollow = async (days, id) => {
+    if (this.state.isOpen) {
+      clearTimeout(this.timeout);
+      this.clearSnackbar();
+      // time is theme.duration.leavingScreen
+      this.timeout = setTimeout(async () => {
+        await this.makeRequest(this.props.unfollowShow, days, id);
+        this.setUndoData(days, id);
+      }, 195);
+    }
+    else {
+      await this.makeRequest(this.props.unfollowShow, days, id);
+      this.setUndoData(days, id);
+    }
+  };
+
+  undoAction = async () => {
+    const { undoData: { showId, showDays } } = this.state;
+    await this.makeRequest(this.props.followShow, showDays, showId);
+    this.clearSnackbar();
+  };
+
+  clearSnackbar = () => {
+    this.setState({
+      isOpen: false,
+      undoData: {
+        showId: null,
+        showDays: []
+      }
+    });
+  };
+
+  setUndoData = (days, id) => {
+    this.setState({
+      undoData: {
+        showId: id,
+        showDays: days
+      },
+      isOpen: true
+    });
+  };
+
+  makeRequest = async (cb, days, id) => {
+    try {
+      await postFollow(id);
+      cb(days, id);
+    }
+    catch (e) {
+      // show error message
+      console.log(e);
+    }
+  };
+
   render() {
     const { followedShows, ...other } = this.props;
     return (
@@ -100,6 +159,9 @@ export class MyShows extends Component {
         showList={followedShows[routes[this.state.day]] || []}
         handleChange={this.handleChange}
         handleSwipeChange={this.handleSwipeChange}
+        unFollow={this.unFollow}
+        undoAction={this.undoAction}
+        handleClose={this.clearSnackbar}
       />
     );
   }
@@ -110,4 +172,15 @@ const mapStateToProps = ({ followedShows, shows }) => ({
   shows
 });
 
-export default connect(mapStateToProps)(MyShows);
+const mapDispatchToProps = (dispatch) => {
+  const boundActions = bindActionCreators({
+    followShow,
+    unfollowShow
+  }, dispatch);
+  return {
+    ...boundActions,
+    dispatch
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyShows);

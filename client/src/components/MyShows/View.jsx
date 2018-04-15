@@ -6,12 +6,27 @@ import { Route } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
+import Snackbar from 'material-ui/Snackbar';
+import Button from 'material-ui/Button';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 import ShowList from './ShowList';
 
 
-const View = ({ days, showList, shows, handleChange, handleSwipeChange, day, match }) => (
+const View = ({
+  days,
+  showList,
+  shows,
+  handleChange,
+  handleSwipeChange,
+  day,
+  match,
+  isOpen,
+  undoData: { showId },
+  unFollow,
+  undoAction,
+  handleClose
+}) => (
   <Paper style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
     <AppBar position={'sticky'}>
       <Tabs
@@ -43,12 +58,26 @@ const View = ({ days, showList, shows, handleChange, handleSwipeChange, day, mat
                 :
                 `${match.url}/${item}`
             }
-            render={() => <ShowList showList={showList} shows={shows} />}
+            render={() => <ShowList unFollow={unFollow} showList={showList} shows={shows} />}
             key={`${item}-${index}-route`}
           />
         ))
       }
     </SwipeableViews>
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left'
+      }}
+      open={isOpen}
+      onClose={handleClose}
+      message={`Un followed ${shows[showId] && shows[showId].name}`}
+      action={(
+        <Button onClick={undoAction}>
+          Undo
+        </Button>
+      )}
+    />
   </Paper>
 );
 
