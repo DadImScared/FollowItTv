@@ -9,6 +9,7 @@ import Schedule from './Schedule';
 import Register from './Register';
 import Login from './Login';
 import Show from './Show';
+import Search from './Search';
 import MyShows from './MyShows';
 import styles from '../styles/Main.css';
 
@@ -34,6 +35,10 @@ export const Main = ({ classes }) => (
       <Route
         path={'/show/:showId'}
         component={Show}
+      />
+      <Route
+        path={'/search/:query'}
+        render={(props) => <Search {...props} />}
       />
     </Switch>
   </div>
