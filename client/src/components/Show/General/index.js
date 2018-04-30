@@ -13,7 +13,7 @@ import Summary from '../../Summary';
 
 const General = ({ show, classes }) => (
   <div className={classes.container}>
-    <div>
+    <div className={classes.summaryWrapper}>
       <img className={classes.img} src={show.image && show.image.medium || ''} />
       <Typography component={'div'} className={classes.summary}>
         {
@@ -24,30 +24,32 @@ const General = ({ show, classes }) => (
         }
       </Typography>
     </div>
-    <Paper className={classes.showInfo}>
+    <div style={{ display: 'flex', 'flex-direction': 'column' }}>
+      <Paper className={classes.showInfo}>
+        {
+          showInfo.map((item, index) => {
+            const styles = {};
+            if (index % 2 === 0) {
+              styles.paddingLeft = '4px';
+            }
+            else {
+              styles.paddingRight = '4px';
+            }
+            return (
+              <div style={styles} className={classes.showInfoItem} key={`${index}`}>
+                {item(show)}
+              </div>
+            );
+          })
+        }
+      </Paper>
       {
-        showInfo.map((item, index) => {
-          const styles = {};
-          if (index % 2 === 0) {
-            styles.paddingLeft = '4px';
-          }
-          else {
-            styles.paddingRight = '4px';
-          }
-          return (
-            <div style={styles} className={classes.showInfoItem} key={`${index}`}>
-              {item(show)}
-            </div>
-          );
-        })
+        show && show._links ?
+          <LatestEpisode {...show._links} />
+          :
+          null
       }
-    </Paper>
-    {
-      show && show._links ?
-        <LatestEpisode {...show._links} />
-        :
-        null
-    }
+    </div>
   </div>
 );
 

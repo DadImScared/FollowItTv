@@ -45,9 +45,10 @@ export const View = ({ handleChange, handleChangeIndex, currentTab, show, match,
       </Tabs>
     </AppBar>
     <SwipeableViews
-      style={{ flexGrow: 1 }}
+      style={{ height: '100%' }}
       onChangeIndex={handleChangeIndex}
       index={currentTab}
+      containerStyle={{ height: '100%' }}
     >
       <Route
         exact

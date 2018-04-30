@@ -10,6 +10,7 @@ import Typography from 'material-ui/Typography';
 
 import { addEpisodes, getEpisode } from '../../../actions/episodes';
 import Countdown from '../../Countdown';
+import Summary from '../../Summary';
 
 
 export class LatestEpisode extends Component {
@@ -63,19 +64,19 @@ export class LatestEpisode extends Component {
         </Typography>
         <div>
           <Typography>
-            {`name ${name}`}
+            {`name: ${name}`}
           </Typography>
           {
             !nextEpisode ?
               <Typography>
-                <span>{`date ${airdate} ${airtime}`}</span>
+                <span>{`date: ${airdate} ${airtime}`}</span>
               </Typography>
               :
               null
           }
         </div>
         <Typography>
-          {summary}
+          <Summary summary={summary} />
         </Typography>
       </Paper>
     );

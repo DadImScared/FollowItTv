@@ -1,13 +1,39 @@
 
 export default (theme) => ({
   container: {
-    padding: theme.spacing.unit
+    height: '100%',
+    padding: theme.spacing.unit,
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      justifyContent: 'space-evenly',
+      alignItems: 'flex-start',
+      flexWrap: 'wrap'
+    }
+  },
+  summaryWrapper: {
+    [theme.breakpoints.up('sm')]: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center'
+    },
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center'
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '40%',
+      flexDirection: 'column'
+    }
   },
   img: {
     float: 'left',
-    height: '30%',
-    width: '30%',
-    marginRight: theme.spacing.unit
+    height: 'auto',
+    width: '40%',
+    marginRight: theme.spacing.unit,
+    [theme.breakpoints.up('md')]: {
+      float: 'none',
+      objectFit: 'contain',
+      width: 'auto'
+    }
   },
   summary: {
     display: 'inline',
