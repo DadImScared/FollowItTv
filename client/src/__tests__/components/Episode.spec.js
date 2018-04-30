@@ -62,7 +62,6 @@ describe('Episode', () => {
     const wrapper = shallow(<Episode {...props()} />);
 
     expect(wrapper.find('Card')).toHaveLength(1);
-    expect(wrapper.find('WithStyles(CardHeader)').get(0).props.title).toEqual(shows[1].name);
   });
 
   it('should change state on button click', () => {

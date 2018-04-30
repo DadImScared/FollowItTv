@@ -71,7 +71,7 @@ export class Episode extends Component {
                 </Typography>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Typography style={{ marginRight: '4px' }}>
-                    {currentShow.network.name}
+                    {currentShow.network && currentShow.network.name}
                   </Typography>
                   <a href={`${currentShow.officialSite}`} style={{ display: 'flex' }}>
                     <SvgIcon color={'primary'}>

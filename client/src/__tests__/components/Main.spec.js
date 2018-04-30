@@ -23,6 +23,6 @@ describe('Main', () => {
     ).toHaveLength(1);
     expect(
       wrapper.find(Route)
-    ).toHaveLength(4);
+    ).toHaveLength(6);
   });
 });
