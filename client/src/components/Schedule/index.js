@@ -1,36 +1,24 @@
 
 import React, { Component } from 'react';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { getSchedule, getEpisodesAndShows, addSchedule } from '../../actions/schedule';
-import { addShows } from '../../actions/shows';
-import { addEpisodes } from '../../actions/episodes';
+import { requestSchedule } from '../../actions/schedule';
 
 import View from './View';
 
 export class Schedule extends Component {
-
   componentDidMount() {
     const date = this.getDate(this.props);
-    const { schedule } = this.props;
-    if (schedule[date]) {
-      return;
-    }
-    this.fetchSchedule(date);
+    this.props.dispatch(requestSchedule(date));
   }
 
   componentWillReceiveProps(nextProps) {
     const oldDate = this.getDate(this.props);
     const newDate = this.getDate(nextProps);
-    const { schedule } = nextProps;
     if (oldDate !== newDate) {
-      if (schedule[newDate]) {
-        return;
-      }
-      this.fetchSchedule(newDate);
+      this.props.dispatch(requestSchedule(newDate));
     }
   }
 
@@ -39,44 +27,31 @@ export class Schedule extends Component {
     return date;
   };
 
-  fetchSchedule = async (date) => {
-    const {
-      addSchedule,
-      addShows,
-      addEpisodes
-    } = this.props;
-    try {
-      const { data } = await getSchedule(date);
-      const { episodes, shows, episodeIds } = getEpisodesAndShows(data);
-      addShows(shows);
-      addEpisodes(episodes);
-      addSchedule(date, episodeIds);
-    }
-    catch ({ response: { data } }) {
-      console.log(data);
-    }
-  };
-
   render() {
-    const { schedule } = this.props;
+    const { schedule, loading, ...other } = this.props;
+    const date = this.getDate(other);
+    const loadingId = `GET_SCHEDULE_${date}`;
+    if (loading[loadingId]) {
+      return (
+        <div>loading</div>
+      );
+    }
+    if (!schedule[date] || schedule[date] && !schedule[date].length) {
+      return (
+        <div>no results</div>
+      );
+    }
     return (
-      <View episodeIds={schedule[this.getDate(this.props)] || []} {...this.props} />
+      <View episodeIds={schedule[date] || []} {...this.props} />
     );
   }
 }
 
-const mapStateToProps = ({ schedule, shows, episodes }) => ({
+const mapStateToProps = ({ schedule, shows, episodes, loading }) => ({
   schedule,
   shows,
-  episodes
+  episodes,
+  loading
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    addShows,
-    addSchedule,
-    addEpisodes
-  }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Schedule);
+export default connect(mapStateToProps)(Schedule);

@@ -9,6 +9,7 @@ import users from './users';
 import episodes from './episodes';
 import seasons from './seasons';
 import search from './search';
+import loading from './loading';
 
 const reducer = combineReducers({
   followedShows,
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   shows,
   schedule,
   users,
-  search
+  search,
+  loading
 });
 
 export default reducer;

@@ -24,7 +24,7 @@ const General = ({ show, classes }) => (
         }
       </Typography>
     </div>
-    <div style={{ display: 'flex', 'flex-direction': 'column' }}>
+    <div style={{ display: 'flex', 'flexDirection': 'column' }}>
       <Paper className={classes.showInfo}>
         {
           showInfo.map((item, index) => {

@@ -1,10 +1,17 @@
 
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
 
 import { LOG_OUT, LOG_IN } from '../../actiontypes/users';
-import { registerUser, reSendEmailConfirm, logIn, logOut } from '../../actions/users';
+import { registerUser, reSendEmailConfirm, logIn, logOut, logInUser } from '../../actions/users';
 
 jest.mock('axios');
+
+const middlewares = [ thunk ];
+const mockStore = configureMockStore(middlewares);
 
 
 const payload = {
@@ -59,6 +66,17 @@ describe('user actions', () => {
         type: LOG_OUT
       };
       expect(logOut()).toEqual(expectedAction);
+    });
+  });
+
+  describe('logInUser', () => {
+    test('successful login', async () => {
+      axios.post.mockImplementationOnce(() => ({ data: { key: 'token here' } }));
+      const spyCookie = sinon.spy(Cookies, 'set');
+      const store = mockStore({});
+      await store.dispatch(logInUser({ email: 'awwad', password: 'aawdoi' }));
+      expect(store.getActions()).toMatchSnapshot();
+      expect(spyCookie.called).toEqual(true);
     });
   });
 });

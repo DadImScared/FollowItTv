@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { LOG_IN, LOG_OUT } from '../actiontypes/users';
 
 
@@ -25,5 +26,18 @@ export const logIn = (token) => {
 export const logOut = () => {
   return {
     type: LOG_OUT
+  };
+};
+
+export const logInUser = (payload) => {
+  return async (dispatch) => {
+    try {
+      const { data: { key } } = await postLogIn(payload);
+      dispatch(logIn(key));
+      Cookies.set('token', key);
+    }
+    catch (e) {
+      throw e;
+    }
   };
 };

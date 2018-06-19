@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`schedule actions get schedule 1`] = `
+Array [
+  Object {
+    "requestId": "GET_SCHEDULE_2011-03-26",
+    "type": "loading/LOADING_START",
+  },
+  Object {
+    "shows": Object {
+      "1": Object {
+        "id": 1,
+        "name": "breaking bad",
+      },
+      "3": Object {
+        "id": 3,
+        "name": "under the dome",
+      },
+    },
+    "type": "shows/ADD_SHOWS",
+  },
+  Object {
+    "episodes": Object {
+      "1": Object {
+        "id": 1,
+        "name": "episode0",
+        "show": 1,
+      },
+      "2": Object {
+        "id": 2,
+        "name": "episode2",
+        "show": 3,
+      },
+    },
+    "type": "episodes/ADD_EPISODES",
+  },
+  Object {
+    "date": "2011-03-26",
+    "episodes": Array [
+      1,
+      2,
+    ],
+    "type": "schedule/ADD_SCHEDULE",
+  },
+  Object {
+    "requestId": "GET_SCHEDULE_2011-03-26",
+    "type": "loading/LOADING_END",
+  },
+]
+`;
+
+exports[`schedule actions get schedule error 1`] = `
+Array [
+  Object {
+    "requestId": "GET_SCHEDULE_2011-03-26",
+    "type": "loading/LOADING_START",
+  },
+  Object {
+    "requestId": "GET_SCHEDULE_2011-03-26",
+    "type": "loading/LOADING_END",
+  },
+]
+`;

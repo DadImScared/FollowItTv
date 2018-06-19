@@ -2,23 +2,19 @@
 import React, { Component } from 'react';
 
 import _ from 'lodash';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { addShows } from '../../../actions/shows';
-import { getSchedule, getEpisodesAndShows, addSchedule } from '../../../actions/schedule';
-import { addEpisodes } from '../../../actions/episodes';
+import { requestSchedule } from '../../../actions/schedule';
+import { organizeTodayShows, getYesterdayIsAiring } from './stateChanges';
 
 import View from './View';
-
 
 const nextStep = {
   'willAir': 'currentlyAiring',
   'currentlyAiring': 'hasAired'
 };
-
 
 export class LiveSchedule extends Component {
   constructor(...args) {
@@ -33,53 +29,46 @@ export class LiveSchedule extends Component {
   }
 
   componentDidMount() {
-    const { schedule } = this.props;
+    const { dispatch } = this.props;
     const today = this.today();
-    this.setState({ today }, async () => {
-      if (!schedule[today]) {
-        await this.fetchSchedule();
-      }
-      try {
-        this.organizeEpisodes();
-      }
-      catch (e) {
-        console.log(e);
-        // for some reasons shows didn't load
-        // maybe timeout from api so prompt for refresh
-        this.setState({ errorMessage: 'there has been an error loading shows please refresh and try again' });
-      }
+    this.setState({ today, todayObj: moment() }, () => {
+      dispatch(requestSchedule(today));
+      dispatch(requestSchedule(this.state.todayObj.clone().subtract(1, 'days').format('YYYY-MM-DD')));
+      this.checkDay();
     });
   }
 
-  organizeEpisodes = () => {
-    // organize shows into one of category
-    // "willAir" "currentlyAiring" "hasAired"
-    const willAir = [];
-    const currentlyAiring = [];
-    const hasAired = [];
-    const { schedule , episodes } = this.props;
-    const { today } = this.state;
-    const now = moment();
-    schedule[today].forEach((episodeId) => {
-      const { airtime: time, airdate: date, runtime } = episodes[episodeId];
-      const showDate = moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm');
-      if (now.diff(showDate) < 0) {
-        this.pushArray(willAir, episodeId);
-      }
-      else if (now.diff(showDate.clone().add(runtime, 'minutes')) > 0 ) {
-        this.pushArray(hasAired, episodeId);
-      }
-      else {
-        this.pushArray(currentlyAiring, episodeId);
-      }
-    });
-    this.setState({ willAir, currentlyAiring, hasAired });
-  };
-
-  pushArray = (arr, id) => {
-    if (!arr.includes(id)) {
-      arr.push(id);
+  componentWillReceiveProps(nextProps) {
+    const { schedule: oldSchedule } = this.props;
+    const { today, todayObj } = this.state;
+    const { schedule } = nextProps;
+    const yesterdayObj = todayObj.clone().subtract(1, 'days');
+    const yesterday = yesterdayObj.format('YYYY-MM-DD');
+    const todayOldSchedule = _.get(oldSchedule, today, []);
+    const yesterdayOldSchedule = _.get(oldSchedule, yesterday, []);
+    const todaySchedule = _.get(schedule, today, []);
+    const yesterdaySchedule = _.get(schedule, yesterday, []);
+    if (!this.compareArray(todayOldSchedule, todaySchedule)) {
+      this.setState(organizeTodayShows);
     }
+    if (!this.compareArray(yesterdayOldSchedule, yesterdaySchedule)) {
+      this.setState(getYesterdayIsAiring);
+    }
+  }
+
+  checkDay = () => {
+    const { dispatch } = this.props;
+    setInterval(() => {
+      const now = moment();
+      const nowFormat = moment().format('YYYY-MM-DD');
+      if (this.state.today !== nowFormat) {
+        // new day
+        this.setState({
+          today: nowFormat,
+          todayObj: now
+        }, () => dispatch(requestSchedule(nowFormat)));
+      }
+    }, 10000);
   };
 
   moveShow = (currentStep, id) => {
@@ -94,20 +83,10 @@ export class LiveSchedule extends Component {
     });
   };
 
-  fetchSchedule = async () => {
-    const { addShows, addEpisodes, addSchedule } = this.props;
-    const { today } = this.state;
-    try {
-      const { data } = await getSchedule(today);
-      const { episodes, shows, episodeIds } = getEpisodesAndShows(data);
-      addShows(shows);
-      addEpisodes(episodes);
-      addSchedule(today, episodeIds);
-    }
-    catch (e) {
-      console.log(e);
-    }
+  compareArray = (arr1, arr2) => {
+    return _.isEqual([...arr1].sort(), [...arr2].sort());
   };
+
 
   today = () => {
     return moment().format('YYYY-MM-DD');
@@ -124,10 +103,7 @@ export class LiveSchedule extends Component {
 LiveSchedule.propTypes = {
   schedule: PropTypes.object.isRequired,
   shows: PropTypes.object.isRequired,
-  episodes: PropTypes.object.isRequired,
-  addShows: PropTypes.func.isRequired,
-  addEpisodes: PropTypes.func.isRequired,
-  addSchedule: PropTypes.func.isRequired
+  episodes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ shows, schedule, episodes }) => ({
@@ -136,12 +112,5 @@ const mapStateToProps = ({ shows, schedule, episodes }) => ({
   episodes
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    addShows,
-    addEpisodes,
-    addSchedule
-  }, dispatch);
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LiveSchedule);
+export default connect(mapStateToProps)(LiveSchedule);

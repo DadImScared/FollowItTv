@@ -38,7 +38,7 @@ export const View = ({ classes, today, currentlyAiring, willAir, hasAired, shows
                       key={`${item}-${index}`}
                       show={shows[episodes[item].show] || {}}
                       moveShow={moveShow}
-                      eventTime={episodes[item].airtime}
+                      eventTime={`${episodes[item].airdate} ${episodes[item].airtime}`}
                       episodeId={item}
                     />
                   ))

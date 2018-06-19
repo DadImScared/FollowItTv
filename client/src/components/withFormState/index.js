@@ -34,7 +34,7 @@ export default function(WrapperComponent) {
       if (
         this.state.afterSend[id]
         || this.state.afterSend[id] === undefined
-        || (typeof afterSend[id] === 'string' && !afterSend[id])
+        || (typeof afterSend[id] === 'string' && !afterSend[id]) // used to check for empty string fix this it can be cleaner
       ) {
         this.clearById(id);
       }

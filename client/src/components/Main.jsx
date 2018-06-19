@@ -11,6 +11,7 @@ import Login from './Login';
 import Show from './Show';
 import Search from './Search';
 import MyShows from './MyShows';
+
 import styles from '../styles/Main.css';
 
 export const Main = ({ classes }) => (

@@ -61,4 +61,15 @@ describe('Countdown' ,() => {
     const wrapper = shallow(<Countdown {...props} />);
     expect(wrapper.render().text()).toEqual('in 00:09:00');
   });
+
+  test('things', () => {
+    const eventTime = moment('2018-06-12 23:56', 'YYYY-MM-DD HH:mm');
+    const newTime = eventTime.clone().add(14, 'minutes');
+    const props = {
+      eventTime: newTime,
+      startTime: moment('2018-06-13 00:01', 'YYYY-MM-DD HH:mm')
+    };
+    const wrapper = shallow(<Countdown {...props} />);
+    expect(wrapper.render().text()).toEqual('in 00:09:00');
+  });
 });

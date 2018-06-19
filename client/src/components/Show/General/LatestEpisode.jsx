@@ -75,7 +75,7 @@ export class LatestEpisode extends Component {
               null
           }
         </div>
-        <Typography>
+        <Typography component={'div'}>
           <Summary summary={summary} />
         </Typography>
       </Paper>

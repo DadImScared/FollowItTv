@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loading loadingEnd 1`] = `
+Object {
+  "requestId": "REQUEST_ID",
+  "type": "loading/LOADING_END",
+}
+`;
+
+exports[`loading loadingStart 1`] = `
+Object {
+  "requestId": "REQUEST_ID",
+  "type": "loading/LOADING_START",
+}
+`;

@@ -19,7 +19,7 @@ const Show = ({ show, showTimer, moveShow, currentStep, eventTime, episodeId, ..
             callBack={() => moveShow(currentStep, episodeId)}
             eventTime={
               currentStep === 'currentlyAiring' ?
-                moment(eventTime, 'HH:mm').add(show.runtime, 'minutes')
+                moment(eventTime, 'YYYY-MM-DD HH:mm').add(show.runtime, 'minutes')
                 :
                 moment(eventTime, 'HH:mm')
             }

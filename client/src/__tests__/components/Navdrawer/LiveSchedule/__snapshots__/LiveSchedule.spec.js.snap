@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiveSchedule getYesterdayisAiring 1`] = `
+Object {
+  "currentlyAiring": Array [
+    1,
+  ],
+}
+`;

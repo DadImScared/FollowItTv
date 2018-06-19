@@ -1,10 +1,16 @@
 
 import axios from 'axios';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
 
 import * as scheduleActionTypes from '../../actiontypes/schedule';
 import * as actions from '../../actions/schedule';
 
 jest.mock('axios');
+
+const middlewares = [ thunk ];
+const mockStore = configureMockStore(middlewares);
 
 // actions.getSchedule = jest.fn((date) => response[date]);
 
@@ -33,6 +39,8 @@ const detailedResponse = {
     }
   ]
 };
+
+const date = '2011-03-26';
 
 describe('schedule actions', () => {
   it('should create add schedule action', () => {
@@ -76,5 +84,49 @@ describe('schedule actions', () => {
       [shows[0].id]: shows[0],
       [shows[1].id]: shows[1]
     });
+  });
+
+  test('get schedule', async () => {
+    axios.get.mockImplementation(() => detailedResponse);
+    const spy = sinon.spy(axios, 'get');
+    const store = mockStore({ schedule: {} });
+    await store.dispatch(actions.requestSchedule(date));
+    expect(spy.called).toEqual(true);
+    expect(store.getActions()).toMatchSnapshot();
+  });
+
+  test('get schedule does not make request if there is a current request for that schedule', async () => {
+    axios.get.mockImplementation(() => detailedResponse);
+    const spy = sinon.spy(axios, 'get');
+    const store = mockStore({ schedule: {}, loading: { [`GET_SCHEDULE_${date}`]: true } });
+    await store.dispatch(actions.requestSchedule(date));
+    expect(spy.called).toEqual(false);
+    expect(store.getActions()).toHaveLength(0);
+  });
+
+  test('get schedule does not make request if schedule exists', async () => {
+    axios.get.mockImplementation(() => detailedResponse);
+    const spy = sinon.spy(axios, 'get');
+    const store = mockStore({ schedule: { [date]: [1, 2] } });
+    await store.dispatch(actions.requestSchedule(date));
+    expect(spy.called).toEqual(false);
+    expect(store.getActions()).toHaveLength(0);
+  });
+
+  test('get schedule error', async () => {
+    axios.get.mockImplementationOnce(() => {
+      throw {
+        response: {
+          data: 'error'
+        }
+      };
+    });
+    const store = mockStore({ schedule: {}, loading: {} });
+    try {
+      await store.dispatch(actions.requestSchedule(date));
+    }
+    catch (e) {
+      expect(store.getActions()).toMatchSnapshot();
+    }
   });
 });
