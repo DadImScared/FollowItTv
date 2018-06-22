@@ -12,3 +12,7 @@ const character = new schema.Entity('character', {}, {
 const castMember = { person, character };
 
 export const castSchema = [ castMember ];
+
+const crewMember = { person };
+
+export const crewSchema = [ crewMember ];

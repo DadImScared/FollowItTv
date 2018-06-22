@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`crew reducer should add crew 1`] = `
+Object {
+  "1": Object {
+    "1": Array [
+      "role1",
+      "role2",
+    ],
+    "2": Array [
+      "role3",
+      "role4",
+    ],
+  },
+}
+`;

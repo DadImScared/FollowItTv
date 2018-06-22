@@ -13,6 +13,7 @@ import loading from './loading';
 import people from './people';
 import characters from './characters';
 import showCharacters from './showCharacters';
+import crew from './crew';
 
 const reducer = combineReducers({
   followedShows,
@@ -26,7 +27,8 @@ const reducer = combineReducers({
   loading,
   people,
   characters,
-  showCharacters
+  showCharacters,
+  crew
 });
 
 export default reducer;

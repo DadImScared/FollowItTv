@@ -1,6 +1,7 @@
 
-import { castSchema } from './person';
+import { castSchema, crewSchema } from './person';
 
 export default {
-  castSchema
+  castSchema,
+  crewSchema
 };

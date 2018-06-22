@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`crew addCrew 1`] = `
+Object {
+  "id": 1,
+  "people": Object {
+    "1": Object {
+      "id": 1,
+    },
+  },
+  "type": "crew/ADD_CREW",
+}
+`;
+
+exports[`crew handleCrewData 1`] = `
+Object {
+  "crewMembers": Object {
+    "1": Array [
+      "creator",
+      "role two",
+    ],
+    "2": Array [
+      "executive producer",
+    ],
+  },
+  "person": Object {
+    "1": Object {
+      "id": 1,
+    },
+    "2": Object {
+      "id": 2,
+    },
+  },
+  "result": Array [
+    Object {
+      "person": 1,
+      "type": "creator",
+    },
+    Object {
+      "person": 1,
+      "type": "role two",
+    },
+    Object {
+      "person": 2,
+      "type": "executive producer",
+    },
+  ],
+}
+`;
+
+exports[`crew requestCrew 1`] = `
+Array [
+  Object {
+    "requestId": "GET_CREW_1",
+    "type": "loading/LOADING_START",
+  },
+  Object {
+    "crewMembers": Object {
+      "1": Array [
+        "role1",
+      ],
+      "2": Array [
+        "role2",
+      ],
+    },
+    "id": 1,
+    "people": Object {
+      "1": Object {
+        "id": 1,
+      },
+      "2": Object {
+        "id": 2,
+      },
+    },
+    "type": "crew/ADD_CREW",
+  },
+  Object {
+    "requestId": "GET_CREW_1",
+    "type": "loading/LOADING_END",
+  },
+]
+`;
