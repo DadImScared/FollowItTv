@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import moment from 'moment';
 
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 
 export class Countdown extends Component {

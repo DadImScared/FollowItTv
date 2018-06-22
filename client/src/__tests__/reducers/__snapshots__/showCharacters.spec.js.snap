@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showCharacters reducer should add characterIds 1`] = `
+Object {
+  "1": Array [
+    1,
+    2,
+  ],
+}
+`;

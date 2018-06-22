@@ -12,6 +12,7 @@ import search from './search';
 import loading from './loading';
 import people from './people';
 import characters from './characters';
+import showCharacters from './showCharacters';
 
 const reducer = combineReducers({
   followedShows,
@@ -24,7 +25,8 @@ const reducer = combineReducers({
   search,
   loading,
   people,
-  characters
+  characters,
+  showCharacters
 });
 
 export default reducer;

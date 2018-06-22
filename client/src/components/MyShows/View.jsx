@@ -4,11 +4,12 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import SwipeableViews from 'react-swipeable-views';
-import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
-import Snackbar from 'material-ui/Snackbar';
-import Button from 'material-ui/Button';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import AppBar from '@material-ui/core/AppBar';
+import Paper from '@material-ui/core/Paper';
+import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import ShowList from './ShowList';
 

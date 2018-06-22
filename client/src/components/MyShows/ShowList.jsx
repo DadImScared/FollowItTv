@@ -1,11 +1,10 @@
 
 import React from 'react';
 
-import List, {
-  ListItem,
-  ListItemText
-} from 'material-ui/List';
-import Button from 'material-ui/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 
 
 const ShowList = ({ showList, shows, unFollow }) => (

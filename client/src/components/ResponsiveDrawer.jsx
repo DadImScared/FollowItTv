@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Drawer from 'material-ui/Drawer';
-import Hidden from 'material-ui/Hidden';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 
 const ResponsiveDrawer = ({ drawerClasses, anchor = 'left', children, isOpen, handleClose, id }) => {
   return (

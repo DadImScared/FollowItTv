@@ -5,11 +5,11 @@ import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import cyan from 'material-ui/colors/cyan';
-import deepPurple from 'material-ui/colors/deepPurple';
-import withWidth from 'material-ui/utils/withWidth';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import CssBaseline from 'material-ui/CssBaseline';
+import cyan from '@material-ui/core/colors/cyan';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import withWidth from '@material-ui/core/withWidth';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from './Navbar';
 import Navdrawer from './Navdrawer';

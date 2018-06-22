@@ -1,6 +1,5 @@
 
 import * as showActionTypes from '../actiontypes/shows';
-import { ADD_CHARACTERS } from '../actiontypes/characters';
 
 function shows(state={}, action) {
   switch(action.type) {
@@ -8,6 +7,7 @@ function shows(state={}, action) {
       return {
         ...state,
         [action.id]: {
+          ...state[action.id],
           ...action.payload
         }
       };
@@ -15,14 +15,6 @@ function shows(state={}, action) {
       return {
         ...state,
         ...action.shows
-      };
-    case ADD_CHARACTERS:
-      return {
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          cast: action.characterIds
-        }
       };
     case showActionTypes.UPDATE_SHOW:
       return {

@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
 
-import TextField from 'material-ui/TextField';
-import { InputAdornment } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
+import TextField from '@material-ui/core/TextField';
+// import { InputAdornment } from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 
-import Search from 'material-ui-icons/Search';
+import Search from '@material-ui/icons/Search';
 
 
 class Searchbar extends Component {
@@ -37,7 +38,7 @@ class Searchbar extends Component {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton type={'submit'}>
+                <IconButton type='submit'>
                   <Search />
                 </IconButton>
               </InputAdornment>

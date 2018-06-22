@@ -1,5 +1,4 @@
 
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -9,37 +8,38 @@ import View from './View';
 export class Cast extends Component {
 
   componentDidMount() {
-    const { show, showId, dispatch } = this.props;
-    if (_.get(show, 'cast', false)) {
+    const { showId, showCharacters, dispatch } = this.props;
+    if (showCharacters[showId]) {
       return;
     }
     dispatch(requestCast(showId));
   }
 
   render() {
-    const { show, showId, loading, characters, people } = this.props;
+    const { showId, loading, characters, people, showCharacters } = this.props;
     if (loading[`GET_CAST_${showId}`]) {
       return (
         <div>loading</div>
       );
     }
 
-    if (!show.cast) {
+    if (!showCharacters[showId]) {
       return (
         <div>no cast</div>
       );
     }
 
     return (
-      <View show={show} characters={characters} people={people} />
+      <View characterIds={showCharacters[showId]} characters={characters} people={people} />
     );
   }
 }
 
-const mapStateToProps = ({ loading, characters, people }) => ({
+const mapStateToProps = ({ loading, characters, people, showCharacters }) => ({
   loading,
   characters,
-  people
+  people,
+  showCharacters
 });
 
 export default connect(mapStateToProps)(Cast);

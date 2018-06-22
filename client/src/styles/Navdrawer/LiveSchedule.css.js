@@ -1,7 +1,7 @@
 
-import green from 'material-ui/colors/green';
-import orange from 'material-ui/colors/orange';
-import red from 'material-ui/colors/red';
+import green from '@material-ui/core/colors/green';
+import orange from '@material-ui/core/colors/orange';
+import red from '@material-ui/core/colors/red';
 
 
 const currentlyAiring = (theme) => ({

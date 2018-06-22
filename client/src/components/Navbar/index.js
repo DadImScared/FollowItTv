@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import { Link, withRouter } from 'react-router-dom';
 
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Hidden from 'material-ui/Hidden';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
-import MenuIcon from 'material-ui-icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import { logOut } from '../../actions/users';
 import LoggedInButtons from './LoggedInButtons';

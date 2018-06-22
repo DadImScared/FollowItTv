@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
 
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 
 import { getSeasonEpisodes, normalizeSeasonEpisodes } from '../../../actions/seasons';
 import Episode from '../../Episode';

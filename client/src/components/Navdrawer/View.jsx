@@ -1,10 +1,10 @@
 
 import React from 'react';
 
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import SvgIcon from 'material-ui/SvgIcon';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 import Television from 'mdi-material-ui/Television';
 import TelevisionBox from 'mdi-material-ui/TelevisionBox';

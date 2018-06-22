@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import Schedule from './Schedule';
 import Register from './Register';

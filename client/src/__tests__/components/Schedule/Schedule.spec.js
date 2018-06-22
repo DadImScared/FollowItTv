@@ -3,7 +3,7 @@ import React from 'react';
 
 import axios from 'axios';
 import sinon from 'sinon';
-import { createShallow } from 'material-ui/test-utils';
+import { createShallow } from '@material-ui/core/test-utils';
 
 import { Schedule } from '../../../components/Schedule/index';
 

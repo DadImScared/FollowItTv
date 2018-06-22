@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import Heart from 'mdi-material-ui/Heart';
 import HeartBroken from 'mdi-material-ui/HeartBroken';

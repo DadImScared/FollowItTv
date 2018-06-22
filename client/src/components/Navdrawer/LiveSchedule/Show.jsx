@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
-import { ListItem, ListItemText } from 'material-ui/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import Countdown from '../../Countdown';
 
