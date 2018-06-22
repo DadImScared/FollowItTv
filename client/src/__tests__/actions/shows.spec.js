@@ -19,4 +19,8 @@ describe('show actions', () => {
     };
     expect(actions.addShows({})).toEqual(expectedAction);
   });
+
+  it('should create update shows action', () => {
+    expect(actions.updateShow('idhere', 'key', 'value here')).toMatchSnapshot();
+  });
 });

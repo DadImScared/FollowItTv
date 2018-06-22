@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`people reducer should add people 1`] = `
+Object {
+  "1": Object {
+    "name": "person1",
+  },
+  "2": Object {
+    "name": "person2",
+  },
+}
+`;
+
+exports[`people reducer should add people from ADD_CHARACTERS action 1`] = `
+Object {
+  "1": Object {
+    "name": "person1",
+  },
+  "2": Object {
+    "name": "person2",
+  },
+}
+`;

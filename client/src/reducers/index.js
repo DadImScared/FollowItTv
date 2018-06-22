@@ -10,6 +10,8 @@ import episodes from './episodes';
 import seasons from './seasons';
 import search from './search';
 import loading from './loading';
+import people from './people';
+import characters from './characters';
 
 const reducer = combineReducers({
   followedShows,
@@ -20,7 +22,9 @@ const reducer = combineReducers({
   schedule,
   users,
   search,
-  loading
+  loading,
+  people,
+  characters
 });
 
 export default reducer;

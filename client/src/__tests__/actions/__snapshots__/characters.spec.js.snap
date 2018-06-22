@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`characters addCharacters 1`] = `
+Object {
+  "characters": Object {
+    "1": Object {
+      "id": 1,
+      "name": "character1",
+    },
+  },
+  "type": "characters/ADD_CHARACTERS",
+}
+`;
+
+exports[`characters handleCastData 1`] = `
+Object {
+  "character": Object {
+    "1": Object {
+      "id": 1,
+      "name": "character1",
+      "people": 5,
+    },
+    "2": Object {
+      "id": 2,
+      "name": "character2",
+      "people": 2,
+    },
+  },
+  "characterIds": Array [
+    1,
+    2,
+  ],
+  "people": Object {
+    "2": Object {
+      "id": 2,
+      "name": "person2",
+    },
+    "5": Object {
+      "id": 5,
+      "name": "person5",
+    },
+  },
+  "result": Array [
+    Object {
+      "character": 1,
+      "people": 5,
+    },
+    Object {
+      "character": 2,
+      "people": 2,
+    },
+  ],
+}
+`;
+
+exports[`characters requestCast 1`] = `
+Array [
+  Object {
+    "requestId": "GET_CAST_1",
+    "type": "loading/LOADING_START",
+  },
+  Object {
+    "requestId": "GET_CAST_1",
+    "type": "loading/LOADING_END",
+  },
+]
+`;

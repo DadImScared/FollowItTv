@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ADD_SEASONS, ADD_SEASON_EPISODES } from '../actiontypes/seasons';
 
 
-const baseUrl = 'http://api.tvmaze.com/';
+export const baseUrl = 'http://api.tvmaze.com/';
 
 export const addSeasons = (showId, seasons) => {
   return {

@@ -1,6 +1,7 @@
 
 import * as showActionTypes from '../../actiontypes/shows';
 import reducer from '../../reducers/shows';
+import { ADD_CHARACTERS } from '../../actiontypes/characters';
 
 const initialShows = {
   5: {
@@ -60,5 +61,24 @@ describe('shows', () => {
         shows
       })
     ).toEqual({ ...initialShows, ...shows });
+  });
+
+  it('should add cast on ADD_CHARACTERS action', () => {
+    expect(reducer(initialShows, {
+      type: ADD_CHARACTERS,
+      id: 5,
+      characterIds: [1, 2]
+    })).toMatchSnapshot();
+  });
+
+  it('should update show', () => {
+    expect(
+      reducer(initialShows, {
+        type: showActionTypes.UPDATE_SHOW,
+        id: 5,
+        key: 'crew',
+        value: [1, 2]
+      })
+    ).toMatchSnapshot();
   });
 });

@@ -18,6 +18,13 @@ export const addShows = (shows) => {
   };
 };
 
+export const updateShow = (id, key, value) => ({
+  type: showActionTypes.UPDATE_SHOW,
+  id,
+  key,
+  value
+});
+
 export const getShow = async (showId) => {
   return await axios.get(`http://api.tvmaze.com/shows/${showId}`);
 };

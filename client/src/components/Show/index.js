@@ -85,6 +85,7 @@ export class Show extends Component {
       <View
         {...other}
         {...this.state}
+        showId={showId}
         show={shows[showId] || {}}
         handleChange={this.handleChange}
         handleChangeIndex={this.handleChangeIndex}

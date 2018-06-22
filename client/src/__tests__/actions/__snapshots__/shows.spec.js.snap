@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`show actions should create update shows action 1`] = `
+Object {
+  "id": "idhere",
+  "key": "key",
+  "type": "shows/UPDATE_SHOW",
+  "value": "value here",
+}
+`;

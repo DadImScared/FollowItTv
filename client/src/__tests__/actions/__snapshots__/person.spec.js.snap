@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`people addPeople 1`] = `
+Object {
+  "people": Object {
+    "1": Object {
+      "name": "person1",
+    },
+    "2": Object {
+      "name": "person2",
+    },
+  },
+  "type": "people/ADD_PEOPLE",
+}
+`;

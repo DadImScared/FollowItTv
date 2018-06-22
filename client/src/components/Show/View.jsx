@@ -11,12 +11,13 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 
 import FollowShowButton from '../FollowShowButton';
+import Cast from './Cast';
 import General from './General';
 import Seasons from './Seasons';
 import { Show as styles } from '../../styles/Show';
 
 
-export const View = ({ handleChange, handleChangeIndex, currentTab, show, match, classes }) => (
+export const View = ({ handleChange, handleChangeIndex, currentTab, show, match, classes, showId }) => (
   <Paper style={{ height: '100%', display: 'flex', flexDirection: 'column', marginBottom: '25px' }}>
     <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px' }}>
       <Typography variant={'title'}>
@@ -63,7 +64,12 @@ export const View = ({ handleChange, handleChangeIndex, currentTab, show, match,
           <Seasons show={show} />
         )}
       />
-      <Typography>Item Three</Typography>
+      <Route
+        path={`${match.url}/cast`}
+        render={() => (
+          <Cast show={show} showId={showId} />
+        )}
+      />
       <Typography>Item Four</Typography>
     </SwipeableViews>
   </Paper>

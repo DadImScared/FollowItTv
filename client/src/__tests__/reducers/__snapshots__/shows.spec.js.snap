@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows should add cast on ADD_CHARACTERS action 1`] = `
+Object {
+  "1": Object {
+    "id": 1,
+    "name": "breaking bad",
+  },
+  "10": Object {
+    "id": 10,
+    "name": "tom and jerry",
+  },
+  "5": Object {
+    "cast": Array [
+      1,
+      2,
+    ],
+    "id": 5,
+    "name": "x files",
+  },
+}
+`;
+
+exports[`shows should update show 1`] = `
+Object {
+  "1": Object {
+    "id": 1,
+    "name": "breaking bad",
+  },
+  "10": Object {
+    "id": 10,
+    "name": "tom and jerry",
+  },
+  "5": Object {
+    "crew": Array [
+      1,
+      2,
+    ],
+    "id": 5,
+    "name": "x files",
+  },
+}
+`;
