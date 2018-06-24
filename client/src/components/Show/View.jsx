@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 
 import FollowShowButton from '../FollowShowButton';
 import Cast from './Cast';
+import Crew from './Crew';
 import General from './General';
 import Seasons from './Seasons';
 import { Show as styles } from '../../styles/Show';
@@ -72,7 +73,12 @@ export const View = ({ handleChange, handleChangeIndex, currentTab, show, match,
           <Cast show={show} showId={showId} />
         )}
       />
-      <Typography>Item Four</Typography>
+      <Route
+        path={`${match.url}/crew`}
+        render={() => (
+          <Crew showId={showId} />
+        )}
+      />
     </SwipeableViews>
   </Paper>
 );

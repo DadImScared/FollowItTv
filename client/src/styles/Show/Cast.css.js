@@ -1,8 +1,13 @@
 
+import { image } from './Crew.css';
+
 export default (theme) => ({
   col: {
     padding: theme.spacing.unit * 2,
     width: '100%',
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      width: '50%'
+    },
     [theme.breakpoints.up('sm')]: {
       width: '50%'
     },
@@ -10,15 +15,8 @@ export default (theme) => ({
       width: '25%'
     },
     [theme.breakpoints.only('xl')]: {
-      width: '20%'
+      width: '16.6%'
     }
   },
-  image: {
-    height: '25vh',
-    margin: '0 auto',
-    backgroundSize: 'contain',
-    [`${theme.breakpoints.down('md')} and (orientation: landscape)`]: {
-      height: '50vh'
-    }
-  }
+  image: image(theme)
 });
