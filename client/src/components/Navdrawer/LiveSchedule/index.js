@@ -29,12 +29,16 @@ export class LiveSchedule extends Component {
   }
 
   componentDidMount() {
-    // this will not bring up shows on mobile because the navdrawer un mounts when it's closed
-    // when it remounts it never gets 'fresh' data because it exists and the state is never updated
-    // solution check data and if it exists organize shows today and yesterday
-    const { dispatch } = this.props;
+    const { dispatch, schedule } = this.props;
     const today = this.today();
     this.setState({ today, todayObj: moment() }, () => {
+      // this will not bring up shows on mobile because the navdrawer un mounts when it's closed
+      // solution check data and if it exists organize shows today and yesterday
+      if (schedule[today]) {
+        const { willAir, currentlyAiring, hasAired } = organizeTodayShows(this.state, this.props);
+        const { currentlyAiring: yesterdayAiring } = getYesterdayIsAiring(this.state, this.props);
+        this.setState({ currentlyAiring: [...currentlyAiring, ...yesterdayAiring], willAir, hasAired });
+      }
       dispatch(requestSchedule(today));
       dispatch(requestSchedule(this.state.todayObj.clone().subtract(1, 'days').format('YYYY-MM-DD')));
       this.checkDay();
