@@ -14,15 +14,17 @@ import Summary from '../../Summary';
 const General = ({ show, classes }) => (
   <div className={classes.container}>
     <div className={classes.summaryWrapper}>
-      <img className={classes.img} src={show.image && show.image.medium || ''} />
-      <Typography component={'div'} className={classes.summary}>
-        {
-          show.summary ?
-            <Summary summary={show.summary} />
-            :
-            'no summary'
-        }
-      </Typography>
+      <Paper className={classes.paper}>
+        <img className={classes.img} src={show.image && show.image.medium || ''} />
+        <Typography component={'div'} className={classes.summary}>
+          {
+            show.summary ?
+              <Summary summary={show.summary} />
+              :
+              'no summary'
+          }
+        </Typography>
+      </Paper>
     </div>
     <div style={{ display: 'flex', 'flexDirection': 'column' }}>
       <Paper className={classes.showInfo}>

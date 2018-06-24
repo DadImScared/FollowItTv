@@ -47,7 +47,7 @@ export class LatestEpisode extends Component {
     const { episodes } = this.props;
     const { name, airtime, airdate, summary }  = episodes[episodeId] || {};
     return (
-      <Paper style={{ height: '150px', marginTop: '16px', padding: '8px' }}>
+      <Paper style={{ height: '150px', margin: '16px 0', padding: '8px' }}>
         <Typography component={'div'} align={'center'}>
           {
             nextEpisode ?

@@ -1,4 +1,6 @@
 
+const mediaQueryWidth543 = '@media only screen and (min-width: 543px)';
+
 export default (theme) => ({
   container: {
     height: '100%',
@@ -10,11 +12,27 @@ export default (theme) => ({
       flexWrap: 'wrap'
     }
   },
+  paper: {
+    padding: '4px',
+    [mediaQueryWidth543]: {
+      padding: theme.spacing.unit * 2
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '50vw'
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '40vw'
+    },
+    ['@media only screen and (min-width: 1862px)']: {
+      width: '50%'
+    }
+  },
   summaryWrapper: {
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     [theme.breakpoints.up('md')]: {
       textAlign: 'center'
@@ -29,6 +47,12 @@ export default (theme) => ({
     height: 'auto',
     width: '40%',
     marginRight: theme.spacing.unit,
+    [mediaQueryWidth543]: {
+      width: '25%'
+    },
+    ['@media only screen and (min-width: 704px)']: {
+      width: '15%'
+    },
     [theme.breakpoints.up('md')]: {
       float: 'none',
       objectFit: 'contain',

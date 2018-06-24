@@ -6,7 +6,7 @@ export default (theme) => ({
     minHeight: 'calc(100vh - 112px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
-      minHeight: 'calc(100vh - 64px)',
+      minHeight: 'calc(100vh - 65px)',
       marginTop: 64
     }
   }
