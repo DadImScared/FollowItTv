@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BottomNav should change to my shows when nav drawer closes and pathname is under /my_shows/* 1`] = `
+Object {
+  "value": 0,
+}
+`;
+
+exports[`BottomNav should change to my shows when route pathname changes to /my_shows/* 1`] = `
+Object {
+  "value": 2,
+}
+`;
+
+exports[`BottomNav should change to schedule when route pathname changes to /schedule/* 1`] = `
+Object {
+  "value": 0,
+}
+`;
+
+exports[`BottomNav should render 1`] = `
+<Hidden
+  implementation="js"
+  lgDown={false}
+  lgUp={false}
+  mdDown={false}
+  mdUp={true}
+  smDown={false}
+  smUp={false}
+  xlDown={false}
+  xlUp={false}
+  xsDown={false}
+  xsUp={false}
+>
+  <WithStyles(BottomNavigation)
+    className="navBar showNavBar"
+    onChange={[Function]}
+    showLabels={true}
+    value={0}
+  >
+    <WithStyles(BottomNavigationAction)
+      icon={<Icon />}
+      key="0"
+      label="Schedule"
+    />
+    <WithStyles(BottomNavigationAction)
+      icon={<pure(Menu) />}
+      key="1"
+      label="Menu"
+    />
+    <WithStyles(BottomNavigationAction)
+      icon={<pure(Favorite) />}
+      key="2"
+      label="My Shows"
+    />
+  </WithStyles(BottomNavigation)>
+</Hidden>
+`;

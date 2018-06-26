@@ -39,6 +39,7 @@ export class  Base extends Component {
   }
 
   async componentDidMount() {
+    window.addEventListener('scroll', this.scrollListener);
     try {
       await getFollowedShows(this.props.dispatch);
     }
@@ -58,33 +59,36 @@ export class  Base extends Component {
 
   toggleHideNavBars = (scrollTop) => {
     const { lastScrollTop, directionDown, bottomOfPage } = this.state;
+    const newState = {};
     if (scrollTop > lastScrollTop) { // scroll down
       if (!directionDown) {
-        this.setState({ directionDown: true });
+        newState.directionDown = true;
       }
       if (this.atBottomOfPage() && !bottomOfPage) {
-        this.setState({ bottomOfPage: true });
+        newState.bottomOfPage = true;
       }
     }
     else { // scroll up
       if (directionDown) {
-        this.setState({ directionDown: false, bottomOfPage: false });
+        newState.directionDown = false;
+        newState.bottomOfPage = false;
       }
     }
-    this.setState({ lastScrollTop: scrollTop });
+    newState.lastScrollTop = scrollTop;
+    this.setState(newState);
   };
 
   handleScroll = () => {
     const { width } = this.props;
     const scrollTop = this.getScrollTop();
     switch(width) {
-    case 'xs':
-    case 'sm':
-    case 'md':
-      this.toggleHideNavBars(scrollTop);
-      break;
-    default:
-      return;
+      case 'xs':
+      case 'sm':
+      case 'md':
+        this.toggleHideNavBars(scrollTop);
+        break;
+      default:
+        return;
     }
   };
 
@@ -102,14 +106,21 @@ export class  Base extends Component {
 
   render() {
     const { classes, ...other } = this.props;
+    const { isOpen, directionDown, bottomOfPage } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline/>
         <div className={classes.appFrame}>
           <Navbar toggleNav={this.toggleNavdrawer} />
-          <Navdrawer toggleNav={this.toggleNavdrawer} isOpen={this.state.isOpen} />
+          <Navdrawer toggleNav={this.toggleNavdrawer} isOpen={isOpen} />
           <Main {...other} />
-          <BottomNav />
+          <BottomNav
+            navDrawerOpen={isOpen}
+            toggleNavdrawer={this.toggleNavdrawer}
+            {...other}
+            directionDown={directionDown}
+            bottomOfPage={bottomOfPage}
+          />
         </div>
       </MuiThemeProvider>
     );

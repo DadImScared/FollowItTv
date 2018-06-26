@@ -64,6 +64,7 @@ export class Episode extends Component {
     } = this.props;
     const currentShow = this.props.show || shows[show];
     const currentId = (this.props.show && this.props.show.id) || show;
+    const realImage = (image && image.medium) || (currentShow.image && currentShow.image.medium);
     return (
       <div>
         <Card>
@@ -87,13 +88,18 @@ export class Episode extends Component {
             }
             subheader={`${this.props.show ? `${airdate} | `:''}${airtime}${!this.props.show ? ` | ${name}`:''}`}
           />
-          <CardMedia
-            component={'img'}
-            className={classes.media}
-            // image={shows[show] && shows[show].image && shows[show].image.medium}
-            image={(image && image.medium) || (currentShow.image && currentShow.image.medium)}
-            title={`episode ${name}. show ${currentShow.name || 'no name'}`}
-          />
+          {
+            realImage ?
+              <CardMedia
+                component={'img'}
+                className={classes.media}
+                // image={shows[show] && shows[show].image && shows[show].image.medium}
+                image={realImage}
+                title={`episode ${name}. show ${currentShow.name || 'no name'}`}
+              />
+              :
+              null
+          }
           <CardContent>
             <Collapse collapsedHeight={'40px'} in={this.state.isOpen}>
               <CardContent>

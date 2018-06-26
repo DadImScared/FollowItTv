@@ -11,7 +11,7 @@
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.38",
     "material-ui-icons": "^1.0.0-beta.36",
-    "mdi-material-ui": "^3.2.0",
+    "mdi-material-ui": "^5.1.1",
     "moment": "^2.21.0",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.1",
@@ -36,10 +36,16 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^4.19.0",
     "eslint-plugin-jest": "^21.15.0",
     "react-test-renderer": "^16.2.0",
     "redux-mock-store": "^1.5.3"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "proxy": "http://localhost:8000"
 }

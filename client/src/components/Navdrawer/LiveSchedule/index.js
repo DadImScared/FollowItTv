@@ -35,9 +35,10 @@ export class LiveSchedule extends Component {
       // this will not bring up shows on mobile because the navdrawer un mounts when it's closed
       // solution check data and if it exists organize shows today and yesterday
       if (schedule[today]) {
-        const { willAir, currentlyAiring, hasAired } = organizeTodayShows(this.state, this.props);
-        const { currentlyAiring: yesterdayAiring } = getYesterdayIsAiring(this.state, this.props);
-        this.setState({ currentlyAiring: [...currentlyAiring, ...yesterdayAiring], willAir, hasAired });
+        this.setState(organizeTodayShows);
+      }
+      if (schedule[this.state.todayObj.clone().subtract(1, 'days').format('YYYY-MM-DD')]) {
+        this.setState(getYesterdayIsAiring);
       }
       dispatch(requestSchedule(today));
       dispatch(requestSchedule(this.state.todayObj.clone().subtract(1, 'days').format('YYYY-MM-DD')));
