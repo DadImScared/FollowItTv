@@ -4,6 +4,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import SwipeableViews from 'react-swipeable-views';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -12,9 +13,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import ShowList from './ShowList';
+import { View as styles } from '../../styles/MyShows';
 
 
 const View = ({
+  classes,
   days,
   showList,
   shows,
@@ -33,9 +36,11 @@ const View = ({
       <Tabs
         scrollable
         scrollButtons="auto"
-        fullWidth
         value={day}
         onChange={handleChange}
+        classes={{
+          flexContainer: classes.flexContainer
+        }}
       >
         {
           days.map((item, index) => (
@@ -82,4 +87,4 @@ const View = ({
   </Paper>
 );
 
-export default View;
+export default withStyles(styles)(View);
