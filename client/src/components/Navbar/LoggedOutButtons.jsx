@@ -8,10 +8,10 @@ import Button from '@material-ui/core/Button';
 
 const LoggedOutButtons = () => (
   <div>
-    <Button component={NavLink} to={'/login/'}>
+    <Button component={NavLink} to={'/login'}>
       Sign in
     </Button>
-    <Button component={NavLink} to={'/register/'}>
+    <Button component={NavLink} to={'/register'}>
       Sign up
     </Button>
   </div>

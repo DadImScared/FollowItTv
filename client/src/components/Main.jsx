@@ -18,11 +18,11 @@ export const Main = ({ classes }) => (
   <div className={classes.content}>
     <Switch>
       <Route
-        path={'/register/'}
+        path={'/register'}
         render={(props) => <Register {...props} />}
       />
       <Route
-        path={'/login/'}
+        path={'/login'}
         render={(props) => <Login {...props} />}
       />
       <Route

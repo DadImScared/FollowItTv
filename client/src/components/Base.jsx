@@ -111,7 +111,10 @@ export class  Base extends Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline/>
         <div className={classes.appFrame}>
-          <Navbar toggleNav={this.toggleNavdrawer} />
+          <Navbar
+            toggleNav={this.toggleNavdrawer}
+            directionDown={directionDown}
+          />
           <Navdrawer toggleNav={this.toggleNavdrawer} isOpen={isOpen} />
           <Main {...other} />
           <BottomNav

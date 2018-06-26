@@ -1,4 +1,6 @@
 
+import transition from './NavbarTransition.css';
+
 const drawerWidth = 260;
 
 export default (theme) => ({
@@ -9,5 +11,9 @@ export default (theme) => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`
     }
-  }
+  },
+  showNavButtons: {
+    display: 'flex'
+  },
+  ...transition(theme)
 });

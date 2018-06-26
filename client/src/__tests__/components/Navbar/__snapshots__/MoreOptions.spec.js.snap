@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoreOptions should render logged in options if loggedIn 1`] = `
+<div>
+  <WithStyles(IconButton)
+    aria-haspopup="true"
+    aria-owns={null}
+    onClick={[Function]}
+  >
+    <WithStyles(Icon)>
+      more_vert
+    </WithStyles(Icon)>
+  </WithStyles(IconButton)>
+  <WithStyles(Menu)
+    anchorEl={null}
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(MenuItem)
+      onClick={[Function]}
+    >
+      Log out
+    </WithStyles(MenuItem)>
+  </WithStyles(Menu)>
+</div>
+`;
+
+exports[`MoreOptions should render logged out options if loggedIn false 1`] = `
+<div>
+  <WithStyles(IconButton)
+    aria-haspopup="true"
+    aria-owns={null}
+    onClick={[Function]}
+  >
+    <WithStyles(Icon)>
+      more_vert
+    </WithStyles(Icon)>
+  </WithStyles(IconButton)>
+  <WithStyles(Menu)
+    anchorEl={null}
+    onClose={[Function]}
+    open={false}
+  >
+    <React.Fragment>
+      <WithStyles(MenuItem)
+        onClick={[Function]}
+      >
+        Sign up
+      </WithStyles(MenuItem)>
+      <WithStyles(MenuItem)
+        onClick={[Function]}
+      >
+        Register
+      </WithStyles(MenuItem)>
+    </React.Fragment>
+  </WithStyles(Menu)>
+</div>
+`;

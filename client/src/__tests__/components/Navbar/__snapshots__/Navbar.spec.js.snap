@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar should render logged in options if loggedIn 1`] = `
+<WithStyles(AppBar)
+  className="appbar"
+  classes={
+    Object {
+      "root": "hideNav",
+    }
+  }
+  color="secondary"
+>
+  <WithStyles(Toolbar)
+    style={
+      Object {
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={false}
+      smDown={false}
+      smUp={true}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div />
+    </Hidden>
+    <div>
+      <Searchbar
+        history={
+          Object {
+            "push": [Function],
+          }
+        }
+      />
+    </div>
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={false}
+      smDown={true}
+      smUp={false}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <WithStyles(Button)
+          component={[Function]}
+          to="/schedule"
+        >
+          Schedule
+        </WithStyles(Button)>
+        <LoggedInButtons
+          logOut={[Function]}
+        />
+      </div>
+    </Hidden>
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={true}
+      smDown={false}
+      smUp={false}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div>
+        <MoreOptions
+          history={
+            Object {
+              "push": [Function],
+            }
+          }
+          logOut={[Function]}
+          loggedIn={true}
+        />
+      </div>
+    </Hidden>
+  </WithStyles(Toolbar)>
+</WithStyles(AppBar)>
+`;
+
+exports[`Navbar should render logged out options if loggedIn = false 1`] = `
+<WithStyles(AppBar)
+  className="appbar"
+  classes={
+    Object {
+      "root": "hideNav",
+    }
+  }
+  color="secondary"
+>
+  <WithStyles(Toolbar)
+    style={
+      Object {
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={false}
+      smDown={false}
+      smUp={true}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div />
+    </Hidden>
+    <div>
+      <Searchbar
+        history={
+          Object {
+            "push": [Function],
+          }
+        }
+      />
+    </div>
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={false}
+      smDown={true}
+      smUp={false}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <WithStyles(Button)
+          component={[Function]}
+          to="/schedule"
+        >
+          Schedule
+        </WithStyles(Button)>
+        <LoggedOutButtons />
+      </div>
+    </Hidden>
+    <Hidden
+      implementation="js"
+      lgDown={false}
+      lgUp={false}
+      mdDown={false}
+      mdUp={true}
+      smDown={false}
+      smUp={false}
+      xlDown={false}
+      xlUp={false}
+      xsDown={false}
+      xsUp={false}
+    >
+      <div>
+        <MoreOptions
+          history={
+            Object {
+              "push": [Function],
+            }
+          }
+          logOut={[Function]}
+          loggedIn={false}
+        />
+      </div>
+    </Hidden>
+  </WithStyles(Toolbar)>
+</WithStyles(AppBar)>
+`;
