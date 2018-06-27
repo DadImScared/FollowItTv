@@ -1,19 +1,21 @@
 
 import { combineReducers } from 'redux';
 
+import characters from './characters';
+import crew from './crew';
+import episodes from './episodes';
 import followedShows from './followedShows';
 import followedShowsById from './followedShowsId';
-import shows from './shows';
-import schedule from './schedule';
-import users from './users';
-import episodes from './episodes';
-import seasons from './seasons';
-import search from './search';
 import loading from './loading';
 import people from './people';
-import characters from './characters';
+import schedule from './schedule';
+import scroll from './scroll';
+import search from './search';
+import seasons from './seasons';
+import shows from './shows';
 import showCharacters from './showCharacters';
-import crew from './crew';
+import users from './users';
+
 
 const reducer = combineReducers({
   followedShows,
@@ -28,7 +30,8 @@ const reducer = combineReducers({
   people,
   characters,
   showCharacters,
-  crew
+  crew,
+  scroll
 });
 
 export default reducer;

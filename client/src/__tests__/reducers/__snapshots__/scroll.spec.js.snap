@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scroll reducer should update scroll 1`] = `
+Object {
+  "bottomOfPage": false,
+  "directionDown": true,
+}
+`;

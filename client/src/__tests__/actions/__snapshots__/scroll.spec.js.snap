@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scroll updateScroll returns expected action 1`] = `
+Object {
+  "scrollData": Object {
+    "atBottomOfPage": false,
+    "directionDown": false,
+  },
+  "type": "scroll/UPDATE_SCROLL",
+}
+`;

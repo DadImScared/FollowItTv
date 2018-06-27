@@ -17,6 +17,7 @@ import Main from './Main';
 import BottomNav from './BottomNav';
 
 import { getFollowedShows } from '../actions/followedShows';
+import { updateScroll } from '../actions/scroll';
 import styles from '../styles/Base.css';
 
 const theme = createMuiTheme({
@@ -31,14 +32,12 @@ export class  Base extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      isOpen: false,
-      lastScrollTop: 0,
-      directionDown: false,
-      bottomOfPage: false
+      isOpen: false
     };
   }
 
   async componentDidMount() {
+    this.lastScrollTop = 0;
     window.addEventListener('scroll', this.scrollListener);
     try {
       await getFollowedShows(this.props.dispatch);
@@ -58,9 +57,9 @@ export class  Base extends Component {
   };
 
   toggleHideNavBars = (scrollTop) => {
-    const { lastScrollTop, directionDown, bottomOfPage } = this.state;
+    const { directionDown, bottomOfPage, dispatch } = this.props;
     const newState = {};
-    if (scrollTop > lastScrollTop) { // scroll down
+    if (scrollTop > this.lastScrollTop) { // scroll down
       if (!directionDown) {
         newState.directionDown = true;
       }
@@ -74,8 +73,8 @@ export class  Base extends Component {
         newState.bottomOfPage = false;
       }
     }
-    newState.lastScrollTop = scrollTop;
-    this.setState(newState);
+    this.lastScrollTop = scrollTop;
+    if (Object.keys(newState).length) dispatch(updateScroll(newState));
   };
 
   handleScroll = () => {
@@ -100,13 +99,12 @@ export class  Base extends Component {
   };
 
   atBottomOfPage = () => {
-    const isAtBottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2;
-    this.setState({ bottomOfPage: isAtBottom });
+    return (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2;
   };
 
   render() {
-    const { classes, ...other } = this.props;
-    const { isOpen, directionDown, bottomOfPage } = this.state;
+    const { classes, directionDown, bottomOfPage, ...other } = this.props;
+    const { isOpen } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline/>
@@ -130,4 +128,8 @@ export class  Base extends Component {
   }
 }
 
-export default withWidth()(withStyles(styles)(withRouter(connect()(Base))));
+const mapStateToProps = ({ scroll }) => ({
+  ...scroll
+});
+
+export default withWidth()(withStyles(styles)(withRouter(connect(mapStateToProps)(Base))));
