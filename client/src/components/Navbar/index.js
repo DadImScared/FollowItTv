@@ -29,13 +29,9 @@ export const Navbar = ({ classes, loggedIn, logOut, directionDown, ...other }) =
   return (
     <AppBar
       color={'secondary'}
-      className={classes.appBar}
-      classes={{
-        root: classNames({
-          [classes.hideNavBar]: directionDown,
-          [classes.showNavBar]: !directionDown
-        })
-      }}
+      className={classNames(classes.appBar, {
+        [classes.hideNavBar]: directionDown
+      })}
     >
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <Hidden smUp>
@@ -70,8 +66,7 @@ export const Navbar = ({ classes, loggedIn, logOut, directionDown, ...other }) =
 Navbar.propTypes = {
   classes: PropTypes.shape({
     appBar: PropTypes.string.isRequired,
-    hideNavBar: PropTypes.string.isRequired,
-    showNavBar: PropTypes.string.isRequired
+    hideNavBar: PropTypes.string.isRequired
   }).isRequired,
   loggedIn: PropTypes.bool.isRequired,
   directionDown: PropTypes.bool.isRequired,

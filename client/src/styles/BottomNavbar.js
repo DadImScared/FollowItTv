@@ -1,12 +1,20 @@
 
-import transition from './NavbarTransition.css';
-
-
 export default (theme) => ({
   navBar: {
     width: '100%',
     position: 'sticky',
-    bottom: 0
+    bottom: 0,
+    overflow: 'auto',
+    [theme.breakpoints.down('md')]: {
+      transition: theme.transitions.create(['height'], {
+        easing: theme.transitions.easing.easeIn,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    }
   },
-  ...transition(theme)
+  hideNavBar: {
+    [theme.breakpoints.down('md')]: {
+      height: '0'
+    }
+  }
 });

@@ -172,10 +172,11 @@ export class MyShows extends Component {
   }
 }
 
-const mapStateToProps = ({ followedShows, shows, followedShowsById }) => ({
+const mapStateToProps = ({ followedShows, shows, followedShowsById, scroll: { directionDown } }) => ({
   followedShows,
   followedShowsById,
-  shows
+  shows,
+  directionDown
 });
 
 const mapDispatchToProps = (dispatch) => {

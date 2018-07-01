@@ -20,7 +20,8 @@ export class Show extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      isSticky: false
     };
   }
 
@@ -40,13 +41,21 @@ export class Show extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { location: { pathname: oldPath } } = this.props;
     const { location: { pathname } } = nextProps;
     if (pathname !== oldPath) {
       this.setInitialTab(nextProps);
     }
   }
+
+  onAppbarEnter = () => {
+    this.setState({ isSticky: false });
+  };
+
+  onAppbarLeave = () => {
+    this.setState({ isSticky: true });
+  };
 
   setInitialTab = (props) => {
     const { location } = props;
@@ -85,6 +94,8 @@ export class Show extends Component {
       <View
         {...other}
         {...this.state}
+        onEnter={this.onAppbarEnter}
+        onLeave={this.onAppbarLeave}
         showId={showId}
         show={shows[showId] || {}}
         handleChange={this.handleChange}
@@ -94,8 +105,9 @@ export class Show extends Component {
   }
 }
 
-const mapStateToProps = ({ shows }) => ({
-  shows
+const mapStateToProps = ({ shows, scroll }) => ({
+  shows,
+  ...scroll
 });
 
 const mapDispatchToProps = (dispatch) => {

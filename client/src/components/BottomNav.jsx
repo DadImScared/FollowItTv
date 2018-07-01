@@ -43,7 +43,7 @@ export class BottomNav extends Component {
         break;
       case 2:
         if (pathname === '/my_shows') return;
-        history.push('my_shows');
+        history.push('/my_shows');
         break;
       default:
         return;
@@ -82,8 +82,7 @@ export class BottomNav extends Component {
         <BottomNavigation
           value={this.state.value}
           className={classNames(classes.navBar, {
-            [classes.hideNavBar]: !bottomOfPage && directionDown,
-            [classes.showNavBar]: !directionDown
+            [classes.hideNavBar]: !bottomOfPage && directionDown
           })}
           onChange={this.handleChange}
           showLabels
@@ -112,8 +111,7 @@ BottomNav.propTypes = {
   }),
   classes: PropTypes.shape({
     navBar: PropTypes.string.isRequired,
-    hideNavBar: PropTypes.string.isRequired,
-    showNavBar: PropTypes.string.isRequired
+    hideNavBar: PropTypes.string.isRequired
   }).isRequired,
   bottomOfPage: PropTypes.bool.isRequired,
   directionDown: PropTypes.bool.isRequired,
