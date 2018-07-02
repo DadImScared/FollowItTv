@@ -6,7 +6,6 @@ import { Route } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +34,7 @@ export const View = ({
   onLeave,
   isSticky
 }) => (
-  <Paper style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+  <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
     <Waypoint topOffset={'98'} onEnter={onEnter} onLeave={onLeave}>
       <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px' }}>
         <Typography variant={'title'}>
@@ -104,7 +103,7 @@ export const View = ({
         )}
       />
     </SwipeableViews>
-  </Paper>
+  </div>
 );
 
 export default withStyles(styles)(View);

@@ -6,12 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Episode from '../Episode';
 
 const View = ({ episodeIds, shows, episodes }) => (
-  <Grid container>
+  <Grid container style={{ padding: '8px' }}>
     {
       episodeIds.length ?
         episodeIds.map((item, index) => {
           return (
-            <Grid item xs={12} sm={6} lg={4} xl={3} key={`${episodes[item].id}-${index}`}>
+            <Grid style={{ padding: '8px' }} item xs={12} sm={6} lg={4} xl={3} key={`${episodes[item].id}-${index}`}>
               <Episode
                 shows={shows}
                 item={episodes[item]}

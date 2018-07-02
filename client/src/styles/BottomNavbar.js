@@ -2,7 +2,7 @@
 export default (theme) => ({
   navBar: {
     width: '100%',
-    position: 'sticky',
+    position: 'fixed',
     bottom: 0,
     overflow: 'auto',
     [theme.breakpoints.down('md')]: {

@@ -4,6 +4,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 
 import Schedule from './Schedule';
 import Register from './Register';
@@ -42,6 +43,9 @@ export const Main = ({ classes }) => (
         render={(props) => <Search {...props} />}
       />
     </Switch>
+    <Hidden mdUp>
+      <div style={{ height: '48px', backgroundColor: 'white' }} />
+    </Hidden>
   </div>
 );
 

@@ -7,6 +7,7 @@ export default (theme) => ({
     height: '100%',
     flexWrap: 'wrap',
     paddingBottom: '1px',
+    backgroundColor: '#fff',
     [theme.breakpoints.up('md')]: {
       flexWrap: 'nowrap'
     }
