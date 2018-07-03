@@ -34,7 +34,9 @@ export class Episode extends Component {
   }
 
   handleExpand = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({ isOpen: !this.state.isOpen }, () => {
+      this.props.handleExpandCb && this.props.handleExpandCb();
+    });
   };
 
   setRef = (el) => {

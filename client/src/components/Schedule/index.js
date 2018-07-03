@@ -14,7 +14,7 @@ export class Schedule extends Component {
     this.props.dispatch(requestSchedule(date));
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const oldDate = this.getDate(this.props);
     const newDate = this.getDate(nextProps);
     if (oldDate !== newDate) {
@@ -22,9 +22,17 @@ export class Schedule extends Component {
     }
   }
 
+  setMasonryRef = (el) => {
+    this.masonry = this.masonry || el.masonry;
+  };
+
   getDate = (props) => {
     const { match: { params: { date = moment().format('YYYY-MM-DD') } } } = props;
     return date;
+  };
+
+  expandContentCb = () => {
+    setTimeout(() => this.masonry.layout(), 275); // wait for close/open transition to finish before setting layout
   };
 
   render() {
@@ -42,7 +50,12 @@ export class Schedule extends Component {
       );
     }
     return (
-      <View episodeIds={schedule[date] || []} {...this.props} />
+      <View
+        expandContentCb={this.expandContentCb}
+        setMasonryRef={this.setMasonryRef}
+        episodeIds={schedule[date] || []}
+        {...this.props}
+      />
     );
   }
 }

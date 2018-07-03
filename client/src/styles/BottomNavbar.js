@@ -5,6 +5,7 @@ export default (theme) => ({
     position: 'fixed',
     bottom: 0,
     overflow: 'auto',
+    zIndex: 1000,
     [theme.breakpoints.down('md')]: {
       transition: theme.transitions.create(['height'], {
         easing: theme.transitions.easing.easeIn,

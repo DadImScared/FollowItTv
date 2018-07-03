@@ -1,28 +1,35 @@
 
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Masonry from 'react-masonry-component';
 
 import Episode from '../Episode';
+import styles from '../../styles/Schedule.css';
 
-const View = ({ episodeIds, shows, episodes }) => (
-  <Grid container style={{ padding: '8px' }}>
-    {
-      episodeIds.length ?
-        episodeIds.map((item, index) => {
-          return (
-            <Grid style={{ padding: '8px' }} item xs={12} sm={6} lg={4} xl={3} key={`${episodes[item].id}-${index}`}>
-              <Episode
-                shows={shows}
-                item={episodes[item]}
-              />
-            </Grid>
-          );
-        })
-        :
-        <div>no results</div>
-    }
-  </Grid>
+const View = ({ classes, episodeIds, shows, episodes, setMasonryRef, expandContentCb }) => (
+  <div className={classes.wrapper}>
+    <Masonry options={{ horizontalOrder: true }} ref={setMasonryRef}>
+      {
+        episodeIds.length ?
+          episodeIds.map((item, index) => {
+            // decrease z-index per card so when one is expanded it covers the element below it before masonry adjusts
+            // the layout
+            return (
+              <div style={{ zIndex: 500 - index }} className={classes.col} key={`${episodes[item].id}-${index}`}>
+                <Episode
+                  handleExpandCb={expandContentCb}
+                  shows={shows}
+                  item={episodes[item]}
+                />
+              </div>
+            );
+          })
+          :
+          <div>no results</div>
+      }
+    </Masonry>
+  </div>
 );
 
-export default View;
+export default withStyles(styles)(View);
