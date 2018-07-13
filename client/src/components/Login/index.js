@@ -27,7 +27,7 @@ export class Login extends Component {
     const { handleErrorResponse, form: { email, password }, history, dispatch } = this.props;
     try {
       await dispatch(logInUser({ email, password }));
-      history.push('/');
+      history.push('/my_shows');
     }
     catch ({ response: { data } }) {
       if (data.non_field_errors && data.non_field_errors[0] === 'E-mail is not verified.') {
