@@ -41,7 +41,7 @@ export class MyShows extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { location: { pathname: oldPath } } = this.props;
     const { location: { pathname } } = nextProps;
     if (pathname !== oldPath) {
@@ -155,13 +155,13 @@ export class MyShows extends Component {
   };
 
   render() {
-    const { followedShows, ...other } = this.props;
+    const { followedShows, followedShowsById, ...other } = this.props;
     return (
       <View
         {...other}
         {...this.state}
         days={Object.values(routes)}
-        showList={followedShows[routes[this.state.day]] || []}
+        showList={ this.state.day === 0 ? followedShowsById : followedShows[routes[this.state.day]] || []}
         handleChange={this.handleChange}
         handleSwipeChange={this.handleSwipeChange}
         unFollow={this.unFollow}
