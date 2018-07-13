@@ -161,7 +161,6 @@ export class MyShows extends Component {
         {...other}
         {...this.state}
         days={Object.values(routes)}
-        showList={ this.state.day === 0 ? followedShowsById : followedShows[routes[this.state.day]] || []}
         handleChange={this.handleChange}
         handleSwipeChange={this.handleSwipeChange}
         unFollow={this.unFollow}

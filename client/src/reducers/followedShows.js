@@ -1,6 +1,10 @@
 
+import _ from 'lodash';
+import { createSelector } from 'reselect';
+
 import * as followedShowsTypes from '../actiontypes/followedShows';
 import { followShow, unfollowShow } from './followedShowsUtility';
+import { getShows } from './shows';
 
 
 const updateShowInDay = (dayState, action, updateCb)=> {
@@ -30,5 +34,16 @@ function followedShows(state={}, action) {
     return state;
   }
 }
+
+const getFollowedShowsByDay = (state, { day }) => {
+  return !day || day === 'All' ? state.followedShowsById : state.followedShows[day] || [];
+};
+
+export const makeFollowedShows = () => {
+  return createSelector(
+    [getFollowedShowsByDay, getShows],
+    (followedShows, shows) => _.sortBy(followedShows.map((id) => shows[id]), ['name'])
+  );
+};
 
 export default followedShows;

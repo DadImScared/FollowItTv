@@ -29,4 +29,6 @@ function shows(state={}, action) {
   }
 }
 
+export const getShows = (state) => state.shows;
+
 export default shows;

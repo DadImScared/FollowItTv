@@ -15,11 +15,9 @@ import HideNav from '../HideNav';
 import ShowList from './ShowList';
 import { View as styles } from '../../styles/MyShows';
 
-
 const View = ({
   classes,
   days,
-  showList,
   shows,
   handleChange,
   handleSwipeChange,
@@ -65,7 +63,7 @@ const View = ({
                 :
                 `${match.url}/${item}`
             }
-            render={() => <ShowList unFollow={unFollow} showList={showList} shows={shows} />}
+            render={() => <ShowList day={item} unFollow={unFollow}  />}
             key={`${item}-${index}-route`}
           />
         ))
