@@ -3,107 +3,84 @@ import React from 'react';
 
 import axios from 'axios';
 import { shallow } from 'enzyme';
+import moment from 'moment';
 import sinon from 'sinon';
 
 import { MyShows } from '../../../components/MyShows/index';
 
 jest.mock('axios');
 
-
-const baseProps = () => ({
-  followedShows: {},
-  followedShowsById: [],
-  shows: {},
-  location: {
-    pathname: '/my_shows/All'
-  },
-  dispatch: sinon.spy(),
-  followShow: sinon.spy(),
-  unfollowShow: sinon.spy()
-});
-
 describe('MyShows', () => {
-  let clock;
+  const _date = Date.now;
+  let props;
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers();
+    props = {
+      followedShows: {},
+      followedShowsById: [],
+      shows: {},
+      location: {
+        pathname: '/my_shows/All'
+      },
+      dispatch: sinon.spy()
+    };
+    moment.now = () => 1531716593863;
     axios.get.mockImplementation(() => ({ data: [] }));
     axios.post.mockImplementation(() => ({ data: [] }));
   });
 
   afterEach(() => {
-    clock.restore();
+    moment.now = _date;
   });
 
   test('unFollow', async () => {
-    const props = {
-      ...baseProps()
-    };
     const wrapper = shallow(<MyShows {...props} />);
     const instance = wrapper.instance();
-    await instance.unFollow(['Monday'], 1);
-    expect(instance.state).toEqual({
-      isOpen: true,
-      day: 0,
-      undoData: {
-        showId: 1,
-        showDays: ['Monday']
-      }
-    });
-    expect(props.unfollowShow.calledOnce).toEqual(true);
-    await instance.unFollow(['Tuesday'], 2);
-    const spied = sinon.spy(instance, 'makeRequest');
-    clock.tick(100);
-    expect(spied.calledOnce).toEqual(false);
-    clock.tick(100);
-    expect(spied.calledOnce).toEqual(true);
+    await instance.unFollow({ schedule: { days: ['Monday'] }, id: 1 });
+    expect(props.dispatch.calledOnce).toEqual(true);
+    expect(instance.state).toMatchSnapshot('un follow while snackbar is closed');
+    await instance.unFollow({ schedule: { days: ['Monday'] }, id: 1 });
+    expect(instance.state).toMatchSnapshot('un follow while snackbar is open');
   });
 
   test('undoAction', async () => {
-    const props = {
-      ...baseProps()
-    };
     const wrapper = shallow(<MyShows {...props} />);
     wrapper.setState({
+      isOpen: true,
       undoData: {
-        showId: 1,
-        showDays: ['Monday']
+        key: 0,
+        show: { schedule: { days: ['Monday'] }, id: 1 }
       }
     });
     const instance = wrapper.instance();
     await instance.undoAction();
-    expect(props.followShow.calledOnce).toEqual(true);
-    expect(instance.state.undoData).toEqual({
-      showId: null, showDays: []
-    });
+    expect(props.dispatch.calledOnce).toEqual(true);
+    expect(instance.state).toMatchSnapshot();
   });
 
   test('setInitialTab', () => {
-    const props = {
-      ...baseProps(),
+    const newProps = {
+      ...props,
       location: {
         pathname: '/my_shows'
       }
     };
-    const wrapper = shallow(<MyShows {...props} />);
+    const wrapper = shallow(<MyShows {...newProps} />);
     const instance = wrapper.instance();
-    const spy = sinon.spy();
-    instance.setInitialTab(props, spy);
-    expect(spy.calledOnce).toEqual(true);
+    instance.setInitialTab(newProps);
+    expect(instance.state.day).toEqual(0);
   });
 
   test('setInitialTab with day', () => {
-    const props = {
-      ...baseProps(),
+    const newProps = {
+      ...props,
       location: {
         pathname: '/my_shows/Monday'
       }
     };
-    const wrapper = shallow(<MyShows {...props} />);
+    const wrapper = shallow(<MyShows {...newProps} />);
     const instance = wrapper.instance();
-    const spy = sinon.spy();
-    instance.setInitialTab(props, spy);
-    expect(spy.calledOnce).toEqual(true);
+    instance.setInitialTab(newProps);
     expect(instance.state.day).toEqual(1);
   });
 });

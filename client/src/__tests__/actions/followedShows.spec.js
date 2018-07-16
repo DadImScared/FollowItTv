@@ -67,6 +67,6 @@ describe('actions', () => {
     const dispatch = sinon.spy();
     axios.get.mockImplementationOnce(() => ({ data: showList }));
     await actions.getFollowedShows(dispatch);
-    expect(dispatch.calledOnce).toEqual(true);
+    expect(dispatch.calledTwice).toEqual(true);
   });
 });

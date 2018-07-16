@@ -1,9 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`selectors makeFollowedShows 1`] = `
-Array [
-  Object {
-    "name": "show1",
-  },
-]
+exports[`selectors makeFollowedShowData with no day 1`] = `
+Object {
+  "followedShows": Array [
+    Object {
+      "name": "show1",
+    },
+  ],
+  "isCached": 1,
+  "isLoading": true,
+}
 `;

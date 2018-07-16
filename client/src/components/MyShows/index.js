@@ -1,10 +1,13 @@
 
 import React, { Component } from 'react';
 
-import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getFollowedShows, unfollowShow, followShow, postFollow } from '../../actions/followedShows';
+import {
+  createFollowedShow,
+  deleteFollowedShow
+} from '../../actions/followedShows';
 import View from './View';
 
 
@@ -20,58 +23,28 @@ const routes = {
 };
 
 export class MyShows extends Component {
+  queue = [];
+
   constructor(...args) {
     super(...args);
     this.state = {
       day: 0,
-      undoData: {
-        showId: null,
-        showDays: []
-      },
+      undoData: {},
       isOpen: false
     };
   }
 
   componentDidMount() {
-    this.setInitialTab(this.props, async () => {
-      if (this.scheduleExists()) {
-        return;
-      }
-      await this.fetchSchedule(this.props);
-    });
+    this.setInitialTab(this.props);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { location: { pathname: oldPath } } = this.props;
     const { location: { pathname } } = nextProps;
     if (pathname !== oldPath) {
-      this.setInitialTab(nextProps, async () => {
-        if (this.scheduleExists()) {
-          return;
-        }
-        await this.fetchSchedule(this.props);
-      });
+      this.setInitialTab(nextProps);
     }
   }
-
-  scheduleExists = () => {
-    const { followedShows, followedShowsById } = this.props;
-    const { day } = this.state;
-    if (day === 0) {
-      return followedShowsById.length;
-    }
-    const dayValue = routes[day];
-    return !!followedShows[dayValue];
-  };
-
-  fetchSchedule = async (props) => {
-    try {
-      await getFollowedShows(props.dispatch, routes[this.state.day]);
-    }
-    catch (e) {
-      console.log(e);
-    }
-  };
 
   handleChange = (event, value) => {
     this.pushRoute(value);
@@ -90,103 +63,82 @@ export class MyShows extends Component {
     history.push(`${match.url}/${routes[value]}`);
   };
 
-  setInitialTab = (props, cb) => {
+  setInitialTab = (props) => {
     const { location } = props;
     for(const route of Object.keys(routes)) {
       if (location.pathname.includes(routes[route])) {
-        this.setState({ day: parseInt(route) }, cb);
+        this.setState({ day: parseInt(route) });
         return;
       }
     }
-    cb();
   };
 
-  unFollow = async (days, id) => {
+  unFollow = async (show) => {
+    const { schedule: { days }, id } = show;
+    const { dispatch } = this.props;
+    this.setUndoData(show);
+    await dispatch(deleteFollowedShow(days, id));
     if (this.state.isOpen) {
-      clearTimeout(this.timeout);
       this.clearSnackbar();
-      // time is theme.duration.leavingScreen
-      this.timeout = setTimeout(async () => {
-        await this.makeRequest(this.props.unfollowShow, days, id);
-        this.setUndoData(days, id);
-      }, 195);
     }
     else {
-      await this.makeRequest(this.props.unfollowShow, days, id);
-      this.setUndoData(days, id);
+      this.processQueue();
     }
   };
 
   undoAction = async () => {
-    const { undoData: { showId, showDays } } = this.state;
-    await this.makeRequest(this.props.followShow, showDays, showId);
+    const { undoData: { show: { schedule: { days }, id } } } = this.state;
+    const { dispatch } = this.props;
+    await dispatch(createFollowedShow(days, id));
     this.clearSnackbar();
   };
 
   clearSnackbar = () => {
-    this.setState({
-      isOpen: false,
-      undoData: {
-        showId: null,
-        showDays: []
-      }
-    });
+    this.setState({ isOpen: false });
   };
 
-  setUndoData = (days, id) => {
-    this.setState({
-      undoData: {
-        showId: id,
-        showDays: days
-      },
-      isOpen: true
-    });
-  };
-
-  makeRequest = async (cb, days, id) => {
-    try {
-      await postFollow(id);
-      cb(days, id);
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-    catch (e) {
-      // show error message
-      console.log(e);
+    this.clearSnackbar();
+  };
+
+  setUndoData = (show) => {
+    this.queue.push({
+      show,
+      key: moment().valueOf()
+    });
+  };
+
+  processQueue = () => {
+    if (this.queue.length) {
+      this.setState({
+        isOpen: true,
+        undoData: this.queue.shift()
+      });
     }
   };
 
   render() {
-    const { followedShows, followedShowsById, ...other } = this.props;
     return (
       <View
-        {...other}
+        {...this.props}
         {...this.state}
         days={Object.values(routes)}
         handleChange={this.handleChange}
         handleSwipeChange={this.handleSwipeChange}
         unFollow={this.unFollow}
         undoAction={this.undoAction}
-        handleClose={this.clearSnackbar}
+        handleClose={this.handleClose}
+        handleSnackbarExit={this.processQueue}
       />
     );
   }
 }
 
-const mapStateToProps = ({ followedShows, shows, followedShowsById, scroll: { directionDown } }) => ({
-  followedShows,
-  followedShowsById,
-  shows,
+const mapStateToProps = ({ scroll: { directionDown } }) => ({
   directionDown
 });
 
-const mapDispatchToProps = (dispatch) => {
-  const boundActions = bindActionCreators({
-    followShow,
-    unfollowShow
-  }, dispatch);
-  return {
-    ...boundActions,
-    dispatch
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyShows);
+export default connect(mapStateToProps)(MyShows);

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyShows undoAction 1`] = `
+Object {
+  "day": 0,
+  "isOpen": false,
+  "undoData": Object {
+    "key": 0,
+    "show": Object {
+      "id": 1,
+      "schedule": Object {
+        "days": Array [
+          "Monday",
+        ],
+      },
+    },
+  },
+}
+`;
+
+exports[`un follow while snackbar is closed 1`] = `
+Object {
+  "day": 0,
+  "isOpen": true,
+  "undoData": Object {
+    "key": 1531716593863,
+    "show": Object {
+      "id": 1,
+      "schedule": Object {
+        "days": Array [
+          "Monday",
+        ],
+      },
+    },
+  },
+}
+`;
+
+exports[`un follow while snackbar is open 1`] = `
+Object {
+  "day": 0,
+  "isOpen": false,
+  "undoData": Object {
+    "key": 1531716593863,
+    "show": Object {
+      "id": 1,
+      "schedule": Object {
+        "days": Array [
+          "Monday",
+        ],
+      },
+    },
+  },
+}
+`;

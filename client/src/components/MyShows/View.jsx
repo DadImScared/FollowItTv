@@ -18,17 +18,17 @@ import { View as styles } from '../../styles/MyShows';
 const View = ({
   classes,
   days,
-  shows,
   handleChange,
   handleSwipeChange,
   day,
   match,
   isOpen,
-  undoData: { showId },
+  undoData: { show = {}, key },
   unFollow,
   undoAction,
   handleClose,
-  directionDown
+  directionDown,
+  handleSnackbarExit
 }) => (
   <Paper style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
     <HideNav directionDown={directionDown}>
@@ -70,13 +70,16 @@ const View = ({
       }
     </SwipeableViews>
     <Snackbar
+      key={key}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left'
       }}
       open={isOpen}
       onClose={handleClose}
-      message={`Un followed ${shows[showId] && shows[showId].name}`}
+      onExited={handleSnackbarExit}
+      autoHideDuration={6000}
+      message={`Un followed ${show.name}`}
       action={(
         <Button onClick={undoAction}>
           Undo

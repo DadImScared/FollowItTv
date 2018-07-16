@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 
 import * as followedShowsTypes from '../actiontypes/followedShows';
 import { followShow, unfollowShow } from './followedShowsUtility';
+import { getLoading } from './loading';
 import { getShows } from './shows';
 
 
@@ -39,10 +40,15 @@ const getFollowedShowsByDay = (state, { day }) => {
   return !day || day === 'All' ? state.followedShowsById : state.followedShows[day] || [];
 };
 
-export const makeFollowedShows = () => {
+export const getFollowedShows = createSelector(
+  [getFollowedShowsByDay, getShows],
+  (followedShows, shows) => _.sortBy(followedShows.map((id) => shows[id]), ['name'])
+);
+
+export const makeFollowedShowData = () => {
   return createSelector(
-    [getFollowedShowsByDay, getShows],
-    (followedShows, shows) => _.sortBy(followedShows.map((id) => shows[id]), ['name'])
+    [getFollowedShows, getLoading('MY_SHOWS_', 'day', 'All')],
+    (followedShows, isLoading) => ({ followedShows, isLoading, isCached: followedShows.length  })
   );
 };
 

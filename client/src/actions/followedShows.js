@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 
+import { loadingStart, loadingEnd } from './loading';
 import axiosOptions from './axiosOptions';
 import * as followedActionTypes from '../actiontypes/followedShows';
 import { addShows } from './shows';
@@ -32,6 +33,30 @@ export const unfollowShow = (days, id) => {
 
 export const postFollow = async (showId) => {
   return await axios.post(`/api/v1/followshow/${showId}/`, {}, axiosOptions());
+};
+
+export const createFollowedShow = (days, showId) => {
+  return async (dispatch) => {
+    try {
+      await postFollow(showId);
+      dispatch(followShow(days, showId));
+    }
+    catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const deleteFollowedShow = (days, showId) => {
+  return async (dispatch) => {
+    try {
+      await postFollow(showId);
+      dispatch(unfollowShow(days, showId));
+    }
+    catch (e) {
+      throw e;
+    }
+  };
 };
 
 export const addShowIds = (showIdList) => {
@@ -77,4 +102,28 @@ export const getFollowedShows = async (dispatch, day = '') => {
   catch (e) {
     throw e;
   }
+};
+
+export const findFollowedShows = (day = 'All') => {
+  return async (dispatch) => {
+    const LOADING_ID = `MY_SHOWS_${day}`;
+    dispatch(loadingStart(LOADING_ID));
+    try {
+      const { data } = await axios.get(
+        `/api/v1/followedshows/${isDay(day) ? `${_.capitalize(day)}/`:''}`,
+        axiosOptions()
+      );
+      const { showData, showIds } = extractShowData(data);
+      dispatch(addShows(showData));
+      dispatch(addShowIds(showIds));
+      if (isDay(day)) {
+        dispatch(addDay(day, showIds));
+      }
+      dispatch(loadingEnd(LOADING_ID));
+    }
+    catch (e) {
+      dispatch(loadingEnd(LOADING_ID));
+      throw e;
+    }
+  };
 };
