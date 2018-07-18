@@ -1,8 +1,6 @@
 
 import React from 'react';
 
-import { Route } from 'react-router-dom';
-
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -12,7 +10,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import HideNav from '../HideNav';
-import ShowList from './ShowList';
+import ShowRoute from './ShowRoute';
 import { View as styles } from '../../styles/MyShows';
 
 const View = ({
@@ -55,17 +53,7 @@ const View = ({
     >
       {
         days.map((item, index) => (
-          <Route
-            exact
-            path={
-              item === 'All' ?
-                `(${match.url}|${match.url}/All)`
-                :
-                `${match.url}/${item}`
-            }
-            render={() => <ShowList day={item} unFollow={unFollow}  />}
-            key={`${item}-${index}-route`}
-          />
+          <ShowRoute day={item} key={`${item}-${index}`} unFollow={unFollow} match={match} />
         ))
       }
     </SwipeableViews>

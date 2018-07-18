@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShowListItem should render 1`] = `
+<WithStyles(ListItem)
+  button={true}
+  component={[Function]}
+  divider={true}
+  to="/show/1"
+>
+  <WithStyles(ListItemText)
+    primary="breaking bad"
+    style={
+      Object {
+        "flex": "0.7 1 auto",
+      }
+    }
+  />
+  <WithStyles(ListItemSecondaryAction)>
+    <WithStyles(Button)
+      onClick={[Function]}
+    >
+      delete
+    </WithStyles(Button)>
+  </WithStyles(ListItemSecondaryAction)>
+</WithStyles(ListItem)>
+`;

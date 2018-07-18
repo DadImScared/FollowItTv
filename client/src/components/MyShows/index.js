@@ -71,6 +71,8 @@ export class MyShows extends Component {
         return;
       }
     }
+    // if no routes match default to all shows
+    this.setState({ day: 0 });
   };
 
   unFollow = async (show) => {
