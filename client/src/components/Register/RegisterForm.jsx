@@ -4,6 +4,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import { Field } from '../withFormState/Field';
 import { lengthValidator, passwordValidator } from '../../validators';
 
 
@@ -27,16 +28,21 @@ const RegisterForm = ({ classes, updateForm, submit, form, formErrors }) => (
       {
         formFields.map(({ id, labelText, fieldType='text', validators }, index) => {
           return (
-            <TextField
-              className={classes.fieldStyle}
+            <Field
               key={`${id}-${index}`}
-              label={labelText}
-              type={fieldType}
-              value={form[id] || ''}
-              error={!!formErrors[id]}
-              helperText={formErrors[id] || ''}
-              onChange={(e) => updateForm(e, id, validators)}
-            />
+              id={id}
+              validators={validators}
+              updateForm={updateForm}
+            >
+              <TextField
+                className={classes.fieldStyle}
+                label={labelText}
+                type={fieldType}
+                value={form[id] || ''}
+                error={!!formErrors[id]}
+                helperText={formErrors[id] || ''}
+              />
+            </Field>
           );
         })
       }
