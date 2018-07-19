@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import Cookies from 'js-cookie';
 import { Link, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -13,19 +12,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 
-import { logOut } from '../../actions/users';
 import LoggedInButtons from './LoggedInButtons';
 import LoggedOutButtons from './LoggedOutButtons';
 import MoreOptions from './MoreOptions';
 import Searchbar from './Searchbar';
 import styles from '../../styles/Navbar.css';
 
-export const Navbar = ({ classes, loggedIn, logOut, directionDown, ...other }) => {
-  const logOutUser = () => {
-    Cookies.remove('token');
-    logOut();
-  };
-
+export const Navbar = ({ classes, loggedIn, directionDown, ...other }) => {
   return (
     <AppBar
       color={'secondary'}
@@ -47,7 +40,7 @@ export const Navbar = ({ classes, loggedIn, logOut, directionDown, ...other }) =
             </Button>
             {
               loggedIn ?
-                <LoggedInButtons logOut={logOutUser} />
+                <LoggedInButtons />
                 :
                 <LoggedOutButtons/>
             }
@@ -55,7 +48,7 @@ export const Navbar = ({ classes, loggedIn, logOut, directionDown, ...other }) =
         </Hidden>
         <Hidden mdUp>
           <div>
-            <MoreOptions {...other} logOut={logOutUser} loggedIn={loggedIn} />
+            <MoreOptions {...other} loggedIn={loggedIn} />
           </div>
         </Hidden>
       </Toolbar>
@@ -69,16 +62,11 @@ Navbar.propTypes = {
     hideNavBar: PropTypes.string.isRequired
   }).isRequired,
   loggedIn: PropTypes.bool.isRequired,
-  directionDown: PropTypes.bool.isRequired,
-  logOut: PropTypes.func.isRequired
+  directionDown: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ users: { loggedIn } }) => ({
   loggedIn
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  logOut: () => dispatch(logOut())
-});
-
-export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar)));
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(Navbar)));

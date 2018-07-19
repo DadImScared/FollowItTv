@@ -16,10 +16,9 @@ export const postLogIn = async (payload) => {
   return await axios.post('/api/v1/login/', payload);
 };
 
-export const logIn = (token) => {
+export const logIn = () => {
   return {
-    type: LOG_IN,
-    token
+    type: LOG_IN
   };
 };
 
@@ -29,11 +28,18 @@ export const logOut = () => {
   };
 };
 
+export const logOutUser = () => {
+  return (dispatch) => {
+    Cookies.remove('token');
+    dispatch(logOut());
+  };
+};
+
 export const logInUser = (payload) => {
   return async (dispatch) => {
     try {
       const { data: { key } } = await postLogIn(payload);
-      dispatch(logIn(key));
+      dispatch(logIn());
       Cookies.set('token', key);
     }
     catch (e) {

@@ -5,24 +5,21 @@ import { LOG_IN, LOG_OUT } from '../actiontypes/users';
 
 
 const initialState = {
-  loggedIn: Cookies.get('token') !== undefined,
-  token: Cookies.get('token')
+  loggedIn: Cookies.get('token') !== undefined
 };
 
 function users(state=initialState, action) {
   switch(action.type) {
-  case LOG_IN:
-    return {
-      loggedIn: true,
-      token: action.token
-    };
-  case LOG_OUT:
-    return {
-      loggedIn: false,
-      token: ''
-    };
-  default:
-    return state;
+    case LOG_IN:
+      return {
+        loggedIn: true
+      };
+    case LOG_OUT:
+      return {
+        loggedIn: false
+      };
+    default:
+      return state;
   }
 }
 

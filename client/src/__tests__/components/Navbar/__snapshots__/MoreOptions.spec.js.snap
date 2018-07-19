@@ -42,16 +42,16 @@ exports[`MoreOptions should render logged out options if loggedIn false 1`] = `
     open={false}
   >
     <React.Fragment>
-      <WithStyles(MenuItem)
-        onClick={[Function]}
-      >
-        Sign up
-      </WithStyles(MenuItem)>
-      <WithStyles(MenuItem)
-        onClick={[Function]}
-      >
-        Register
-      </WithStyles(MenuItem)>
+      <MenuItemLink
+        handleClose={[Function]}
+        routeName="/login"
+        text="Sign in"
+      />
+      <MenuItemLink
+        handleClose={[Function]}
+        routeName="/register"
+        text="Sign up"
+      />
     </React.Fragment>
   </WithStyles(Menu)>
 </div>

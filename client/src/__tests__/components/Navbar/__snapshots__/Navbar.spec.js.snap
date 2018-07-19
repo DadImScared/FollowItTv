@@ -2,12 +2,7 @@
 
 exports[`Navbar should render logged in options if loggedIn 1`] = `
 <WithStyles(AppBar)
-  className="appbar"
-  classes={
-    Object {
-      "root": "hideNav",
-    }
-  }
+  className="appbar hideNav"
   color="secondary"
 >
   <WithStyles(Toolbar)
@@ -67,9 +62,7 @@ exports[`Navbar should render logged in options if loggedIn 1`] = `
         >
           Schedule
         </WithStyles(Button)>
-        <LoggedInButtons
-          logOut={[Function]}
-        />
+        <LoggedInButtons />
       </div>
     </Hidden>
     <Hidden
@@ -92,7 +85,6 @@ exports[`Navbar should render logged in options if loggedIn 1`] = `
               "push": [Function],
             }
           }
-          logOut={[Function]}
           loggedIn={true}
         />
       </div>
@@ -103,12 +95,7 @@ exports[`Navbar should render logged in options if loggedIn 1`] = `
 
 exports[`Navbar should render logged out options if loggedIn = false 1`] = `
 <WithStyles(AppBar)
-  className="appbar"
-  classes={
-    Object {
-      "root": "hideNav",
-    }
-  }
+  className="appbar hideNav"
   color="secondary"
 >
   <WithStyles(Toolbar)
@@ -191,7 +178,6 @@ exports[`Navbar should render logged out options if loggedIn = false 1`] = `
               "push": [Function],
             }
           }
-          logOut={[Function]}
           loggedIn={false}
         />
       </div>

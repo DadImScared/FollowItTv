@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuItemLink should render 1`] = `
+<WithStyles(MenuItem)
+  component={[Function]}
+  onClick={[Function]}
+  to="/register"
+>
+  Sign up
+</WithStyles(MenuItem)>
+`;

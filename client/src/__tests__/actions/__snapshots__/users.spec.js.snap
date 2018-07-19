@@ -1,9 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`user actions logIn should create logIn action 1`] = `
+Object {
+  "type": "users/LOG_IN",
+}
+`;
+
 exports[`user actions logInUser successful login 1`] = `
 Array [
   Object {
-    "token": "token here",
     "type": "users/LOG_IN",
   },
 ]

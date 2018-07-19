@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
+import MenuItemLink from './MenuItemLink';
 
 export class MoreOptions extends Component {
   constructor(...args) {
@@ -20,14 +20,8 @@ export class MoreOptions extends Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = (route) => {
+  handleClose = () => {
     this.setState({ anchorEl: null });
-    typeof route === 'string' && this.props.history.push(route);
-  };
-
-  logOut = () => {
-    this.props.logOut();
-    this.handleClose('');
   };
 
   render() {
@@ -49,15 +43,11 @@ export class MoreOptions extends Component {
         >
           {
             loggedIn ?
-              <MenuItem onClick={this.logOut}>Log out</MenuItem>
+              <MenuItemLink handleClose={this.handleClose} routeName={'/logout'} text={'Log out'}/>
               :
               <Fragment>
-                <MenuItem onClick={() => this.handleClose('/login')}>
-                  Sign up
-                </MenuItem>
-                <MenuItem onClick={() => this.handleClose('/register')}>
-                  Register
-                </MenuItem>
+                <MenuItemLink handleClose={this.handleClose} routeName={'/login'} text={'Sign in'} />
+                <MenuItemLink handleClose={this.handleClose} routeName={'/register'} text={'Sign up'} />
               </Fragment>
           }
         </Menu>
@@ -70,8 +60,7 @@ MoreOptions.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  loggedIn: PropTypes.bool.isRequired,
-  logOut: PropTypes.func.isRequired
+  loggedIn: PropTypes.bool.isRequired
 };
 
 export default MoreOptions;

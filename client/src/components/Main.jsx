@@ -9,6 +9,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Schedule from './Schedule';
 import Register from './Register';
 import Login from './Login';
+import Logout from './Logout';
 import Show from './Show';
 import Search from './Search';
 import MyShows from './MyShows';
@@ -41,6 +42,10 @@ export const Main = ({ classes }) => (
       <Route
         path={'/search/:query'}
         render={(props) => <Search {...props} />}
+      />
+      <Route
+        path={'/logout'}
+        component={Logout}
       />
     </Switch>
     <Hidden mdUp>

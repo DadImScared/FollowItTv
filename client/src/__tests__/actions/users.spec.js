@@ -5,8 +5,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import { LOG_OUT, LOG_IN } from '../../actiontypes/users';
-import { registerUser, reSendEmailConfirm, logIn, logOut, logInUser } from '../../actions/users';
+import { LOG_OUT } from '../../actiontypes/users';
+import { registerUser, logIn, logOut, logInUser } from '../../actions/users';
 
 jest.mock('axios');
 
@@ -52,11 +52,7 @@ describe('user actions', () => {
 
   describe('logIn', () => {
     it('should create logIn action', () => {
-      const expectedAction = {
-        type: LOG_IN,
-        token: 'token'
-      };
-      expect(logIn('token')).toEqual(expectedAction);
+      expect(logIn()).toMatchSnapshot();
     });
   });
 
