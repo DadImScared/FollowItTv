@@ -53,10 +53,8 @@ export class Seasons extends Component {
   }
 }
 
-const mapStateToProps = ({ seasons: { byId, seasonEpisodes }, episodes }) => ({
-  byId,
-  seasonEpisodes,
-  episodes
+const mapStateToProps = ({ seasons: { byId } }) => ({
+  byId
 });
 
 const mapDispatchToProps = (dispatch) => {

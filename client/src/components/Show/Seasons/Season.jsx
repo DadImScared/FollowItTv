@@ -1,19 +1,21 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import { getSeasonEpisodes, normalizeSeasonEpisodes } from '../../../actions/seasons';
+import { makeSeasonEpisodes } from '../../../reducers/seasons';
 import Episode from '../../Episode';
 
 
 export class Season extends Component {
 
   async componentDidMount() {
-    const { season: { id }, seasonEpisodes, addSeasonEpisodes, addEpisodes, showId } = this.props;
-    if (seasonEpisodes[id]) {
+    const { season: { id }, hasData, addSeasonEpisodes, addEpisodes, showId } = this.props;
+    if (hasData) {
       return;
     }
     try {
@@ -28,8 +30,8 @@ export class Season extends Component {
   }
 
   render() {
-    const { season, seasonEpisodes, episodes, show } = this.props;
-    const fullEpisodes = seasonEpisodes[season.id] || [];
+    const { season, episodes, show } = this.props;
+    // const fullEpisodes = seasonEpisodes[season.id] || [];
     return (
       <div>
         <div style={{ marginBottom: '8px' }}>
@@ -50,10 +52,10 @@ export class Season extends Component {
         </div>
         <Grid container>
           {
-            fullEpisodes.map((episodeId, index) => {
-              const episode = episodes[episodeId] || {};
+            episodes.map((episode, index) => {
+              // const episode = episodes[episodeId] || {};
               return (
-                <Grid item xs={12} lg={6} xl={4} style={{ marginBottom: '5px' }} key={`${episodeId}-${index}`}>
+                <Grid item xs={12} lg={6} xl={4} style={{ marginBottom: '5px' }} key={`${episode.id}-${index}`}>
                   <Episode showActions={false} item={episode} show={show} />
                 </Grid>
               );
@@ -65,4 +67,13 @@ export class Season extends Component {
   }
 }
 
-export default Season;
+const makeMapStateToProps = () => {
+  const getSeasonEpisodesData = makeSeasonEpisodes();
+  return (state, props) => {
+    const results = getSeasonEpisodesData(state, props);
+    console.log(getSeasonEpisodesData.recomputations());
+    return results;
+  };
+};
+
+export default connect(makeMapStateToProps)(Season);

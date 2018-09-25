@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Season should render 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "marginBottom": "8px",
+      }
+    }
+  >
+    <div>
+      <WithStyles(Typography)
+        gutterBottom={true}
+      >
+        episodes: 
+        13
+      </WithStyles(Typography)>
+    </div>
+    <WithStyles(Typography)
+      gutterBottom={true}
+    >
+      No summary
+    </WithStyles(Typography)>
+    <WithStyles(Divider) />
+  </div>
+  <WithStyles(Grid)
+    container={true}
+  >
+    <WithStyles(Grid)
+      item={true}
+      key="1-0"
+      lg={6}
+      style={
+        Object {
+          "marginBottom": "5px",
+        }
+      }
+      xl={4}
+      xs={12}
+    >
+      <WithStyles(Episode)
+        item={
+          Object {
+            "id": 1,
+          }
+        }
+        show={Object {}}
+        showActions={false}
+      />
+    </WithStyles(Grid)>
+  </WithStyles(Grid)>
+</div>
+`;

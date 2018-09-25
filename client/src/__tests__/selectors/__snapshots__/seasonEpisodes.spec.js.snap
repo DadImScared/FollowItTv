@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`seasonEpisodes makeSeasonEpisodes 1`] = `
+Object {
+  "episodes": Array [
+    Object {
+      "id": 1,
+      "name": "episode 1",
+    },
+  ],
+  "hasData": 1,
+  "isLoading": false,
+}
+`;

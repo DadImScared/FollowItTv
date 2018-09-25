@@ -1,6 +1,8 @@
 
 import axios from 'axios';
 import { ADD_SEASONS, ADD_SEASON_EPISODES } from '../actiontypes/seasons';
+import { loadingStart, loadingEnd } from './loading';
+import { seasonEpisodesLoading } from '../loadingIds';
 
 
 export const baseUrl = 'http://api.tvmaze.com/';
@@ -27,6 +29,15 @@ export const getSeasons = async (showId) => {
 
 export const getSeasonEpisodes = async (seasonId) => {
   return await axios.get(`${baseUrl}seasons/${seasonId}/episodes`);
+};
+
+// work in progress
+export const findSeasonEpisodes = (seasonId, showId) => {
+  return async (dispatch) => {
+    const loadingId = seasonEpisodesLoading(seasonId);
+    dispatch(loadingStart(loadingId));
+    const { data } = await axios.get(`${baseUrl}seasons/${seasonId}/episodes`);
+  };
 };
 
 export const normalizeSeasonEpisodes = (showId, episodes) => {

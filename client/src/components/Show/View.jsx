@@ -87,7 +87,7 @@ export const View = ({
       <Route
         path={`${match.url}/seasons`}
         render={() => (
-          <Seasons show={show} />
+          <Seasons show={show} showId={showId} />
         )}
       />
       <Route

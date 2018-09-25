@@ -14,4 +14,6 @@ function episodes(state={}, action) {
   }
 }
 
+export const getEpisodes = (state) => state.episodes;
+
 export default episodes;
