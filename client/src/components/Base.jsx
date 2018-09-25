@@ -10,6 +10,8 @@ import deepPurple from '@material-ui/core/colors/deepPurple';
 import withWidth from '@material-ui/core/withWidth';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 
 import Navbar from './Navbar';
 import Navdrawer from './Navdrawer';
@@ -106,24 +108,26 @@ export class  Base extends Component {
     const { classes, directionDown, bottomOfPage, ...other } = this.props;
     const { isOpen } = this.state;
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline/>
-        <div className={classes.appFrame}>
-          <Navbar
-            toggleNav={this.toggleNavdrawer}
-            directionDown={directionDown}
-          />
-          <Navdrawer toggleNav={this.toggleNavdrawer} isOpen={isOpen} />
-          <Main {...other} />
-          <BottomNav
-            navDrawerOpen={isOpen}
-            toggleNavdrawer={this.toggleNavdrawer}
-            {...other}
-            directionDown={directionDown}
-            bottomOfPage={bottomOfPage}
-          />
-        </div>
-      </MuiThemeProvider>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline/>
+          <div className={classes.appFrame}>
+            <Navbar
+              toggleNav={this.toggleNavdrawer}
+              directionDown={directionDown}
+            />
+            <Navdrawer toggleNav={this.toggleNavdrawer} isOpen={isOpen} />
+            <Main {...other} />
+            <BottomNav
+              navDrawerOpen={isOpen}
+              toggleNavdrawer={this.toggleNavdrawer}
+              {...other}
+              directionDown={directionDown}
+              bottomOfPage={bottomOfPage}
+            />
+          </div>
+        </MuiThemeProvider>
+      </MuiPickersUtilsProvider>
     );
   }
 }

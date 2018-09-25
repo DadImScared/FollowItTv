@@ -50,6 +50,7 @@ export const requestSchedule = (date) => {
     try {
       const { data } = await getSchedule(date);
       const { episodes, shows, episodeIds } = getEpisodesAndShows(data);
+      // convert to redux-batched-actions to reduce re-render
       dispatch(addShows(shows));
       dispatch(addEpisodes(episodes));
       dispatch(addSchedule(date, episodeIds));

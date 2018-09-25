@@ -15,5 +15,8 @@ export default (theme) => ({
     [theme.breakpoints.up('xl')]: {
       width: '25%'
     }
+  },
+  datePickerWrapper: {
+    padding: theme.spacing.unit
   }
 });

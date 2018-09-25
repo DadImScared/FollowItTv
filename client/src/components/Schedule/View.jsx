@@ -3,12 +3,25 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Masonry from 'react-masonry-component';
+import DatePicker from 'material-ui-pickers/DatePicker';
 
 import Episode from '../Episode';
 import styles from '../../styles/Schedule.css';
 
-const View = ({ classes, episodeIds, shows, episodes, setMasonryRef, expandContentCb }) => (
+const View = ({
+  classes,
+  episodeIds,
+  shows,
+  episodes,
+  setMasonryRef,
+  expandContentCb,
+  selectedDate,
+  handleDateChange
+}) => (
   <div className={classes.wrapper}>
+    <div className={classes.datePickerWrapper}>
+      <DatePicker label='Select date' autoOk showTodayButton value={selectedDate} onChange={handleDateChange} />
+    </div>
     <Masonry options={{ horizontalOrder: true }} ref={setMasonryRef}>
       {
         episodeIds.length ?

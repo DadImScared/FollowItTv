@@ -5,25 +5,44 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { requestSchedule } from '../../actions/schedule';
-
 import View from './View';
 
 export class Schedule extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedDate: new Date()
+    };
+  }
+
   componentDidMount() {
     const date = this.getDate(this.props);
     this.props.dispatch(requestSchedule(date));
+    this.dateStringToSelectedDate(date);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const oldDate = this.getDate(this.props);
-    const newDate = this.getDate(nextProps);
+  componentDidUpdate(prevProps) {
+    const oldDate = this.getDate(prevProps);
+    const newDate = this.getDate(this.props);
     if (oldDate !== newDate) {
       this.props.dispatch(requestSchedule(newDate));
+      this.dateStringToSelectedDate(newDate);
     }
   }
 
+  dateStringToSelectedDate = (date) => {
+    this.setState({ selectedDate: moment(date).toDate() });
+  };
+
+  handleDateChange = (date) => {
+    this.setState({ selectedDate: date.toDate() });
+    this.props.history.push(`/schedule/${date.format('YYYY-MM-DD')}`);
+  };
+
   setMasonryRef = (el) => {
-    this.masonry = this.masonry || el.masonry;
+    if (el) {
+      this.masonry = el.masonry;
+    }
   };
 
   getDate = (props) => {
@@ -54,6 +73,8 @@ export class Schedule extends Component {
         expandContentCb={this.expandContentCb}
         setMasonryRef={this.setMasonryRef}
         episodeIds={schedule[date] || []}
+        handleDateChange={this.handleDateChange}
+        {...this.state}
         {...this.props}
       />
     );
