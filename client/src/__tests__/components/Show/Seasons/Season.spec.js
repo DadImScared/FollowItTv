@@ -9,6 +9,9 @@ describe('Season', () => {
   it('should render', () => {
     const props = {
       addEpisodes: jest.fn(),
+      classes: {
+        col: 'col'
+      },
       season: {
         id: 1,
         episodeOrder: 13

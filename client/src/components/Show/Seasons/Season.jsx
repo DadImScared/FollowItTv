@@ -1,14 +1,16 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Masonry from 'react-masonry-component';
 
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import { getSeasonEpisodes, normalizeSeasonEpisodes } from '../../../actions/seasons';
 import { makeSeasonEpisodes } from '../../../reducers/seasons';
 import Episode from '../../Episode';
+import styles from '../../../styles/Schedule.css';
 
 
 export class Season extends Component {
@@ -29,11 +31,20 @@ export class Season extends Component {
     }
   }
 
+  setMasonryRef = (el) => {
+    if (el) {
+      this.masonry = el.masonry;
+    }
+  };
+
+  expandContentCb = () => {
+    setTimeout(() => this.masonry.layout(), 275); // wait for close/open transition to finish before setting layout
+  };
+
   render() {
-    const { season, episodes, show } = this.props;
-    // const fullEpisodes = seasonEpisodes[season.id] || [];
+    const { season, episodes, show, classes } = this.props;
     return (
-      <div>
+      <div style={{ width: '100%' }}>
         <div style={{ marginBottom: '8px' }}>
           <div>
             <Typography gutterBottom>
@@ -48,20 +59,19 @@ export class Season extends Component {
                 'No summary'
             }
           </Typography>
-          <Divider/>
+          <Divider />
         </div>
-        <Grid container>
+        <Masonry options={{ horizontalOrder: true }} ref={this.setMasonryRef}>
           {
             episodes.map((episode, index) => {
-              // const episode = episodes[episodeId] || {};
               return (
-                <Grid item xs={12} lg={6} xl={4} style={{ marginBottom: '5px' }} key={`${episode.id}-${index}`}>
-                  <Episode showActions={false} item={episode} show={show} />
-                </Grid>
+                <div style={{ zIndex: 500 - index }} className={classes.col} key={`${episode.id}-${index}`}>
+                  <Episode handleExpandCb={this.expandContentCb} showActions={false} item={episode} show={show} />
+                </div>
               );
             })
           }
-        </Grid>
+        </Masonry>
       </div>
     );
   }
@@ -69,11 +79,7 @@ export class Season extends Component {
 
 const makeMapStateToProps = () => {
   const getSeasonEpisodesData = makeSeasonEpisodes();
-  return (state, props) => {
-    const results = getSeasonEpisodesData(state, props);
-    console.log(getSeasonEpisodesData.recomputations());
-    return results;
-  };
+  return (state, props) => getSeasonEpisodesData(state, props);
 };
 
-export default connect(makeMapStateToProps)(Season);
+export default connect(makeMapStateToProps)(withStyles(styles)(Season));
