@@ -13,7 +13,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "material-ui-pickers": "^1.0.0-rc.14",
     "mdi-material-ui": "^5.5.0",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.1",
     "react": "^16.4.1",
